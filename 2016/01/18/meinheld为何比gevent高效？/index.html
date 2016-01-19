@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>meinheld为何比gevent高效？ | XYM</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前言
+两者都是高性能的WSGI兼容的web服务器。既然是同种东西，必然有对比，网上有挺多benchmark，我也做过对应的benchmark，不过没有整理，这里推荐一下网上的一篇benchmark，能够看出meinheld的性能确实好得令人意外。那么为什么meinheld会比gevent性能高这么多呢？我们从底层实现来看看，他究竟做了一些什么。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="meinheld为何比gevent高效？">
+<meta property="og:url" content="http://xymlife.com/2016/01/18/meinheld为何比gevent高效？/index.html">
+<meta property="og:site_name" content="XYM">
+<meta property="og:description" content="前言
+两者都是高性能的WSGI兼容的web服务器。既然是同种东西，必然有对比，网上有挺多benchmark，我也做过对应的benchmark，不过没有整理，这里推荐一下网上的一篇benchmark，能够看出meinheld的性能确实好得令人意外。那么为什么meinheld会比gevent性能高这么多呢？我们从底层实现来看看，他究竟做了一些什么。">
+<meta property="og:image" content="http://7xq2as.com1.z0.glb.clouddn.com/75E1F650-43F0-469C-AD75-EB93A028CDD0.png">
+<meta property="og:updated_time" content="2016-01-19T15:48:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="meinheld为何比gevent高效？">
+<meta name="twitter:description" content="前言
+两者都是高性能的WSGI兼容的web服务器。既然是同种东西，必然有对比，网上有挺多benchmark，我也做过对应的benchmark，不过没有整理，这里推荐一下网上的一篇benchmark，能够看出meinheld的性能确实好得令人意外。那么为什么meinheld会比gevent性能高这么多呢？我们从底层实现来看看，他究竟做了一些什么。">
+  
+    <link rel="alternative" href="/atom.xml" title="XYM" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.ico">
+  
+  
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <script>
+      var yiliaConfig = {
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/hello_world.JPG" class="js-avatar">
+            
+        </a>
+
+        <hgroup>
+          <h1 class="header-author"><a href="/">XYM</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">念念不忘，必有回响。</p>
+        
+                
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <li id="新浪微博"><a class="新浪微博" target="_blank" href="http://weibo.com/xymacmer/" title="新浪微博"></a></li>
+                            
+                                <li id="GitHub"><a class="GitHub" target="_blank" href="http://github.com/xym2010" title="GitHub"></a></li>
+                            
+                                <li id="RSS"><a class="RSS" target="_blank" href="/atom.xml" title="RSS"></a></li>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/I-O多路复用/" style="font-size: 20px;">I/O多路复用</a> <a href="/tags/arch/" style="font-size: 10px;">arch</a> <a href="/tags/gevent/" style="font-size: 10px;">gevent</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/libevent/" style="font-size: 15px;">libevent</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/meinheld/" style="font-size: 10px;">meinheld</a> <a href="/tags/picoev/" style="font-size: 10px;">picoev</a> <a href="/tags/reactor/" style="font-size: 10px;">reactor</a> <a href="/tags/redis/" style="font-size: 15px;">redis</a> <a href="/tags/事件驱动/" style="font-size: 10px;">事件驱动</a> <a href="/tags/后缀数组/" style="font-size: 10px;">后缀数组</a> <a href="/tags/字符串处理/" style="font-size: 10px;">字符串处理</a> <a href="/tags/安全/" style="font-size: 10px;">安全</a> <a href="/tags/技能/" style="font-size: 10px;">技能</a> <a href="/tags/排序/" style="font-size: 10px;">排序</a> <a href="/tags/操作系统/" style="font-size: 15px;">操作系统</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/笔记/" style="font-size: 10px;">笔记</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/xymscau/">我的CSDN博客</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.90arther.net">90Arther</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">未知生物</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">XYM</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img lazy-src="/img/hello_world.JPG" class="js-avatar">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">XYM</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">念念不忘，必有回响。</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <li id="新浪微博"><a class="新浪微博" target="_blank" href="http://weibo.com/xymacmer/" title="新浪微博"></a></li>
+                            
+                                <li id="GitHub"><a class="GitHub" target="_blank" href="http://github.com/xym2010" title="GitHub"></a></li>
+                            
+                                <li id="RSS"><a class="RSS" target="_blank" href="/atom.xml" title="RSS"></a></li>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-meinheld为何比gevent高效？" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/01/18/meinheld为何比gevent高效？/" class="article-date">
+      <time datetime="2016-01-17T16:54:28.000Z" itemprop="datePublished">2016-01-18</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      meinheld为何比gevent高效？
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/I-O多路复用/">I/O多路复用</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gevent/">gevent</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/libevent/">libevent</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/meinheld/">meinheld</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/picoev/">picoev</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h3 id="u524D_u8A00"><a href="#u524D_u8A00" class="headerlink" title="前言"></a><strong>前言</strong></h3><blockquote>
+<p>两者都是高性能的WSGI兼容的web服务器。既然是同种东西，必然有对比，网上有挺多benchmark，我也做过对应的benchmark，不过没有整理，这里推荐一下网上的一篇<a href="http://www.360ito.com/article/26.html" target="_blank" rel="external">benchmark</a>，能够看出meinheld的性能确实好得令人意外。那么为什么meinheld会比gevent性能高这么多呢？我们从底层实现来看看，他究竟做了一些什么。</p>
+</blockquote>
+<a id="more"></a>
+<h3 id="meinheld_u548Cgevent"><a href="#meinheld_u548Cgevent" class="headerlink" title="meinheld和gevent"></a><strong>meinheld和gevent</strong></h3><blockquote>
+<p>两者实现很相似。<br>meinheld：greenlet(协程) + picoev（高性能网络库）<br>gevent：greenlet（协程） + libevent（高性能网络库）</p>
+</blockquote>
+<h3 id="greenlet"><a href="#greenlet" class="headerlink" title="greenlet"></a><strong>greenlet</strong></h3><blockquote>
+<p>python中的yield和第三方库greenlet，都是用来实现协程的利器。<br>greenlet 提供了在协程中直接切换控制权的方式，比生成器(yield)更加灵活、简洁。</p>
+<p><strong>协程：又称微线程，纤程。</strong><br>协程的这种“挂起”和“唤醒”机制实质上是将一个过程切分成了若干个子过程，给了我们一种以扁平的方式来使用事件回调模型。优点：共享进程的上下文，一个进程可以创建百万，千万的coroutine。</p>
+</blockquote>
+<h3 id="libevent"><a href="#libevent" class="headerlink" title="libevent"></a><strong>libevent</strong></h3><blockquote>
+<p>libevent是一个事件驱动的网络库，主要设计模式是<a href="http://www.xymlife.com/2016/01/16/Reactor/" target="_blank" rel="external">Reactor（反应器）</a>。<br>程序通过Libevent框架注册相应的事件和回调函数；当这些事件发生时，Libevent会调用这些回调函数处理相应的事件（I/O读写、定时和信号）。整个过程都是异步高效的。想看具体源码实现的请移步<a href="http://blog.csdn.net/sparkliang/article/details/5202394" target="_blank" rel="external">这里</a>。这里我们只看主要处理部分event_base_loop。</p>
+<p>简要说明event_base_loop实现。<br><strong>事件：</strong>首先loop中要处理的事件有3种，一种是计时事件（timeout触发），一种是普通<a href="http://www.xymlife.com/2016/01/13/IO%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/" target="_blank" rel="external">I/O</a>事件（select, poll，epoll），还有一种信号事件（signal），其中信号事件最终也是被转换成普通I/O事件被监听。</p>
+<p><strong>流程：</strong></p>
+<ol>
+<li>先通过Timer最小堆（以时间为排序的键）找出至少要等待的时间。（代码中的timeout_next()函数）。</li>
+<li>通过select发送这些事件fd到内核并设置时间为1中所求的等待时间。然后把select返回的就绪事件放到就绪列表。（对应 evsel-&gt;dispatch(base, evbase, tv_p)）。</li>
+<li>然后把现在超时的计时事件放到就绪列表。（对应gettime(base, &amp;base-&gt;tv_cache)）。</li>
+<li>最后调用处理函数处理就绪列表中的事件（timeout_process(base)）。</li>
+</ol>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">event_base_loop</span><span class="params">(<span class="keyword">struct</span> event_base *base, <span class="keyword">int</span> flags)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">struct</span> eventop *evsel = base-&gt;evsel;</span><br><span class="line">    <span class="keyword">void</span> *evbase = base-&gt;evbase;</span><br><span class="line">    <span class="keyword">struct</span> timeval tv;</span><br><span class="line">    <span class="keyword">struct</span> timeval *tv_p;</span><br><span class="line">    <span class="keyword">int</span> res, done;</span><br><span class="line">    <span class="comment">// 清空时间缓存</span></span><br><span class="line">    base-&gt;tv_cache.tv_sec = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// evsignal_base是全局变量，在处理signal时，用于指名signal所属的event_base实例</span></span><br><span class="line">    <span class="keyword">if</span> (base-&gt;sig.ev_signal_added)</span><br><span class="line">        evsignal_base = base;</span><br><span class="line">    done = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (!done) &#123; <span class="comment">// 事件主循环</span></span><br><span class="line">        <span class="comment">// 查看是否需要跳出循环，程序可以调用event_loopexit_cb()设置event_gotterm标记</span></span><br><span class="line">        <span class="comment">// 调用event_base_loopbreak()设置event_break标记</span></span><br><span class="line">        <span class="keyword">if</span> (base-&gt;event_gotterm) &#123;</span><br><span class="line">            base-&gt;event_gotterm = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (base-&gt;event_break) &#123;</span><br><span class="line">            base-&gt;event_break = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 校正系统时间，如果系统使用的是非MONOTONIC时间，用户可能会向后调整了系统时间</span></span><br><span class="line">        <span class="comment">// 在timeout_correct函数里，比较last wait time和当前时间，如果当前时间&lt; last wait time</span></span><br><span class="line">        <span class="comment">// 表明时间有问题，这是需要更新timer_heap中所有定时事件的超时时间。</span></span><br><span class="line">        timeout_correct(base, &amp;tv);</span><br><span class="line">   </span><br><span class="line">        <span class="comment">// 根据timer heap中事件的最小超时时间，计算系统I/O demultiplexer的最大等待时间</span></span><br><span class="line">        tv_p = &amp;tv;</span><br><span class="line">        <span class="keyword">if</span> (!base-&gt;event_count_active &amp;&amp; !(flags &amp; EVLOOP_NONBLOCK)) &#123;</span><br><span class="line">            timeout_next(base, &amp;tv_p);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 依然有未处理的就绪时间，就让I/O demultiplexer立即返回，不必等待</span></span><br><span class="line">            <span class="comment">// 下面会提到，在libevent中，低优先级的就绪事件可能不能立即被处理</span></span><br><span class="line">            evutil_timerclear(&amp;tv);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 如果当前没有注册事件，就退出</span></span><br><span class="line">        <span class="keyword">if</span> (!event_haveevents(base)) &#123;</span><br><span class="line">            event_debug((<span class="string">"%s: no events registered."</span>, __func__));</span><br><span class="line">            <span class="keyword">return</span> (<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 更新last wait time，并清空time cache</span></span><br><span class="line">        gettime(base, &amp;base-&gt;event_tv);</span><br><span class="line">        base-&gt;tv_cache.tv_sec = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// 调用系统I/O demultiplexer等待就绪I/O events，可能是epoll_wait，或者select等；</span></span><br><span class="line">        <span class="comment">// 在evsel-&gt;dispatch()中，会把就绪signal event、I/O event插入到激活链表中</span></span><br><span class="line">        res = evsel-&gt;dispatch(base, evbase, tv_p);</span><br><span class="line">        <span class="keyword">if</span> (res == -<span class="number">1</span>)</span><br><span class="line">            <span class="keyword">return</span> (-<span class="number">1</span>);</span><br><span class="line">        <span class="comment">// 将time cache赋值为当前系统时间</span></span><br><span class="line">        gettime(base, &amp;base-&gt;tv_cache);</span><br><span class="line">        <span class="comment">// 检查heap中的timer events，将就绪的timer event从heap上删除，并插入到激活链表中</span></span><br><span class="line">        timeout_process(base);</span><br><span class="line">        <span class="comment">// 调用event_process_active()处理激活链表中的就绪event，调用其回调函数执行事件处理</span></span><br><span class="line">        <span class="comment">// 该函数会寻找最高优先级（priority值越小优先级越高）的激活事件链表，</span></span><br><span class="line">        <span class="comment">// 然后处理链表中的所有就绪事件；</span></span><br><span class="line">        <span class="comment">// 因此低优先级的就绪事件可能得不到及时处理；</span></span><br><span class="line">        <span class="keyword">if</span> (base-&gt;event_count_active) &#123;</span><br><span class="line">            event_process_active(base);</span><br><span class="line">            <span class="keyword">if</span> (!base-&gt;event_count_active &amp;&amp; (flags &amp; EVLOOP_ONCE))</span><br><span class="line">                done = <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (flags &amp; EVLOOP_NONBLOCK)</span><br><span class="line">            done = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 循环结束，清空时间缓存</span></span><br><span class="line">    base-&gt;tv_cache.tv_sec = <span class="number">0</span>;</span><br><span class="line">    event_debug((<span class="string">"%s: asked to terminate loop."</span>, __func__));</span><br><span class="line">    <span class="keyword">return</span> (<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="picoev"><a href="#picoev" class="headerlink" title="picoev"></a><strong>picoev</strong></h3><blockquote>
+<p><a href="https://github.com/kazuho/picoev" target="_blank" rel="external">picoev</a>在项目下有把picoev和libevent这些库做对比，作者也提了一下为什么picoev的速度会这么快。主要有两个原因。</p>
+<ol>
+<li>picoev几乎所有顺序结构都是用数组实现的，索引访问速度比libevent的链表快很多。</li>
+<li>picoev采用了环形队列+vector+bitmap来实现定时事件的检测。</li>
+</ol>
+<p>下面看看picoev的picoev_loop_once。</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">picoev_loop_once</span><span class="params">(picoev_loop* loop, <span class="keyword">int</span> max_wait)</span> </span>&#123;</span><br><span class="line">  loop-&gt;now = time(<span class="literal">NULL</span>);  <span class="comment">//获取当前时间</span></span><br><span class="line">  <span class="comment">// 最大等待事件不超过计时器的处理时间</span></span><br><span class="line">  <span class="keyword">if</span> (max_wait &gt; loop-&gt;timeout.resolution) &#123;</span><br><span class="line">    max_wait = loop-&gt;timeout.resolution;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 使用select去检测事件是否完成，如果完成就调对应的回调函数处理</span></span><br><span class="line">  <span class="keyword">if</span> (picoev_poll_once_internal(loop, max_wait) != <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (max_wait != <span class="number">0</span>) &#123;  <span class="comment">//有指定时间则刷新当前时间</span></span><br><span class="line">    loop-&gt;now = time(<span class="literal">NULL</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 处理到时间的计时事件</span></span><br><span class="line">  picoev_handle_timeout_internal(loop);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这里主要讲一下loop的结构，因为这是高效的原因。</p>
+<p><img src="http://7xq2as.com1.z0.glb.clouddn.com/75E1F650-43F0-469C-AD75-EB93A028CDD0.png" alt="loop结构图"></p>
+<ol>
+<li>对于timeout环形队列，每经过resolution时间就往后移动一块，当前队头永远指向刚刚到达时间的事件块，如图当前处理的是2，那么说明队列头在2，那么再经过resolution时间就会到3，根据时间不断后移，循环利用。</li>
+<li>在处理每一块timeout里面注册的事件时，遍历所有不为0的vector，得出对应的fd。图中已经写的很清楚的，其实原理和16进制一样简单。插入一个事件的时间复杂度为O(1),遍历所有在timeout块的注册事件时间复杂度等价为O(n)[注：这里n为timeout里面注册事件的个数]，对比libevent的最小堆O(logn)插入，每次处理一个后调整堆的复杂度O(logn)处理n个就为O(nlogn)，确实是高效很多。</li>
+<li>还有一个高效的地方在于，picoev是检测到有一个事件就马上处理（无阻塞），不像libevent挂起等待最小等待时间到达（阻塞），然后才对所有就绪事件队列里面的事件进行处理，不过这也导致了picoev不能设定事件处理的优先级。</li>
+</ol>
+<p>缺点（对比libevent）：作者在最后说picoev并没有libevent成熟，也没有很多功能，现在只支持select，epoll，kqueue，我们也可以看到没有信号事件的处理，优先级设定这些功能的支持。不过他简单快速，而且支持多线程。</p>
+</blockquote>
+<h3 id="u6700_u540E"><a href="#u6700_u540E" class="headerlink" title="最后"></a><strong>最后</strong></h3><blockquote>
+<p>使用python做web开发的同学，可以尝试一下nginx + meinheld + gunicorn + flask。</p>
+</blockquote>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/01/18/meinheld为何比gevent高效？/">meinheld为何比gevent高效？</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 XYM 的个人博客">XYM</a></p>
+        <p><span>发布时间:</span>2016年01月18日 - 00时54分</p>
+        <p><span>最后更新:</span>2016年01月19日 - 23时48分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/01/18/meinheld为何比gevent高效？/" title="meinheld为何比gevent高效？">http://xymlife.com/2016/01/18/meinheld为何比gevent高效？/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://xymlife.com/2016/01/18/meinheld为何比gevent高效？/　　作者: XYM" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/01/16/后缀数组小结/">
+                    后缀数组小结
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#u524D_u8A00"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#meinheld_u548Cgevent"><span class="toc-number">2.</span> <span class="toc-text">meinheld和gevent</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#greenlet"><span class="toc-number">3.</span> <span class="toc-text">greenlet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#libevent"><span class="toc-number">4.</span> <span class="toc-text">libevent</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#picoev"><span class="toc-number">5.</span> <span class="toc-text">picoev</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u6700_u540E"><span class="toc-number">6.</span> <span class="toc-text">最后</span></a></li></ol>
+</div>
+<style>
+    .left-col .switch-btn {
+        display: none;
+    }
+    .left-col .switch-area {
+        display: none;
+    }
+</style>
+
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+            $(".switch-btn, .switch-area").fadeOut(300);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+            $(".switch-btn, .switch-area").fadeIn(500);
+        }
+    })
+
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+        $(".switch-btn, .switch-area").show();
+    }
+</script>
+
+
+
+
+<div class="share">
+    <div class="bdsharebuttonbox">
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+    <a href="#" class="bds_copy" data-cmd="copy" title="复制网址"></a>
+    <a href="#" class="bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+    </div>
+    <script>
+        window._bd_share_config={
+            "common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+</div>
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="2016/01/18/meinheld为何比gevent高效？/" data-title="meinheld为何比gevent高效？" data-url="http://xymlife.com/2016/01/18/meinheld为何比gevent高效？/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"xymlife"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+</div>
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/01/16/后缀数组小结/" title="下一篇: 后缀数组小结">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/01/18/meinheld为何比gevent高效？/">meinheld为何比gevent高效？</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/16/后缀数组小结/">后缀数组小结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/16/Reactor/">Reactor</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/13/IO多路复用/">I/O多路复用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/09/Linux 启动过程/">Linux 启动过程</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/08/Arch/">Arch</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/06/22/redis/">Redis</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/03/11/ratproxy/">ubuntu ratproxy安装使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/03/09/hexo-skill/">hexo常用技巧</a></li></ul>
+    <script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#toc, .switch-btn, .switch-area").toggle();
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+                $(".switch-btn, .switch-area").fadeToggle(300);
+            }
+        })
+    </script>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2016 XYM
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的静态博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减双栏 Hexo 博客主题">Yelee</a> by MOxFIVE
+            </div>
+        </div>
+        <div class="visit">
+            <span id="busuanzi_container_site_pv" style='display:none'>
+                <span id="site-visit" >本站到访数: 
+                    <span id="busuanzi_value_site_uv"></span>
+                </span>
+            </span>
+            <span id="busuanzi_container_page_pv" style='display:none'>
+                <span id="page-visit">, 本页阅读量: 
+                    <span id="busuanzi_value_page_pv"></span>
+                </span>
+            </span>
+        </div>
+    </div>
+</footer>
+    </div>
+    <script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

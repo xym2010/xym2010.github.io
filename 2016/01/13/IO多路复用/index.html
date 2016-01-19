@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>I/O多路复用 | XYM</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="I/O多路复用技术
+系统内核缓冲I/O数据，当某个I/O准备好后，系统通知应用程序该I/O可读或可写，这样应用程序可以马上完成相应的I/O操作，而不需要等待系统完成相应I/O操作，从而应用程序不必因等待I/O操作而阻塞。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="I/O多路复用">
+<meta property="og:url" content="http://xymlife.com/2016/01/13/IO多路复用/index.html">
+<meta property="og:site_name" content="XYM">
+<meta property="og:description" content="I/O多路复用技术
+系统内核缓冲I/O数据，当某个I/O准备好后，系统通知应用程序该I/O可读或可写，这样应用程序可以马上完成相应的I/O操作，而不需要等待系统完成相应I/O操作，从而应用程序不必因等待I/O操作而阻塞。">
+<meta property="og:image" content="http://7xq2as.com1.z0.glb.clouddn.com/F5044F9E-F8BA-4D9F-A9BF-EBBE0ECDE09C.png">
+<meta property="og:updated_time" content="2016-01-19T15:48:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="I/O多路复用">
+<meta name="twitter:description" content="I/O多路复用技术
+系统内核缓冲I/O数据，当某个I/O准备好后，系统通知应用程序该I/O可读或可写，这样应用程序可以马上完成相应的I/O操作，而不需要等待系统完成相应I/O操作，从而应用程序不必因等待I/O操作而阻塞。">
+  
+    <link rel="alternative" href="/atom.xml" title="XYM" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.ico">
+  
+  
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <script>
+      var yiliaConfig = {
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/hello_world.JPG" class="js-avatar">
+            
+        </a>
+
+        <hgroup>
+          <h1 class="header-author"><a href="/">XYM</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">念念不忘，必有回响。</p>
+        
+                
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <li id="新浪微博"><a class="新浪微博" target="_blank" href="http://weibo.com/xymacmer/" title="新浪微博"></a></li>
+                            
+                                <li id="GitHub"><a class="GitHub" target="_blank" href="http://github.com/xym2010" title="GitHub"></a></li>
+                            
+                                <li id="RSS"><a class="RSS" target="_blank" href="/atom.xml" title="RSS"></a></li>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/I-O多路复用/" style="font-size: 20px;">I/O多路复用</a> <a href="/tags/arch/" style="font-size: 10px;">arch</a> <a href="/tags/gevent/" style="font-size: 10px;">gevent</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/libevent/" style="font-size: 15px;">libevent</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/meinheld/" style="font-size: 10px;">meinheld</a> <a href="/tags/picoev/" style="font-size: 10px;">picoev</a> <a href="/tags/reactor/" style="font-size: 10px;">reactor</a> <a href="/tags/redis/" style="font-size: 15px;">redis</a> <a href="/tags/事件驱动/" style="font-size: 10px;">事件驱动</a> <a href="/tags/后缀数组/" style="font-size: 10px;">后缀数组</a> <a href="/tags/字符串处理/" style="font-size: 10px;">字符串处理</a> <a href="/tags/安全/" style="font-size: 10px;">安全</a> <a href="/tags/技能/" style="font-size: 10px;">技能</a> <a href="/tags/排序/" style="font-size: 10px;">排序</a> <a href="/tags/操作系统/" style="font-size: 15px;">操作系统</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/笔记/" style="font-size: 10px;">笔记</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/xymscau/">我的CSDN博客</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.90arther.net">90Arther</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">未知生物</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">XYM</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img lazy-src="/img/hello_world.JPG" class="js-avatar">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">XYM</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">念念不忘，必有回响。</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <li id="新浪微博"><a class="新浪微博" target="_blank" href="http://weibo.com/xymacmer/" title="新浪微博"></a></li>
+                            
+                                <li id="GitHub"><a class="GitHub" target="_blank" href="http://github.com/xym2010" title="GitHub"></a></li>
+                            
+                                <li id="RSS"><a class="RSS" target="_blank" href="/atom.xml" title="RSS"></a></li>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-IO多路复用" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/01/13/IO多路复用/" class="article-date">
+      <time datetime="2016-01-13T11:46:12.000Z" itemprop="datePublished">2016-01-13</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      I/O多路复用
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/I-O多路复用/">I/O多路复用</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/操作系统/">操作系统</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h4 id="I/O_u591A_u8DEF_u590D_u7528_u6280_u672F"><a href="#I/O_u591A_u8DEF_u590D_u7528_u6280_u672F" class="headerlink" title="I/O多路复用技术"></a><strong>I/O多路复用技术</strong></h4><blockquote>
+<p>系统内核缓冲I/O数据，当某个I/O准备好后，系统通知应用程序该I/O可读或可写，这样应用程序可以马上完成相应的I/O操作，而不需要等待系统完成相应I/O操作，从而应用程序不必因等待I/O操作而阻塞。</p>
+</blockquote>
+<a id="more"></a>
+<h4 id="select"><a href="#select" class="headerlink" title="select"></a><strong>select</strong></h4><blockquote>
+<p>网上很多讲解select函数的，这里围绕下图讲解一下select函数。</p>
+<p><strong>函数构造：</strong><br>int select(int maxfd, fd_set readset, fd_set writeset, fd_set exceptset, timeval tv);</p>
+<ol>
+<li>fd: （file descriptor）文件描述符，是内核用来描述一个文件的索引值（非负整型）。</li>
+<li>fdset: 是一个关于fd的一个bitmap,上面有3个fdset变量，readset：可读集合，writeset：可写集合，exceptset：异常集合。分别对应文件的可读，可写，和异常。</li>
+<li>maxfd: 就是最大的fd的值+1。估计代码里面是&lt;而非&lt;=，所以必须+1。</li>
+<li>timevl: 是一个结构体，其中包含两个属性，tv_sec：秒，tv_usec：微妙，表示select超时时间。</li>
+</ol>
+<p><strong>如图所示：</strong></p>
+<ol>
+<li>程序先调用了select函数对fd=1和fd=2的文件进行了可读监听，超时时间为5s。</li>
+<li>在接下来的5s内，被监听的两个文件没有全部就绪，直到超时时间到返回一个数值，表示有多少个就绪，这里只有一个所以return的是1，然后重新看readset，发现只有fd=1的位置是1，说明只有fd=1的文件就绪。</li>
+<li>接着可以去读取你要读取的文件（fd=1）了。<br><img src="http://7xq2as.com1.z0.glb.clouddn.com/F5044F9E-F8BA-4D9F-A9BF-EBBE0ECDE09C.png" alt="select流程图"></li>
+</ol>
+<p><strong>缺点：</strong></p>
+<ol>
+<li>每次调用select，都需要把fd集合从用户态拷贝到内核态，这个开销在fd很多时会很大。</li>
+<li>同时每次调用select都需要在内核遍历传递进来的所有fd，这个开销在fd很多时也很大。</li>
+<li>select支持的文件描述符数量太小了，默认是1024。</li>
+</ol>
+</blockquote>
+<h4 id="poll"><a href="#poll" class="headerlink" title="poll"></a><strong>poll</strong></h4><blockquote>
+<p>poll的实现和select非常相似，只是描述fd集合的方式不同，poll使用pollfd数组而不是select的fd_set结构，所以poll克服了select文件描述符数量的限制。</p>
+</blockquote>
+<h4 id="epoll"><a href="#epoll" class="headerlink" title="epoll"></a><strong>epoll</strong></h4><blockquote>
+<p>epoll是一种reactor模式，提供了三个函数，epoll_create,epoll_ctl和epoll_wait。</p>
+<ol>
+<li>epoll_create是创建一个epoll句柄。</li>
+<li>epoll_ctl是注册要监听的事件类型。</li>
+<li>epoll_wait则是等待事件的产生。</li>
+</ol>
+<p><strong>优化select缺点：</strong></p>
+<ol>
+<li>对于第一个缺点，epoll的解决方案在epoll_ctl函数中。每次注册新的事件到epoll句柄中时（在epoll_ctl中指定EPOLL_CTL_ADD），会把所有的fd拷贝进内核，而不是在epoll_wait的时候重复拷贝。epoll保证了每个fd在整个过程中只会拷贝一次。</li>
+<li>对于第二个缺点，epoll的解决方案不像select或poll一样每次都把fdset里面的fd轮流加入fd对应的设备等待队列中，而只在epoll_ctl时把要监控的fd挂一遍，并为每个fd指定一个回调函数，当设备就绪，唤醒等待队列上的等待者时，就会调用这个回调函数，而这个回调函数会把就绪的fd加入一个就绪链表）。epoll_wait的工作实际上就是在这个就绪链表中查看有没有就绪的fd（利用schedule_timeout()实现睡一会，判断一会的效果）。</li>
+<li>对于第三个缺点，epoll没有这个限制，它所支持的FD上限是最大可以打开文件的数目，这个和系统限制有关，linux里面可以用ulimit查看文件打开数限制。</li>
+</ol>
+</blockquote>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/01/13/IO多路复用/">I/O多路复用</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 XYM 的个人博客">XYM</a></p>
+        <p><span>发布时间:</span>2016年01月13日 - 19时46分</p>
+        <p><span>最后更新:</span>2016年01月19日 - 23时48分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/01/13/IO多路复用/" title="I/O多路复用">http://xymlife.com/2016/01/13/IO多路复用/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://xymlife.com/2016/01/13/IO多路复用/　　作者: XYM" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2016/01/16/Reactor/">
+                    Reactor
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/01/09/Linux 启动过程/">
+                    Linux 启动过程
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#I/O_u591A_u8DEF_u590D_u7528_u6280_u672F"><span class="toc-number">1.</span> <span class="toc-text">I/O多路复用技术</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#select"><span class="toc-number">2.</span> <span class="toc-text">select</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#poll"><span class="toc-number">3.</span> <span class="toc-text">poll</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#epoll"><span class="toc-number">4.</span> <span class="toc-text">epoll</span></a></li></ol>
+</div>
+<style>
+    .left-col .switch-btn {
+        display: none;
+    }
+    .left-col .switch-area {
+        display: none;
+    }
+</style>
+
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+            $(".switch-btn, .switch-area").fadeOut(300);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+            $(".switch-btn, .switch-area").fadeIn(500);
+        }
+    })
+
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+        $(".switch-btn, .switch-area").show();
+    }
+</script>
+
+
+
+
+<div class="share">
+    <div class="bdsharebuttonbox">
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+    <a href="#" class="bds_copy" data-cmd="copy" title="复制网址"></a>
+    <a href="#" class="bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+    </div>
+    <script>
+        window._bd_share_config={
+            "common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+</div>
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="2016/01/13/IO多路复用/" data-title="I/O多路复用" data-url="http://xymlife.com/2016/01/13/IO多路复用/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"xymlife"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+</div>
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2016/01/16/Reactor/" title="上一篇: Reactor">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/01/09/Linux 启动过程/" title="下一篇: Linux 启动过程">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/01/18/meinheld为何比gevent高效？/">meinheld为何比gevent高效？</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/16/后缀数组小结/">后缀数组小结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/16/Reactor/">Reactor</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/13/IO多路复用/">I/O多路复用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/09/Linux 启动过程/">Linux 启动过程</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/08/Arch/">Arch</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/06/22/redis/">Redis</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/03/11/ratproxy/">ubuntu ratproxy安装使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/03/09/hexo-skill/">hexo常用技巧</a></li></ul>
+    <script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#toc, .switch-btn, .switch-area").toggle();
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+                $(".switch-btn, .switch-area").fadeToggle(300);
+            }
+        })
+    </script>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2016 XYM
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的静态博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减双栏 Hexo 博客主题">Yelee</a> by MOxFIVE
+            </div>
+        </div>
+        <div class="visit">
+            <span id="busuanzi_container_site_pv" style='display:none'>
+                <span id="site-visit" >本站到访数: 
+                    <span id="busuanzi_value_site_uv"></span>
+                </span>
+            </span>
+            <span id="busuanzi_container_page_pv" style='display:none'>
+                <span id="page-visit">, 本页阅读量: 
+                    <span id="busuanzi_value_page_pv"></span>
+                </span>
+            </span>
+        </div>
+    </div>
+</footer>
+    </div>
+    <script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>后缀数组小结 | XYM</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="这篇文章看的人还是挺多的，为了提升大家的阅读快感，特地写了这markdown版。希望大家会喜欢。
+
+【前言】
+后缀数组号称字符串处理神器，不过发现好多人都只会用模板，其实这不是我们学算法的本质，我们学习算法的本质应该理解其实现原理，并加以实现，特别是算法，更讲究的是一种思想。一年前的我也是只会用别人的模板，最近却静下心来，研究了一下后缀数组，自己写了一份自己的模板。我基本上是跟着连教的ppt来学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="后缀数组小结">
+<meta property="og:url" content="http://xymlife.com/2016/01/16/后缀数组小结/index.html">
+<meta property="og:site_name" content="XYM">
+<meta property="og:description" content="这篇文章看的人还是挺多的，为了提升大家的阅读快感，特地写了这markdown版。希望大家会喜欢。
+
+【前言】
+后缀数组号称字符串处理神器，不过发现好多人都只会用模板，其实这不是我们学算法的本质，我们学习算法的本质应该理解其实现原理，并加以实现，特别是算法，更讲究的是一种思想。一年前的我也是只会用别人的模板，最近却静下心来，研究了一下后缀数组，自己写了一份自己的模板。我基本上是跟着连教的ppt来学习">
+<meta property="og:updated_time" content="2016-01-19T15:48:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="后缀数组小结">
+<meta name="twitter:description" content="这篇文章看的人还是挺多的，为了提升大家的阅读快感，特地写了这markdown版。希望大家会喜欢。
+
+【前言】
+后缀数组号称字符串处理神器，不过发现好多人都只会用模板，其实这不是我们学算法的本质，我们学习算法的本质应该理解其实现原理，并加以实现，特别是算法，更讲究的是一种思想。一年前的我也是只会用别人的模板，最近却静下心来，研究了一下后缀数组，自己写了一份自己的模板。我基本上是跟着连教的ppt来学习">
+  
+    <link rel="alternative" href="/atom.xml" title="XYM" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.ico">
+  
+  
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <script>
+      var yiliaConfig = {
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/hello_world.JPG" class="js-avatar">
+            
+        </a>
+
+        <hgroup>
+          <h1 class="header-author"><a href="/">XYM</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">念念不忘，必有回响。</p>
+        
+                
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <li id="新浪微博"><a class="新浪微博" target="_blank" href="http://weibo.com/xymacmer/" title="新浪微博"></a></li>
+                            
+                                <li id="GitHub"><a class="GitHub" target="_blank" href="http://github.com/xym2010" title="GitHub"></a></li>
+                            
+                                <li id="RSS"><a class="RSS" target="_blank" href="/atom.xml" title="RSS"></a></li>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/I-O多路复用/" style="font-size: 20px;">I/O多路复用</a> <a href="/tags/arch/" style="font-size: 10px;">arch</a> <a href="/tags/gevent/" style="font-size: 10px;">gevent</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/libevent/" style="font-size: 15px;">libevent</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/meinheld/" style="font-size: 10px;">meinheld</a> <a href="/tags/picoev/" style="font-size: 10px;">picoev</a> <a href="/tags/reactor/" style="font-size: 10px;">reactor</a> <a href="/tags/redis/" style="font-size: 15px;">redis</a> <a href="/tags/事件驱动/" style="font-size: 10px;">事件驱动</a> <a href="/tags/后缀数组/" style="font-size: 10px;">后缀数组</a> <a href="/tags/字符串处理/" style="font-size: 10px;">字符串处理</a> <a href="/tags/安全/" style="font-size: 10px;">安全</a> <a href="/tags/技能/" style="font-size: 10px;">技能</a> <a href="/tags/排序/" style="font-size: 10px;">排序</a> <a href="/tags/操作系统/" style="font-size: 15px;">操作系统</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/笔记/" style="font-size: 10px;">笔记</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/xymscau/">我的CSDN博客</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.90arther.net">90Arther</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">未知生物</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">XYM</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img lazy-src="/img/hello_world.JPG" class="js-avatar">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">XYM</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">念念不忘，必有回响。</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <li id="新浪微博"><a class="新浪微博" target="_blank" href="http://weibo.com/xymacmer/" title="新浪微博"></a></li>
+                            
+                                <li id="GitHub"><a class="GitHub" target="_blank" href="http://github.com/xym2010" title="GitHub"></a></li>
+                            
+                                <li id="RSS"><a class="RSS" target="_blank" href="/atom.xml" title="RSS"></a></li>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-后缀数组小结" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/01/16/后缀数组小结/" class="article-date">
+      <time datetime="2016-01-16T03:20:45.000Z" itemprop="datePublished">2016-01-16</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      后缀数组小结
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/后缀数组/">后缀数组</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/字符串处理/">字符串处理</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/排序/">排序</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <blockquote>
+<p>这篇文章看的人还是挺多的，为了提升大家的阅读快感，特地写了这markdown版。希望大家会喜欢。</p>
+</blockquote>
+<h3 id="u3010_u524D_u8A00_u3011"><a href="#u3010_u524D_u8A00_u3011" class="headerlink" title="【前言】"></a><strong>【前言】</strong></h3><blockquote>
+<p>后缀数组号称字符串处理神器，不过发现好多人都只会用模板，其实这不是我们学算法的本质，我们学习算法的本质应该理解其实现原理，并加以实现，特别是算法，更讲究的是一种思想。一年前的我也是只会用别人的模板，最近却静下心来，研究了一下后缀数组，自己写了一份自己的模板。<br>我基本上是跟着连教的ppt来学习的，当然也少不了百度，先讲一下基本概念。(这里大量引用了连教的ppt)</p>
+</blockquote>
+<a id="more"></a>
+<h3 id="u3010_u57FA_u672C_u5B9A_u4E49_u3011"><a href="#u3010_u57FA_u672C_u5B9A_u4E49_u3011" class="headerlink" title="【基本定义】"></a><strong>【基本定义】</strong></h3><blockquote>
+<p><strong>1. 子串（注：串!=字符串）：</strong>字符串 S 的子串r[i..j] ，i ≤ j，表示r 串中从 i 到 j 这一段，就是顺次排列r[i]，r[i+1]，…，r[j] 形成的子串。</p>
+<p><strong>2. 后缀：</strong>后缀是指从某个位置 i 开始到整个串末尾结束的一个特殊子串。字符串r 的从 第 i 个字 符 开 始 的 后 缀 表 示 为 Suffix(i) ，也 就 是Suffix(i)=r[i..len(r)] 。</p>
+<p><strong>3. 后缀数组（SA[i]存放排名第i大的子串首字符下标）：</strong> 后缀数组 SA 是一个一维数组，它保存1..n 的某个排列 SA[1]，SA[2]， ……，SA[n]，并且保证Suffix(SA[i]) &lt; Suffix(SA[i+1])，1 ≤ i &lt; n。也就是将 S 的 n 个后缀从小到大进行排序之后把排好序的后缀的开头位置顺次放入SA 中。</p>
+<p><strong>4. 名次数组（rank[i]存放suffix(i)的优先级）：</strong>名次数组 Rank[i] 保存的是 Suffix(i) 在所有后缀中从小到大排列的 “ 名次 ” 。<br><strong>注：这个是排序的关键字~（这句话是我们排序的重点）</strong></p>
+</blockquote>
+<h3 id="u3010_u7B97_u6CD5_u76EE_u6807_u3011"><a href="#u3010_u7B97_u6CD5_u76EE_u6807_u3011" class="headerlink" title="【算法目标】"></a><strong>【算法目标】</strong></h3><blockquote>
+<p><strong>目标是求得串的sa数组和rank数组：</strong>易知sa和rank互为逆操作，即sa[rank[i]] = i；Rank[sa[i]] = i;（所以我们只要求得其一，就能O(n）算出另一个）<br><strong>注：这个结论只在最后完成排序的时候符合。但sa和rank的定义一直都是适用的。原因是最后的时候不会存在相同（rank相等）的两个子串。</strong></p>
+</blockquote>
+<h3 id="u3010_u7B97_u6CD5_u57FA_u672C_u6D41_u7A0B_u3011"><a href="#u3010_u7B97_u6CD5_u57FA_u672C_u6D41_u7A0B_u3011" class="headerlink" title="【算法基本流程】"></a><strong>【算法基本流程】</strong></h3><blockquote>
+<p>1.设排序的的当前长度是h。Suffix(i,h) 表示suffix(i)前h个字符(大于length会截断)。<br>2.先按H=1，对suffix(i,H)(0 &lt; i &lt; s.length)排序。<br>3.倍增长度H，利用之前排序H/2长度后得到的rank数组作为关键字，把后H/2部分作为第二关键字，把前H/2部分作为第一关键字，对H长度的子串作排序。<br>4.由于是倍增长度，所以最多作logn次排序。</p>
+<p><strong>注：那么复杂要做到nlogn，显然排序要o(n)，O(n)一般都选计数排序。</strong></p>
+</blockquote>
+<h3 id="u3010_u8BA1_u6570_u6392_u5E8F_u3011"><a href="#u3010_u8BA1_u6570_u6392_u5E8F_u3011" class="headerlink" title="【计数排序】"></a><strong>【计数排序】</strong></h3><blockquote>
+<p>不会的自己看看这个<a href="http://baike.baidu.com/view/1209480.html" target="_blank" rel="external">百度百科</a>，是代码的主要部分。<br>这里选计数排序还有一个重要的原因，它是一个稳定排序，这就保证了数组的下标识第二关键字，我们前面说了，对于倍增长度H，利用之前排序H/2长度后得到的rank数组作为关键字,把后H/2部分作为第二关键字，嗯，就是这里，所以我们要先排后H/2的序，然后得到新的数组序列，下标就是第二关键字了，数组里面就是前H/2 rank的值，这是第一关键字，那么直接排序就相当于先对前H/2排序，如果这里相等，那么就会按下标排序，既第二关键字排序。</p>
+</blockquote>
+<h3 id="u3010_u52A8_u624B_u73AF_u8282_u3011"><a href="#u3010_u52A8_u624B_u73AF_u8282_u3011" class="headerlink" title="【动手环节】"></a><strong>【动手环节】</strong></h3><blockquote>
+<p>以下内容请按代码手动模拟一个串abab的构造过程，求sa数组。这能让你真正清楚后缀数组实现的精妙所在。</p>
+</blockquote>
+<ol>
+<li><p>按H=1进行计数排序</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">// cnt是计数排序的辅助数组，k是第一关键字，id是第二关键字下标数组，r是以下标为第二关键字的新构数组，w存放的是字符串信息。sa保存的是排第i的是谁，</span></span><br><span class="line"> <span class="comment">// #define rep(i,n) for(int i = 0;i &lt; n; i++) ，</span></span><br><span class="line"><span class="keyword">int</span> *k = rk,*id = height,*r = res, *cnt = wa;<span class="comment">//计数排序</span></span><br><span class="line">rep(i,up) cnt[i] = <span class="number">0</span>;</span><br><span class="line">rep(i,len) cnt[k[i] = w[i]]++;</span><br><span class="line">rep(i,up) cnt[i+<span class="number">1</span>] += cnt[i];</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = len - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">	sa[--cnt[k[i]]] = i;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>求第二关键字（想想为什么构造w数组的时候末尾要加个0）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//cnt是计数排序的辅助数组，k是第一关键字，id是第二关键字下标数组，r是以下标为第二关键字的新构数组，w存放的是字符串信息，sa保存的是排第i的是谁。</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = len - d; i &lt; len; i++) id[p++] = i;</span><br><span class="line">rep(i,len) <span class="keyword">if</span>(sa[i] &gt;= d) id[p++] = sa[i] - d;  <span class="comment">//id保存了按后h/2排序的的序列，即排第i的后h/2的是原数组中的那个</span></span><br><span class="line">rep(i,len) r[i] = k[id[i]];  <span class="comment">//构造新的排序数组</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>对新数组排序</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">//cnt是计数排序的辅助数组，k是第一关键字，id是第二关键字下标数组,r是以下标为第二关键字的新构数组，w存放的是字符串信息，sa保存的是排第i的是谁</span></span><br><span class="line">rep(i,up) cnt[i] = <span class="number">0</span>;</span><br><span class="line">rep(i,len) cnt[r[i]]++;</span><br><span class="line">rep(i,up) cnt[i+<span class="number">1</span>] += cnt[i];</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = len - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">	sa[--cnt[r[i]]] = id[i];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>得到新的关键字(即按H长度排序后的离散序列)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">//cnt是计数排序的辅助数组，k是第一关键字，id是第二关键字下标数组,r是以下标为第二关键字的新构数组，w存放的是字符串信息，sa保存的是排第i的是谁</span></span><br><span class="line">swap(k,r);</span><br><span class="line">p = <span class="number">0</span>;</span><br><span class="line">k[sa[<span class="number">0</span>]] = p++;</span><br><span class="line">rep(i,len-<span class="number">1</span>) &#123;</span><br><span class="line">	<span class="keyword">if</span>(sa[i]+d &lt; len &amp;&amp; sa[i+<span class="number">1</span>]+d &lt;len &amp;&amp;r[sa[i]] == r[sa[i+<span class="number">1</span>]]&amp;&amp; r[sa[i]+d] == r[sa[i+<span class="number">1</span>]+d])</span><br><span class="line">	k[sa[i+<span class="number">1</span>]] = p - <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">else</span> k[sa[i+<span class="number">1</span>]] = p++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<blockquote>
+<p>重复以上最后可以得到sa数组<br>Sa和rank有什么用？<br>求<strong>height数组！！</strong><br>height[i] 表示sa[i]和sa[i-1]的最长前缀，height的构造看代码手推一定能弄懂，自己找题目试试。</p>
+</blockquote>
+<h3 id="u3010_u540E_u7F00_u6570_u7EC4_u6A21_u677F_u3011"><a href="#u3010_u540E_u7F00_u6570_u7EC4_u6A21_u677F_u3011" class="headerlink" title="【后缀数组模板】"></a><strong>【后缀数组模板】</strong></h3><blockquote>
+<p>模板为了短小精悍，所以尽量压缩了代码。</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">define</span> rep(i,n) for(int i = <span class="number">0</span>;i &lt; n; i++)</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> size  = <span class="number">200005</span>,INF = <span class="number">1</span>&lt;&lt;<span class="number">30</span>;</span><br><span class="line"><span class="keyword">int</span> rk[size],sa[size],height[size],w[size],wa[size],res[size];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">getSa</span> <span class="params">(<span class="keyword">int</span> len,<span class="keyword">int</span> up)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> *k = rk,*id = height,*r = res, *cnt = wa;</span><br><span class="line">	rep(i,up) cnt[i] = <span class="number">0</span>;</span><br><span class="line">	rep(i,len) cnt[k[i] = w[i]]++;</span><br><span class="line">	rep(i,up) cnt[i+<span class="number">1</span>] += cnt[i];</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = len - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">		sa[--cnt[k[i]]] = i;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> d = <span class="number">1</span>,p = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span>(p &lt; len)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = len - d; i &lt; len; i++) id[p++] = i;</span><br><span class="line">		rep(i,len)	<span class="keyword">if</span>(sa[i] &gt;= d) id[p++] = sa[i] - d;</span><br><span class="line">		rep(i,len) r[i] = k[id[i]];</span><br><span class="line">		rep(i,up) cnt[i] = <span class="number">0</span>;</span><br><span class="line">		rep(i,len) cnt[r[i]]++;</span><br><span class="line">		rep(i,up) cnt[i+<span class="number">1</span>] += cnt[i];</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = len - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">			sa[--cnt[r[i]]] = id[i];</span><br><span class="line">		&#125; </span><br><span class="line">		swap(k,r);</span><br><span class="line">		p = <span class="number">0</span>;</span><br><span class="line">		k[sa[<span class="number">0</span>]] = p++;</span><br><span class="line">		rep(i,len-<span class="number">1</span>) &#123;</span><br><span class="line">			<span class="keyword">if</span>(sa[i]+d &lt; len &amp;&amp; sa[i+<span class="number">1</span>]+d &lt;len &amp;&amp;r[sa[i]] == r[sa[i+<span class="number">1</span>]]&amp;&amp; r[sa[i]+d] == r[sa[i+<span class="number">1</span>]+d])</span><br><span class="line">				k[sa[i+<span class="number">1</span>]] = p - <span class="number">1</span>;</span><br><span class="line">			<span class="keyword">else</span> k[sa[i+<span class="number">1</span>]] = p++;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(p &gt;= len) <span class="keyword">return</span> ;</span><br><span class="line">		d *= <span class="number">2</span>,up = p, p = <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">getHeight</span><span class="params">(<span class="keyword">int</span> len)</span> </span>&#123;</span><br><span class="line">	rep(i,len) rk[sa[i]] = i;</span><br><span class="line">	height[<span class="number">0</span>] =  <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>,p = <span class="number">0</span>; i &lt; len - <span class="number">1</span>; i++) &#123;</span><br><span class="line">		<span class="keyword">int</span> j = sa[rk[i]-<span class="number">1</span>];</span><br><span class="line">		<span class="keyword">while</span>(i+p &lt; len&amp;&amp; j+p &lt; len&amp;&amp; w[i+p] == w[j+p]) &#123;</span><br><span class="line">			p++;</span><br><span class="line">		&#125;</span><br><span class="line">		height[rk[i]] = p;</span><br><span class="line">		p = max(<span class="number">0</span>,p - <span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getSuffix</span><span class="params">(<span class="keyword">char</span> s[])</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> len = <span class="built_in">strlen</span>(s),up = <span class="number">0</span>;	</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">		w[i] = s[i];</span><br><span class="line">		up = max(up,w[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	w[len++] = <span class="number">0</span>;</span><br><span class="line">	getSa(len,up+<span class="number">1</span>);</span><br><span class="line">	getHeight(len);</span><br><span class="line">	<span class="keyword">return</span> len;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="u3010_u7EC3_u624B_u3011"><a href="#u3010_u7EC3_u624B_u3011" class="headerlink" title="【练手】"></a><strong>【练手】</strong></h3><blockquote>
+<p>最后给出几题练习题。<br>•Poj 2774 –最长公共连续子串（入门题目）<br>•Poj1743—最长不重叠重复子串（二分的判定要小心点，这题有点特别。）<br>•Poj3294—出现次数超过一半的最长子串（判断组中不同串出现次数的技巧很关键）<br>•Poj3261—重复k次可重叠子串。（会了上面两题，这题应该很简单，可以试试用单调栈。）<br>•Poj2758—后缀数组+rmq（这题难度不在rmq，而在于写代码的能力和查询的算法实现。）</p>
+</blockquote>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/01/16/后缀数组小结/">后缀数组小结</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 XYM 的个人博客">XYM</a></p>
+        <p><span>发布时间:</span>2016年01月16日 - 11时20分</p>
+        <p><span>最后更新:</span>2016年01月19日 - 23时48分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/01/16/后缀数组小结/" title="后缀数组小结">http://xymlife.com/2016/01/16/后缀数组小结/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://xymlife.com/2016/01/16/后缀数组小结/　　作者: XYM" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2016/01/18/meinheld为何比gevent高效？/">
+                    meinheld为何比gevent高效？
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/01/16/Reactor/">
+                    Reactor
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#u3010_u524D_u8A00_u3011"><span class="toc-number">1.</span> <span class="toc-text">【前言】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u3010_u57FA_u672C_u5B9A_u4E49_u3011"><span class="toc-number">2.</span> <span class="toc-text">【基本定义】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u3010_u7B97_u6CD5_u76EE_u6807_u3011"><span class="toc-number">3.</span> <span class="toc-text">【算法目标】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u3010_u7B97_u6CD5_u57FA_u672C_u6D41_u7A0B_u3011"><span class="toc-number">4.</span> <span class="toc-text">【算法基本流程】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u3010_u8BA1_u6570_u6392_u5E8F_u3011"><span class="toc-number">5.</span> <span class="toc-text">【计数排序】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u3010_u52A8_u624B_u73AF_u8282_u3011"><span class="toc-number">6.</span> <span class="toc-text">【动手环节】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u3010_u540E_u7F00_u6570_u7EC4_u6A21_u677F_u3011"><span class="toc-number">7.</span> <span class="toc-text">【后缀数组模板】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#u3010_u7EC3_u624B_u3011"><span class="toc-number">8.</span> <span class="toc-text">【练手】</span></a></li></ol>
+</div>
+<style>
+    .left-col .switch-btn {
+        display: none;
+    }
+    .left-col .switch-area {
+        display: none;
+    }
+</style>
+
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+            $(".switch-btn, .switch-area").fadeOut(300);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+            $(".switch-btn, .switch-area").fadeIn(500);
+        }
+    })
+
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+        $(".switch-btn, .switch-area").show();
+    }
+</script>
+
+
+
+
+<div class="share">
+    <div class="bdsharebuttonbox">
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+    <a href="#" class="bds_copy" data-cmd="copy" title="复制网址"></a>
+    <a href="#" class="bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+    </div>
+    <script>
+        window._bd_share_config={
+            "common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+</div>
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="2016/01/16/后缀数组小结/" data-title="后缀数组小结" data-url="http://xymlife.com/2016/01/16/后缀数组小结/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"xymlife"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+</div>
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2016/01/18/meinheld为何比gevent高效？/" title="上一篇: meinheld为何比gevent高效？">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/01/16/Reactor/" title="下一篇: Reactor">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/01/18/meinheld为何比gevent高效？/">meinheld为何比gevent高效？</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/16/后缀数组小结/">后缀数组小结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/16/Reactor/">Reactor</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/13/IO多路复用/">I/O多路复用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/09/Linux 启动过程/">Linux 启动过程</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/08/Arch/">Arch</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/06/22/redis/">Redis</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/03/11/ratproxy/">ubuntu ratproxy安装使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/03/09/hexo-skill/">hexo常用技巧</a></li></ul>
+    <script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#toc, .switch-btn, .switch-area").toggle();
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+                $(".switch-btn, .switch-area").fadeToggle(300);
+            }
+        })
+    </script>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2016 XYM
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的静态博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减双栏 Hexo 博客主题">Yelee</a> by MOxFIVE
+            </div>
+        </div>
+        <div class="visit">
+            <span id="busuanzi_container_site_pv" style='display:none'>
+                <span id="site-visit" >本站到访数: 
+                    <span id="busuanzi_value_site_uv"></span>
+                </span>
+            </span>
+            <span id="busuanzi_container_page_pv" style='display:none'>
+                <span id="page-visit">, 本页阅读量: 
+                    <span id="busuanzi_value_page_pv"></span>
+                </span>
+            </span>
+        </div>
+    </div>
+</footer>
+    </div>
+    <script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

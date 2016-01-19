@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Redis | XYM</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最近看了下huangz1990写的《redis设计与实现》，做一下笔记。附上源码 https://github.com/huangz1990/redis-3.0-annotated
+
+内部数据结构【sds】12345struct sdshdr &amp;#123;    int len;  // buf已用长度    int free;  // 剩余空间    char buf[]; // 保存字符串的c">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis">
+<meta property="og:url" content="http://xymlife.com/2015/06/22/redis/index.html">
+<meta property="og:site_name" content="XYM">
+<meta property="og:description" content="最近看了下huangz1990写的《redis设计与实现》，做一下笔记。附上源码 https://github.com/huangz1990/redis-3.0-annotated
+
+内部数据结构【sds】12345struct sdshdr &amp;#123;    int len;  // buf已用长度    int free;  // 剩余空间    char buf[]; // 保存字符串的c">
+<meta property="og:updated_time" content="2016-01-19T15:48:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Redis">
+<meta name="twitter:description" content="最近看了下huangz1990写的《redis设计与实现》，做一下笔记。附上源码 https://github.com/huangz1990/redis-3.0-annotated
+
+内部数据结构【sds】12345struct sdshdr &amp;#123;    int len;  // buf已用长度    int free;  // 剩余空间    char buf[]; // 保存字符串的c">
+  
+    <link rel="alternative" href="/atom.xml" title="XYM" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.ico">
+  
+  
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <script>
+      var yiliaConfig = {
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/hello_world.JPG" class="js-avatar">
+            
+        </a>
+
+        <hgroup>
+          <h1 class="header-author"><a href="/">XYM</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">念念不忘，必有回响。</p>
+        
+                
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <li id="新浪微博"><a class="新浪微博" target="_blank" href="http://weibo.com/xymacmer/" title="新浪微博"></a></li>
+                            
+                                <li id="GitHub"><a class="GitHub" target="_blank" href="http://github.com/xym2010" title="GitHub"></a></li>
+                            
+                                <li id="RSS"><a class="RSS" target="_blank" href="/atom.xml" title="RSS"></a></li>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/I-O多路复用/" style="font-size: 20px;">I/O多路复用</a> <a href="/tags/arch/" style="font-size: 10px;">arch</a> <a href="/tags/gevent/" style="font-size: 10px;">gevent</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/libevent/" style="font-size: 15px;">libevent</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/meinheld/" style="font-size: 10px;">meinheld</a> <a href="/tags/picoev/" style="font-size: 10px;">picoev</a> <a href="/tags/reactor/" style="font-size: 10px;">reactor</a> <a href="/tags/redis/" style="font-size: 15px;">redis</a> <a href="/tags/事件驱动/" style="font-size: 10px;">事件驱动</a> <a href="/tags/后缀数组/" style="font-size: 10px;">后缀数组</a> <a href="/tags/字符串处理/" style="font-size: 10px;">字符串处理</a> <a href="/tags/安全/" style="font-size: 10px;">安全</a> <a href="/tags/技能/" style="font-size: 10px;">技能</a> <a href="/tags/排序/" style="font-size: 10px;">排序</a> <a href="/tags/操作系统/" style="font-size: 15px;">操作系统</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/笔记/" style="font-size: 10px;">笔记</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/xymscau/">我的CSDN博客</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.90arther.net">90Arther</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">未知生物</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">XYM</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img lazy-src="/img/hello_world.JPG" class="js-avatar">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">XYM</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">念念不忘，必有回响。</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <li id="新浪微博"><a class="新浪微博" target="_blank" href="http://weibo.com/xymacmer/" title="新浪微博"></a></li>
+                            
+                                <li id="GitHub"><a class="GitHub" target="_blank" href="http://github.com/xym2010" title="GitHub"></a></li>
+                            
+                                <li id="RSS"><a class="RSS" target="_blank" href="/atom.xml" title="RSS"></a></li>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-redis" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/06/22/redis/" class="article-date">
+      <time datetime="2015-06-22T15:15:53.000Z" itemprop="datePublished">2015-06-22</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Redis
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/">redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构/">数据结构</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <blockquote>
+<p>最近看了下huangz1990写的《redis设计与实现》，做一下笔记。<br>附上源码 <a href="https://github.com/huangz1990/redis-3.0-annotated" target="_blank" rel="external">https://github.com/huangz1990/redis-3.0-annotated</a></p>
+</blockquote>
+<h2 id="u5185_u90E8_u6570_u636E_u7ED3_u6784"><a href="#u5185_u90E8_u6570_u636E_u7ED3_u6784" class="headerlink" title="内部数据结构"></a><strong>内部数据结构</strong></h2><p><strong>【sds】</strong><br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> sdshdr &#123;</span><br><span class="line">    <span class="keyword">int</span> len;  <span class="comment">// buf已用长度</span></span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">free</span>;  <span class="comment">// 剩余空间</span></span><br><span class="line">    <span class="keyword">char</span> buf[]; <span class="comment">// 保存字符串的char指针</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<blockquote>
+<ol>
+<li><p>简单动态字符串：主要用于存储redis里面的字符串对象，不过只有这个对象存储的是字符串的时候，才是sdsi，否则就是long类型。</p>
+</li>
+<li><p>append操作：如果添加后长度超过SDS_MAX_PREALLOC（默认1M），则空间追加加多1M，否则为添加后长度的两倍，显然append的字符串不能超过1M。</p>
+</li>
+<li><p>可以看出一个明显的弊端，就是会有比较多的剩余空间，这部分空间是不会主动释放的，如果要释放需要调用对应的API(sdsRemoveFreeSpace)。</p>
+</li>
+</ol>
+</blockquote>
+<p><strong>【双端链表】</strong><br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 节点</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> listNode &#123;</span><br><span class="line">    <span class="keyword">struct</span> listNode *prev;  <span class="comment">//前指针</span></span><br><span class="line">    <span class="keyword">struct</span> listNode *next;  <span class="comment">//后指针</span></span><br><span class="line">    <span class="keyword">void</span> *value;  <span class="comment">//值</span></span><br><span class="line">&#125; listNode;</span><br><span class="line"></span><br><span class="line"><span class="comment">//链表</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="built_in">list</span> &#123;</span><br><span class="line"> listNode *head;  <span class="comment">//头指针</span></span><br><span class="line"> listNode *tail;  <span class="comment">//尾指针</span></span><br><span class="line"> <span class="keyword">unsigned</span> <span class="keyword">long</span> len;  <span class="comment">//表长</span></span><br><span class="line"> <span class="keyword">void</span> *(*dup)(<span class="keyword">void</span> *ptr);  <span class="comment">//复制函数</span></span><br><span class="line"> <span class="keyword">void</span> (*<span class="built_in">free</span>)(<span class="keyword">void</span> *ptr);  <span class="comment">//释放函数</span></span><br><span class="line"> <span class="keyword">int</span> (*match)(<span class="keyword">void</span> *ptr, <span class="keyword">void</span> *key);  <span class="comment">//对比函数</span></span><br><span class="line">&#125; <span class="built_in">list</span>;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>因为是无类型指针存值，所以可以保存任意的值,双端队列的优势在于队头尾的操作方便，但是链表的查找效率显然是瓶颈，注意带查找(非头尾)的操作效率。</p>
+</blockquote>
+<p><strong>【字典】</strong><br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> dict &#123;</span><br><span class="line">    dictType *type;  <span class="comment">//处理特定类型的函数</span></span><br><span class="line">    <span class="keyword">void</span> *privdata;  <span class="comment">//处理函数的私有数据</span></span><br><span class="line">    dictht ht[<span class="number">2</span>];  <span class="comment">//用于rehash的滚动数组</span></span><br><span class="line">    <span class="keyword">int</span> rehashidx;  <span class="comment">//rehash进度，-1标示未开始</span></span><br><span class="line">    <span class="keyword">int</span> iterators;  <span class="comment">//正常使用的迭代器数量</span></span><br><span class="line">&#125; dict;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> dictht &#123;</span><br><span class="line">    dictEntry **table;  <span class="comment">//桶，一个指针数组,取模后的值就是对应数组下标</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> size;  <span class="comment">//指针数组大小</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> sizemask;  <span class="comment">//取模掩码</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> used;  <span class="comment">//节点数量</span></span><br><span class="line">&#125; dictht;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> dictEntry &#123;</span><br><span class="line">    <span class="keyword">void</span> *key;  <span class="comment">//键</span></span><br><span class="line">    <span class="keyword">union</span> &#123;  <span class="comment">//值</span></span><br><span class="line">        <span class="keyword">void</span> *val;</span><br><span class="line">        <span class="keyword">uint64_t</span> u64;</span><br><span class="line">        <span class="keyword">int64_t</span> s64;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">struct</span> dictEntry *next;  <span class="comment">//下一个指针,取模后值相同的节点</span></span><br><span class="line">&#125; dictEntry;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<ol>
+<li><p>rehash是重新建一个大小于现在不同的表，将原来的hash表迁移到这个新的hash表的过程。</p>
+</li>
+<li><p>rehash条件：<br>(1) ratio = used/size &gt;= 1，且dict_can_resize为真（持久化操作的时候一般为假）。<br>(2) ratio &gt; dict_force_resize_ratio（默认5）。</p>
+</li>
+<li><p>rehash方式：渐进式(dictRehashStep, dictRehashMilliseconds)。</p>
+</li>
+</ol>
+</blockquote>
+<p><strong>【跳跃表】</strong></p>
+<blockquote>
+<ol>
+<li><p>跳表是一种神奇的数据结构，依赖随机概率，但是效率却可以和平衡树相媲美，与平衡树相比，编程复杂度低，但是空间复杂度比较高。</p>
+</li>
+<li><p>不知道怎么加图进来，就不多说了，插入是随机插入某一层，查找从最上层开始找，查找，插入，删除都是log(N)（期望值，有最坏的情况，数据量越大越接近期望值）。</p>
+</li>
+<li><p>主要用来实现有序集合。</p>
+</li>
+</ol>
+</blockquote>
+<h2 id="redis_u6570_u636E_u7C7B_u578B"><a href="#redis_u6570_u636E_u7C7B_u578B" class="headerlink" title="redis数据类型"></a><strong>redis数据类型</strong></h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> redisObject &#123;</span><br><span class="line">    <span class="keyword">unsigned</span> type:<span class="number">4</span>;  <span class="comment">//类型</span></span><br><span class="line">    <span class="keyword">unsigned</span> notused:<span class="number">2</span>;  <span class="comment">//对齐位</span></span><br><span class="line">    <span class="keyword">unsigned</span> encoding:<span class="number">4</span>;  <span class="comment">//编码</span></span><br><span class="line">    <span class="keyword">unsigned</span> lru:<span class="number">22</span>;  <span class="comment">//lru时间</span></span><br><span class="line">    <span class="keyword">int</span> refcount;  <span class="comment">//引用次数</span></span><br><span class="line">    <span class="keyword">void</span> *ptr;  <span class="comment">//对象值</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<ol>
+<li><p>redisObject 类型:字符串（整数，字符串）， 列表(双端队列，压缩链表) 有序集合(跳跃表，压缩列表)，哈希表(压缩列表，字典)， 集合(字典，整数集合)。</p>
+</li>
+<li><p>字符串：REDIS_ENCODING_INT(long)和REDIS_ENCODING_RAW(sds), 除了能表示成long的，其他都保存为sds.</p>
+</li>
+<li><p>哈希表: 创建空白的哈希表的时候，是用压缩列表的，当哈希表的键或值长度大于某个值时（默认64），或者当节点数大于某个值（默认512）的时候，切换到哈希链表。</p>
+</li>
+<li><p>列表：先用压缩列表，达到某种条件(与哈希表条件类似)，切换为双端链表。</p>
+</li>
+<li><p>阻塞：先记录相关阻塞信息，如阻塞时间，key，客户端等，server.db[i]-&gt;blocking_keys记录因为某个key被阻塞的客户端（多个）。</p>
+</li>
+<li><p>当push一个值的时候，server.ready_keys-&gt;ready_list添加这个key和对应的DB，并添加对应的值，注意解除阻塞为先阻塞先服务。</p>
+</li>
+<li><p>集合： 如果第一元素能用longlong表示，那么就用intset，否则用哈希表。</p>
+</li>
+<li><p>有序集合：先是ziplist，元素个数大于128时，或者元素长度大于64，转换成跳表。</p>
+</li>
+</ol>
+</blockquote>
+<h2 id="u4E8B_u52A1"><a href="#u4E8B_u52A1" class="headerlink" title="事务"></a><strong>事务</strong></h2><blockquote>
+<ol>
+<li><p>redis事务SMEMBERS事务进队，DISCARD取消事务，EXEC执行事务，WATCH监视改动。</p>
+</li>
+<li><p>watch命令用于事务执行之前监视任意数量的键，如果这些键被改变了，那么事务停止，直接返回失败。</p>
+</li>
+<li><p>watch某个key时，redisDb.wathced_key存储这个key对应的watch客户端,当有对键的操作的时候，会触发查找key是否在watch_key里面，在就会改变客户端的REDIS_DIRTY_CAS,执行事务前会检查这个，如果有那么就回复空，表示失败。</p>
+</li>
+<li><p>ACID: A(原子性)，C(一致性)，I(隔离性)，D(持久性)， redis里面只有保证了CI。</p>
+</li>
+<li><p>lua: 使用lua执行redis函数，当执行自身的函数时，会创建一个伪客户端执行函数，返回给服务器。</p>
+</li>
+<li><p>订阅。</p>
+</li>
+<li><p>慢查询日志：日志滚动删除。</p>
+</li>
+</ol>
+</blockquote>
+<h2 id="u5185_u90E8_u8FD0_u4F5C_u673A_u5236"><a href="#u5185_u90E8_u8FD0_u4F5C_u673A_u5236" class="headerlink" title="内部运作机制"></a><strong>内部运作机制</strong></h2><blockquote>
+<ol>
+<li><p>键过期：保存在expires字典里面，存着每一个键的过期时间，使用定期删除（间隔一段时间清理一次）和惰性删除（用到这个键的时候,才删除）清除键值。</p>
+</li>
+<li><p>RDB: 将内存镜像写入RDB文件(SAVE，BGSAVE),SAVE阻塞， BGSAVE 非阻塞。</p>
+</li>
+<li><p>AOF: 将操作写入AOF日志(BGREWRITEAOF),rewrite. 异步每秒一次,高于BGSAVE。</p>
+</li>
+</ol>
+</blockquote>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2015/06/22/redis/">Redis</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 XYM 的个人博客">XYM</a></p>
+        <p><span>发布时间:</span>2015年06月22日 - 23时15分</p>
+        <p><span>最后更新:</span>2016年01月19日 - 23时48分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2015/06/22/redis/" title="Redis">http://xymlife.com/2015/06/22/redis/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://xymlife.com/2015/06/22/redis/　　作者: XYM" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2016/01/08/Arch/">
+                    Arch
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2015/03/11/ratproxy/">
+                    ubuntu ratproxy安装使用
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#u5185_u90E8_u6570_u636E_u7ED3_u6784"><span class="toc-number">1.</span> <span class="toc-text">内部数据结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#redis_u6570_u636E_u7C7B_u578B"><span class="toc-number">2.</span> <span class="toc-text">redis数据类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u4E8B_u52A1"><span class="toc-number">3.</span> <span class="toc-text">事务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u5185_u90E8_u8FD0_u4F5C_u673A_u5236"><span class="toc-number">4.</span> <span class="toc-text">内部运作机制</span></a></li></ol>
+</div>
+<style>
+    .left-col .switch-btn {
+        display: none;
+    }
+    .left-col .switch-area {
+        display: none;
+    }
+</style>
+
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+            $(".switch-btn, .switch-area").fadeOut(300);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+            $(".switch-btn, .switch-area").fadeIn(500);
+        }
+    })
+
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+        $(".switch-btn, .switch-area").show();
+    }
+</script>
+
+
+
+
+<div class="share">
+    <div class="bdsharebuttonbox">
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+    <a href="#" class="bds_copy" data-cmd="copy" title="复制网址"></a>
+    <a href="#" class="bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+    </div>
+    <script>
+        window._bd_share_config={
+            "common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+</div>
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="2015/06/22/redis/" data-title="Redis" data-url="http://xymlife.com/2015/06/22/redis/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"xymlife"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+</div>
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2016/01/08/Arch/" title="上一篇: Arch">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2015/03/11/ratproxy/" title="下一篇: ubuntu ratproxy安装使用">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/01/18/meinheld为何比gevent高效？/">meinheld为何比gevent高效？</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/16/后缀数组小结/">后缀数组小结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/16/Reactor/">Reactor</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/13/IO多路复用/">I/O多路复用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/09/Linux 启动过程/">Linux 启动过程</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/08/Arch/">Arch</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/06/22/redis/">Redis</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/03/11/ratproxy/">ubuntu ratproxy安装使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/03/09/hexo-skill/">hexo常用技巧</a></li></ul>
+    <script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#toc, .switch-btn, .switch-area").toggle();
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+                $(".switch-btn, .switch-area").fadeToggle(300);
+            }
+        })
+    </script>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2016 XYM
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的静态博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减双栏 Hexo 博客主题">Yelee</a> by MOxFIVE
+            </div>
+        </div>
+        <div class="visit">
+            <span id="busuanzi_container_site_pv" style='display:none'>
+                <span id="site-visit" >本站到访数: 
+                    <span id="busuanzi_value_site_uv"></span>
+                </span>
+            </span>
+            <span id="busuanzi_container_page_pv" style='display:none'>
+                <span id="page-visit">, 本页阅读量: 
+                    <span id="busuanzi_value_page_pv"></span>
+                </span>
+            </span>
+        </div>
+    </div>
+</footer>
+    </div>
+    <script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

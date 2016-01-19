@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Linux 启动过程 | XYM</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="安装了Arch，顺便梳理一下linux启动流程。
+
+BIOS(MBR)
+
+开机自检，通过通过BIOS加载CMOS，获取各种硬件信息。
+按照BIOS 的boot sequeuece顺序读取每一个存储设备的最前面512个字节,如果发现最后两个字节是0x55, oxAA,那么就找到了主引导扇区MBR。
+MBR结构如下：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux 启动过程">
+<meta property="og:url" content="http://xymlife.com/2016/01/09/Linux 启动过程/index.html">
+<meta property="og:site_name" content="XYM">
+<meta property="og:description" content="安装了Arch，顺便梳理一下linux启动流程。
+
+BIOS(MBR)
+
+开机自检，通过通过BIOS加载CMOS，获取各种硬件信息。
+按照BIOS 的boot sequeuece顺序读取每一个存储设备的最前面512个字节,如果发现最后两个字节是0x55, oxAA,那么就找到了主引导扇区MBR。
+MBR结构如下：">
+<meta property="og:updated_time" content="2016-01-19T15:48:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux 启动过程">
+<meta name="twitter:description" content="安装了Arch，顺便梳理一下linux启动流程。
+
+BIOS(MBR)
+
+开机自检，通过通过BIOS加载CMOS，获取各种硬件信息。
+按照BIOS 的boot sequeuece顺序读取每一个存储设备的最前面512个字节,如果发现最后两个字节是0x55, oxAA,那么就找到了主引导扇区MBR。
+MBR结构如下：">
+  
+    <link rel="alternative" href="/atom.xml" title="XYM" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.ico">
+  
+  
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <script>
+      var yiliaConfig = {
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/hello_world.JPG" class="js-avatar">
+            
+        </a>
+
+        <hgroup>
+          <h1 class="header-author"><a href="/">XYM</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">念念不忘，必有回响。</p>
+        
+                
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <li id="新浪微博"><a class="新浪微博" target="_blank" href="http://weibo.com/xymacmer/" title="新浪微博"></a></li>
+                            
+                                <li id="GitHub"><a class="GitHub" target="_blank" href="http://github.com/xym2010" title="GitHub"></a></li>
+                            
+                                <li id="RSS"><a class="RSS" target="_blank" href="/atom.xml" title="RSS"></a></li>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/I-O多路复用/" style="font-size: 20px;">I/O多路复用</a> <a href="/tags/arch/" style="font-size: 10px;">arch</a> <a href="/tags/gevent/" style="font-size: 10px;">gevent</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/libevent/" style="font-size: 15px;">libevent</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/meinheld/" style="font-size: 10px;">meinheld</a> <a href="/tags/picoev/" style="font-size: 10px;">picoev</a> <a href="/tags/reactor/" style="font-size: 10px;">reactor</a> <a href="/tags/redis/" style="font-size: 15px;">redis</a> <a href="/tags/事件驱动/" style="font-size: 10px;">事件驱动</a> <a href="/tags/后缀数组/" style="font-size: 10px;">后缀数组</a> <a href="/tags/字符串处理/" style="font-size: 10px;">字符串处理</a> <a href="/tags/安全/" style="font-size: 10px;">安全</a> <a href="/tags/技能/" style="font-size: 10px;">技能</a> <a href="/tags/排序/" style="font-size: 10px;">排序</a> <a href="/tags/操作系统/" style="font-size: 15px;">操作系统</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/笔记/" style="font-size: 10px;">笔记</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/xymscau/">我的CSDN博客</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.90arther.net">90Arther</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">未知生物</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">XYM</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img lazy-src="/img/hello_world.JPG" class="js-avatar">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">XYM</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">念念不忘，必有回响。</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <li id="新浪微博"><a class="新浪微博" target="_blank" href="http://weibo.com/xymacmer/" title="新浪微博"></a></li>
+                            
+                                <li id="GitHub"><a class="GitHub" target="_blank" href="http://github.com/xym2010" title="GitHub"></a></li>
+                            
+                                <li id="RSS"><a class="RSS" target="_blank" href="/atom.xml" title="RSS"></a></li>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-Linux 启动过程" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/01/09/Linux 启动过程/" class="article-date">
+      <time datetime="2016-01-09T12:10:21.000Z" itemprop="datePublished">2016-01-09</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Linux 启动过程
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/操作系统/">操作系统</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <blockquote>
+<p>安装了Arch，顺便梳理一下linux启动流程。</p>
+</blockquote>
+<h4 id="BIOS_28MBR_29"><a href="#BIOS_28MBR_29" class="headerlink" title="BIOS(MBR)"></a><strong>BIOS(MBR)</strong></h4><blockquote>
+<ol>
+<li>开机自检，通过通过BIOS加载CMOS，获取各种硬件信息。</li>
+<li>按照BIOS 的boot sequeuece顺序读取每一个存储设备的最前面512个字节,如果发现最后两个字节是0x55, oxAA,那么就找到了主引导扇区MBR。</li>
+<li>MBR结构如下：</li>
+</ol>
+</blockquote>
+<a id="more"></a>
+<table>
+<thead>
+<tr>
+<th>HDD 上的位置</th>
+<th style="text-align:left">代码用意</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>001-440 bytes</td>
+<td style="text-align:left">由 BIOS 启动的 MBR 启动代码</td>
+</tr>
+<tr>
+<td>441-446 bytes</td>
+<td style="text-align:left">MBR 硬盘签名</td>
+</tr>
+<tr>
+<td>447-510 bytes</td>
+<td style="text-align:left">分区表 (主分区和扩展分区，而非逻辑分区)</td>
+</tr>
+<tr>
+<td>511-512 bytes</td>
+<td style="text-align:left">MBR 启动签名 0xAA55</td>
+</tr>
+</tbody>
+</table>
+<h4 id="GRUB"><a href="#GRUB" class="headerlink" title="GRUB"></a><strong>GRUB</strong></h4><blockquote>
+<ol>
+<li>通过引导器（GNU/Linux 引导器包括 GRUB 和 Syslinux）读取分区表。</li>
+<li>“传统” Windows/DOS MBR：引导器代码会在整个分区表里搜寻一个也是唯一的一个”活动”分区，读取该分区的X扇区，并把控制权交给操作系统。Windows/DOS 引导器不能启动 Arch Linux 分区因为它不是设计来加载 Linux 内核的，而且它只适应活动分区，主分区 (GRUB 会完全无视). 这也是为什么先装linux，再装windows会无法找到linux启动项。</li>
+<li>grub：linux下一般使用grub启动root loader，让用户选择启动哪个操作系统, grub可以从任何分区启动，无论它是主分区还是逻辑分区。</li>
+<li>分区表：每个分区表的长度只有64个字节，里面又分成四项，每项16个字节（第1个字节：如果为0x80，就表示该主分区是”活动”分区）所以，一个硬盘最多只能分四个一级分区，又叫做”主分区”。 随着硬盘越来越大，四个主分区已经不够了，需要更多的分区。但是，分区表只有四项，因此规定有且仅有一个区可以被定义成”扩展分区”（Extended partition）也就逻辑分区。 逻辑分区，以链式存放，可以无限拓展。</li>
+</ol>
+</blockquote>
+<h4 id="u8F7D_u5165_u5185_u6838"><a href="#u8F7D_u5165_u5185_u6838" class="headerlink" title="载入内核"></a><strong>载入内核</strong></h4><blockquote>
+<ol>
+<li>操作系统接管硬件以后，首先将系统内核载入RAM，执行内核代码设置自己的虚拟内存子系统和根文件系统,对硬件进行检测并进行设备驱动程序初始化。</li>
+<li>驱动程序初始化后,会挂载一个只读的根文件系统（rootfs）,执行/sbin/init, 释放内存。</li>
+</ol>
+</blockquote>
+<h4 id="u521D_u59CB_u5316"><a href="#u521D_u59CB_u5316" class="headerlink" title="初始化"></a><strong>初始化</strong></h4><blockquote>
+<ol>
+<li>执行/sbin/init 生成第一个进程，接管系统控制权，它首先会去读取/etc/inittab文件来执行相应的脚本进行系统初始化，如设置键盘、字体，装载模块，设置网络等。</li>
+<li>系统初始化脚本(/etc/rc.d/rc.sysinit)对系统进行基本的配置，以读写方式挂载根文件系统及其它文件系统，读取各种系统配置,如分区挂载/etc/fstab, 网络配置/etc/sysconfig/network。</li>
+<li>执行/etc/rc.d/rc脚本。该文件定义了服务启动的先后顺序，而具体的每个运行级别的服务状态是放在/etc/rc.d/rc*.d（=0~6）目录下，所有的文件均是指向/etc/init.d下相应文件的符号链接。rc.sysinit通过分析/etc/inittab文件来确定系统的启动级别，然后才去执行/etc/rc.d/rc.d下的文件。</li>
+</ol>
+</blockquote>
+<h4 id="u7528_u6237_u767B_u5F55"><a href="#u7528_u6237_u767B_u5F55" class="headerlink" title="用户登录"></a><strong>用户登录</strong></h4><blockquote>
+<ol>
+<li>命令行登录：init进程调用getty程序（意为get teletype），让用户输入用户名和密码。输入完成后，再调用login程序，核对密码。如果密码正确，就从文件 /etc/passwd 读取该用户指定的shell，然后启动这个shell。</li>
+</ol>
+</blockquote>
+<h4 id="u684C_u9762_u8F7D_u5165"><a href="#u684C_u9762_u8F7D_u5165" class="headerlink" title="桌面载入"></a><strong>桌面载入</strong></h4><blockquote>
+<ol>
+<li>如果有配置图形界面自动启动，则登录成功后，会读取当前用户的~/.xinitrc 文件，启动对应的X窗口系统。</li>
+</ol>
+</blockquote>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/01/09/Linux 启动过程/">Linux 启动过程</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 XYM 的个人博客">XYM</a></p>
+        <p><span>发布时间:</span>2016年01月09日 - 20时10分</p>
+        <p><span>最后更新:</span>2016年01月19日 - 23时48分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/01/09/Linux 启动过程/" title="Linux 启动过程">http://xymlife.com/2016/01/09/Linux 启动过程/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://xymlife.com/2016/01/09/Linux 启动过程/　　作者: XYM" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2016/01/13/IO多路复用/">
+                    I/O多路复用
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/01/08/Arch/">
+                    Arch
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#BIOS_28MBR_29"><span class="toc-number">1.</span> <span class="toc-text">BIOS(MBR)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GRUB"><span class="toc-number">2.</span> <span class="toc-text">GRUB</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u8F7D_u5165_u5185_u6838"><span class="toc-number">3.</span> <span class="toc-text">载入内核</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u521D_u59CB_u5316"><span class="toc-number">4.</span> <span class="toc-text">初始化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u7528_u6237_u767B_u5F55"><span class="toc-number">5.</span> <span class="toc-text">用户登录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u684C_u9762_u8F7D_u5165"><span class="toc-number">6.</span> <span class="toc-text">桌面载入</span></a></li></ol>
+</div>
+<style>
+    .left-col .switch-btn {
+        display: none;
+    }
+    .left-col .switch-area {
+        display: none;
+    }
+</style>
+
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+            $(".switch-btn, .switch-area").fadeOut(300);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+            $(".switch-btn, .switch-area").fadeIn(500);
+        }
+    })
+
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+        $(".switch-btn, .switch-area").show();
+    }
+</script>
+
+
+
+
+<div class="share">
+    <div class="bdsharebuttonbox">
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+    <a href="#" class="bds_copy" data-cmd="copy" title="复制网址"></a>
+    <a href="#" class="bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+    </div>
+    <script>
+        window._bd_share_config={
+            "common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+</div>
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="2016/01/09/Linux 启动过程/" data-title="Linux 启动过程" data-url="http://xymlife.com/2016/01/09/Linux 启动过程/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"xymlife"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+</div>
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2016/01/13/IO多路复用/" title="上一篇: I/O多路复用">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/01/08/Arch/" title="下一篇: Arch">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/01/18/meinheld为何比gevent高效？/">meinheld为何比gevent高效？</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/16/后缀数组小结/">后缀数组小结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/16/Reactor/">Reactor</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/13/IO多路复用/">I/O多路复用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/09/Linux 启动过程/">Linux 启动过程</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/08/Arch/">Arch</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/06/22/redis/">Redis</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/03/11/ratproxy/">ubuntu ratproxy安装使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/03/09/hexo-skill/">hexo常用技巧</a></li></ul>
+    <script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#toc, .switch-btn, .switch-area").toggle();
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+                $(".switch-btn, .switch-area").fadeToggle(300);
+            }
+        })
+    </script>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2016 XYM
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的静态博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减双栏 Hexo 博客主题">Yelee</a> by MOxFIVE
+            </div>
+        </div>
+        <div class="visit">
+            <span id="busuanzi_container_site_pv" style='display:none'>
+                <span id="site-visit" >本站到访数: 
+                    <span id="busuanzi_value_site_uv"></span>
+                </span>
+            </span>
+            <span id="busuanzi_container_page_pv" style='display:none'>
+                <span id="page-visit">, 本页阅读量: 
+                    <span id="busuanzi_value_page_pv"></span>
+                </span>
+            </span>
+        </div>
+    </div>
+</footer>
+    </div>
+    <script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
