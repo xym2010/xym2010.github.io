@@ -7,8 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="这里记录了一些Arch的小知识点。
 
-####【分区表】####
-
+【分区表】
   MBR(master boot record)：只能有4个主分区，一个拓展分区（也算一个主分区），拓展分区下可以建多个逻辑分区
 GUID：只有主分区，数量不限">
 <meta property="og:type" content="article">
@@ -17,17 +16,15 @@ GUID：只有主分区，数量不限">
 <meta property="og:site_name" content="XYM">
 <meta property="og:description" content="这里记录了一些Arch的小知识点。
 
-####【分区表】####
-
+【分区表】
   MBR(master boot record)：只能有4个主分区，一个拓展分区（也算一个主分区），拓展分区下可以建多个逻辑分区
 GUID：只有主分区，数量不限">
-<meta property="og:updated_time" content="2016-01-19T15:48:18.000Z">
+<meta property="og:updated_time" content="2016-01-20T15:09:04.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Arch">
 <meta name="twitter:description" content="这里记录了一些Arch的小知识点。
 
-####【分区表】####
-
+【分区表】
   MBR(master boot record)：只能有4个主分区，一个拓展分区（也算一个主分区），拓展分区下可以建多个逻辑分区
 GUID：只有主分区，数量不限">
   
@@ -272,45 +269,35 @@ GUID：只有主分区，数量不限">
         <blockquote>
 <p>这里记录了一些Arch的小知识点。</p>
 </blockquote>
-<p>####<strong>【分区表】</strong>####</p>
-<blockquote>
+<h4 id="u3010_u5206_u533A_u8868_u3011"><a href="#u3010_u5206_u533A_u8868_u3011" class="headerlink" title="【分区表】"></a><strong>【分区表】</strong></h4><blockquote>
 <p>  MBR(master boot record)：只能有4个主分区，一个拓展分区（也算一个主分区），拓展分区下可以建多个逻辑分区</p>
 <p>GUID：只有主分区，数量不限</p>
 </blockquote>
 <a id="more"></a>
-<p>####<strong>【格式化】</strong>####</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mkfs：</span><br><span class="line">mkfs.vfat -F32 /dev/sdxy  <span class="comment">#vfat32</span></span><br><span class="line">mkfs.ext4 /dev/sdxy  <span class="comment">#ext4</span></span><br><span class="line"></span><br><span class="line">swap:</span><br><span class="line">mkswap /dev/sdxy  <span class="comment"># 格式化交换分区</span></span><br><span class="line">swapon /dev/sdxy  <span class="comment"># 开启交换分区</span></span><br></pre></td></tr></table></figure>
-<p>####<strong>【挂载】</strong>####</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mount /dev/sdxr /mnt  <span class="comment"># 挂载根目录</span></span><br><span class="line">mkdir /mnt/home</span><br><span class="line">mount /dev/sda2 /mnt/home  <span class="comment"># 挂载home目录</span></span><br></pre></td></tr></table></figure>
-<p>####<strong>【fstab】</strong>####</p>
-<blockquote>
+<h4 id="u3010_u683C_u5F0F_u5316_u3011"><a href="#u3010_u683C_u5F0F_u5316_u3011" class="headerlink" title="【格式化】"></a><strong>【格式化】</strong></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mkfs：</span><br><span class="line">mkfs.vfat -F32 /dev/sdxy  <span class="comment">#vfat32</span></span><br><span class="line">mkfs.ext4 /dev/sdxy  <span class="comment">#ext4</span></span><br><span class="line"></span><br><span class="line">swap:</span><br><span class="line">mkswap /dev/sdxy  <span class="comment"># 格式化交换分区</span></span><br><span class="line">swapon /dev/sdxy  <span class="comment"># 开启交换分区</span></span><br></pre></td></tr></table></figure>
+<h4 id="u3010_u6302_u8F7D_u3011"><a href="#u3010_u6302_u8F7D_u3011" class="headerlink" title="【挂载】"></a><strong>【挂载】</strong></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mount /dev/sdxr /mnt  <span class="comment"># 挂载根目录</span></span><br><span class="line">mkdir /mnt/home</span><br><span class="line">mount /dev/sda2 /mnt/home  <span class="comment"># 挂载home目录</span></span><br></pre></td></tr></table></figure>
+<h4 id="u3010fstab_u3011"><a href="#u3010fstab_u3011" class="headerlink" title="【fstab】"></a><strong>【fstab】</strong></h4><blockquote>
 <p>文件/etc/fstab包含了静态文件系统信息，定义了存储设备和分区整合到整个系统的方式。mount命令会读取这个文件，确定设备和分区的挂载选项。</p>
 </blockquote>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -al /dev/disk/by-uuid  <span class="comment"># ubuntu下面查看当前分区的uuid</span></span><br></pre></td></tr></table></figure>
-<p>####<strong>【tmpfs】</strong>####</p>
-<blockquote>
+<h4 id="u3010tmpfs_u3011"><a href="#u3010tmpfs_u3011" class="headerlink" title="【tmpfs】"></a><strong>【tmpfs】</strong></h4><blockquote>
 <p>tmpfs(理论是内存一半)是一个临时文件系统，驻留于你的交换分区或是内存中（取决于你的使用情况）。使用它可以提高文件访问速度，并能保证重启时会自动清除这些文件。<br>为用户添加 tmpfs 挂载：</p>
 </blockquote>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/etc/fstab</span><br><span class="line">tmpfs /www/cache tmpfs rw,size=<span class="number">1</span>G,nr_inodes=<span class="number">5</span>k,noexec,nodev,nosuid,uid=<span class="number">648</span>,gid=<span class="number">648</span>,mode=<span class="number">1700</span> <span class="number">0</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
-<p>####<strong>【chroot】</strong>####</p>
-<blockquote>
+<h4 id="u3010chroot_u3011"><a href="#u3010chroot_u3011" class="headerlink" title="【chroot】"></a><strong>【chroot】</strong></h4><blockquote>
 <p>chroot是将当前磁盘根路径(和当前进程和它们的子进程)更改到另一个根目录</p>
 </blockquote>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arch-chroot /mnt /bin/bash</span><br></pre></td></tr></table></figure>
-<p>####<strong>【pacman】</strong>####</p>
-<blockquote>
+<h4 id="u3010pacman_u3011"><a href="#u3010pacman_u3011" class="headerlink" title="【pacman】"></a><strong>【pacman】</strong></h4><blockquote>
 <p>arch安装包指令</p>
 </blockquote>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacman -S grub os-prober</span><br></pre></td></tr></table></figure>
-<p>####<strong>【grub】</strong>####</p>
-<blockquote>
+<h4 id="u3010grub_u3011"><a href="#u3010grub_u3011" class="headerlink" title="【grub】"></a><strong>【grub】</strong></h4><blockquote>
 <p>引导装入器 – 它负责装入内核并引导 Linux 系统</p>
 </blockquote>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grub-mkconfig -o /boot/grub/grub.cfg</span><br></pre></td></tr></table></figure>
-<p>####<strong>【创建用户组】</strong>####</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">groupadd users</span><br><span class="line">useradd -m -g users -s /bin/bash xym</span><br><span class="line">passwd xym</span><br><span class="line">visudo(vi /etc/sudoers)  <span class="comment"># 执行 xym ALL=(ALL) ALL</span></span><br></pre></td></tr></table></figure>
-<p>####<strong>【ssh key】</strong>####</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen (-t rsa)</span><br></pre></td></tr></table></figure>
+<h4 id="u3010_u521B_u5EFA_u7528_u6237_u7EC4_u3011"><a href="#u3010_u521B_u5EFA_u7528_u6237_u7EC4_u3011" class="headerlink" title="【创建用户组】"></a><strong>【创建用户组】</strong></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">groupadd users</span><br><span class="line">useradd -m -g users -s /bin/bash xym</span><br><span class="line">passwd xym</span><br><span class="line">visudo(vi /etc/sudoers)  <span class="comment"># 执行 xym ALL=(ALL) ALL</span></span><br></pre></td></tr></table></figure>
+<h4 id="u3010ssh_key_u3011"><a href="#u3010ssh_key_u3011" class="headerlink" title="【ssh key】"></a><strong>【ssh key】</strong></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen (-t rsa)</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -322,7 +309,7 @@ GUID：只有主分区，数量不限">
         <p><span>本文标题:</span><a href="/2016/01/08/Arch/">Arch</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 XYM 的个人博客">XYM</a></p>
         <p><span>发布时间:</span>2016年01月08日 - 00时41分</p>
-        <p><span>最后更新:</span>2016年01月19日 - 23时48分</p>
+        <p><span>最后更新:</span>2016年01月20日 - 23时09分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2016/01/08/Arch/" title="Arch">http://xymlife.com/2016/01/08/Arch/</a>
             <span class="copy-path" data-clipboard-text="原文: http://xymlife.com/2016/01/08/Arch/　　作者: XYM" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -358,7 +345,7 @@ GUID：只有主分区，数量不限">
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    
+    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010_u5206_u533A_u8868_u3011"><span class="toc-number">1.</span> <span class="toc-text">【分区表】</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010_u683C_u5F0F_u5316_u3011"><span class="toc-number">2.</span> <span class="toc-text">【格式化】</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010_u6302_u8F7D_u3011"><span class="toc-number">3.</span> <span class="toc-text">【挂载】</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010fstab_u3011"><span class="toc-number">4.</span> <span class="toc-text">【fstab】</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010tmpfs_u3011"><span class="toc-number">5.</span> <span class="toc-text">【tmpfs】</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010chroot_u3011"><span class="toc-number">6.</span> <span class="toc-text">【chroot】</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010pacman_u3011"><span class="toc-number">7.</span> <span class="toc-text">【pacman】</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010grub_u3011"><span class="toc-number">8.</span> <span class="toc-text">【grub】</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010_u521B_u5EFA_u7528_u6237_u7EC4_u3011"><span class="toc-number">9.</span> <span class="toc-text">【创建用户组】</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010ssh_key_u3011"><span class="toc-number">10.</span> <span class="toc-text">【ssh key】</span></a></li></ol>
 </div>
 <style>
     .left-col .switch-btn {
