@@ -5,7 +5,7 @@
   
   <title>Reactor | XYM</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Reactor ?
+  <meta name="description" content="【Reactor】
 Reactor设计模式在高性能I/O框架中随处可见，例如redis，tornado，gevent，libevent等。
 Reactor可以翻译为反应器，是一种基于事件驱动的设计模式。那么它是如何运作的呢？其实很多设计模式都来源于生活中的一些常见的处理事情的方式。
 我们先来看一个例子：你和妹子去购物中心吃饭，发现很多人在排队，这时只需要让前台在电脑上填上你需要的双人位，和你的手机">
@@ -13,15 +13,15 @@ Reactor可以翻译为反应器，是一种基于事件驱动的设计模式。�
 <meta property="og:title" content="Reactor">
 <meta property="og:url" content="http://xymlife.com/2016/01/16/Reactor/index.html">
 <meta property="og:site_name" content="XYM">
-<meta property="og:description" content="Reactor ?
+<meta property="og:description" content="【Reactor】
 Reactor设计模式在高性能I/O框架中随处可见，例如redis，tornado，gevent，libevent等。
 Reactor可以翻译为反应器，是一种基于事件驱动的设计模式。那么它是如何运作的呢？其实很多设计模式都来源于生活中的一些常见的处理事情的方式。
 我们先来看一个例子：你和妹子去购物中心吃饭，发现很多人在排队，这时只需要让前台在电脑上填上你需要的双人位，和你的手机">
 <meta property="og:image" content="http://7xq2as.com1.z0.glb.clouddn.com/1342687408_4917.jpg">
-<meta property="og:updated_time" content="2016-01-20T11:24:40.000Z">
+<meta property="og:updated_time" content="2016-01-20T15:27:03.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Reactor">
-<meta name="twitter:description" content="Reactor ?
+<meta name="twitter:description" content="【Reactor】
 Reactor设计模式在高性能I/O框架中随处可见，例如redis，tornado，gevent，libevent等。
 Reactor可以翻译为反应器，是一种基于事件驱动的设计模式。那么它是如何运作的呢？其实很多设计模式都来源于生活中的一些常见的处理事情的方式。
 我们先来看一个例子：你和妹子去购物中心吃饭，发现很多人在排队，这时只需要让前台在电脑上填上你需要的双人位，和你的手机">
@@ -264,7 +264,7 @@ Reactor可以翻译为反应器，是一种基于事件驱动的设计模式。�
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h4 id="Reactor__3F"><a href="#Reactor__3F" class="headerlink" title="Reactor ?"></a><strong>Reactor ?</strong></h4><blockquote>
+        <h4 id="u3010Reactor_u3011"><a href="#u3010Reactor_u3011" class="headerlink" title="【Reactor】"></a><strong>【Reactor】</strong></h4><blockquote>
 <p>Reactor设计模式在高性能I/O框架中随处可见，例如redis，tornado，gevent，libevent等。</p>
 <p><strong>Reactor可以翻译为反应器，是一种基于事件驱动的设计模式。</strong>那么它是如何运作的呢？其实很多设计模式都来源于生活中的一些常见的处理事情的方式。</p>
 <p>我们先来看一个例子：你和妹子去购物中心吃饭，发现很多人在排队，这时只需要让前台在电脑上填上你需要的双人位，和你的手机号码，待会有位置的时候会发短信给你，这时候你可以陪妹子到处逛逛，买买买。当餐厅有双人位空出的时候，就会发短信或打电话给你，这时你就可以带妹子去吃饭了。</p>
@@ -272,14 +272,14 @@ Reactor可以翻译为反应器，是一种基于事件驱动的设计模式。�
 <p><strong>总结：在Reactor模式中，处理事件的程序不会去调用反应器，而是告诉Reactor监听一个事件，和这个事件发生时处理方法，当Reactor监测到这个事件发生时，就启动对应的处理方法（一般是回调函数）进行处理，这种控制逆转又称为“好莱坞法则”（不要调用我，让我来调用你）。</strong></p>
 </blockquote>
 <a id="more"></a>
-<h4 id="Reactor_u8BBE_u8BA1_u6A21_u5F0F"><a href="#Reactor_u8BBE_u8BA1_u6A21_u5F0F" class="headerlink" title="Reactor设计模式"></a><strong>Reactor设计模式</strong></h4><blockquote>
+<h4 id="u3010Reactor_u8BBE_u8BA1_u6A21_u5F0F_u3011"><a href="#u3010Reactor_u8BBE_u8BA1_u6A21_u5F0F_u3011" class="headerlink" title="【Reactor设计模式】"></a><strong>【Reactor设计模式】</strong></h4><blockquote>
 <p>在Reactor模式中，有5个关键的参与者。<a href="http://www.cnblogs.com/hzbook/archive/2012/07/19/2599698.html" target="_blank" rel="external">[引用]</a></p>
 <p><strong>1. 描述符（handle）：</strong>由操作系统提供，用于识别每一个事件，如Socket描述符、文件描述符(fd)等。在Linux中，它用一个整数来表示。事件可以来自外部，如来自客户端的连接请求、数据等。事件也可以来自内部，如定时器事件。<br><strong>2. 同步事件分离器（demultiplexer）：</strong>是一个函数，用来等待一个或多个事件的发生。调用者会被阻塞，直到分离器分离的描述符集上有事件发生。Linux的select函数是一个经常被使用的分离器。<br><strong>3. 事件处理器接口（event handler）：</strong>是由一个或多个模板函数组成的接口。这些模板函数描述了和应用程序相关的对某个事件的操作。<br><strong>4. 具体的事件处理器（concrete event handler）：</strong>是事件处理器接口的实现。它实现了应用程序提供的某个服务。每个具体的事件处理器总和一个描述符相关。它使用描述符来识别事件、识别应用程序提供的服务。<br><strong>5. Reactor 管理器（reactor）：</strong>定义了一些接口，用于应用程序控制事件调度，以及应用程序注册、删除事件处理器和相关的描述符。它是事件处理器的调度核心。 Reactor管理器使用同步事件分离器来等待事件的发生。一旦事件发生，Reactor管理器先是分离每个事件，然后调度事件处理器，最后调用相关的模 板函数来处理这个事件。</p>
 <p>下面是Reactor结构图</p>
 <p><img src="http://7xq2as.com1.z0.glb.clouddn.com/1342687408_4917.jpg" alt="此处输入图片的描述"></p>
 <p>可能从上面来看比较难理解，那么我们从最开始的例子来分析这几个角色的作用。<br>你告诉前台MM <strong>（Reactor：负责后面的所有操作的调度）</strong>你需要一个双人位<strong>（handle：就是一个等待双人位的事件）</strong>，并告知手机号码<strong>（concrete event handler：当有双人位时，通过这个手机联系你，是具体的事件的处理方法）</strong>，而她会往她的电脑中添加一条记录<strong>（event handler：记录着双人位和你的联系方式，将事件和处理方式绑定到一起）</strong>，当某一桌双人位结账时，电脑从一堆排号信息中自动检测到有空余双人位<strong>（demultiplexer：将空余双人位事件从其他还在等待发生的事件中分离出来）</strong>，前台MM根据电脑记录找到你的电话号码，然后通过电话通知你可以前来就餐。<br>希望到这里你已经把Reactor的各个角色的作用弄清楚了，下次就可以去读一些使用Reactor设计模式的源码了，这里推荐 <a href="http://blog.csdn.net/sparkliang/article/details/5202394" target="_blank" rel="external">libevent</a> 。</p>
 </blockquote>
-<h4 id="Reactor_u7684_u7279_u70B9"><a href="#Reactor_u7684_u7279_u70B9" class="headerlink" title="Reactor的特点"></a><strong>Reactor的特点</strong></h4><blockquote>
+<h4 id="u3010Reactor_u7684_u7279_u70B9_u3011"><a href="#u3010Reactor_u7684_u7279_u70B9_u3011" class="headerlink" title="【Reactor的特点】"></a><strong>【Reactor的特点】</strong></h4><blockquote>
 <p>最后总结一下Reactor的优点：<br><strong>1. 响应快：</strong>不必为单个同步时间所阻塞，虽然Reactor本身依然是同步的。<br><strong>2. 编程相对简单：</strong> 可以最大程度的避免复杂的多线程及同步问题，并且避免了多线程/进程的切换开销。<br><strong>3. 可扩展性：</strong> 可以方便的通过增加Reactor实例个数来充分利用CPU资源。<br><strong>4. 可复用性：</strong> reactor框架本身与具体事件处理逻辑无关，具有很高的复用性。</p>
 </blockquote>
 
@@ -293,7 +293,7 @@ Reactor可以翻译为反应器，是一种基于事件驱动的设计模式。�
         <p><span>本文标题:</span><a href="/2016/01/16/Reactor/">Reactor</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 XYM 的个人博客">XYM</a></p>
         <p><span>发布时间:</span>2016年01月16日 - 01时39分</p>
-        <p><span>最后更新:</span>2016年01月20日 - 19时24分</p>
+        <p><span>最后更新:</span>2016年01月20日 - 23时27分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2016/01/16/Reactor/" title="Reactor">http://xymlife.com/2016/01/16/Reactor/</a>
             <span class="copy-path" data-clipboard-text="原文: http://xymlife.com/2016/01/16/Reactor/　　作者: XYM" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -329,7 +329,7 @@ Reactor可以翻译为反应器，是一种基于事件驱动的设计模式。�
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Reactor__3F"><span class="toc-number">1.</span> <span class="toc-text">Reactor ?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Reactor_u8BBE_u8BA1_u6A21_u5F0F"><span class="toc-number">2.</span> <span class="toc-text">Reactor设计模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Reactor_u7684_u7279_u70B9"><span class="toc-number">3.</span> <span class="toc-text">Reactor的特点</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010Reactor_u3011"><span class="toc-number">1.</span> <span class="toc-text">【Reactor】</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010Reactor_u8BBE_u8BA1_u6A21_u5F0F_u3011"><span class="toc-number">2.</span> <span class="toc-text">【Reactor设计模式】</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010Reactor_u7684_u7279_u70B9_u3011"><span class="toc-number">3.</span> <span class="toc-text">【Reactor的特点】</span></a></li></ol>
 </div>
 <style>
     .left-col .switch-btn {

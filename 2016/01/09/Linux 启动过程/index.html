@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="安装了Arch，顺便梳理一下linux启动流程。
 
-BIOS(MBR)
+【BIOS(MBR)】
 
 开机自检，通过通过BIOS加载CMOS，获取各种硬件信息。
 按照BIOS 的boot sequeuece顺序读取每一个存储设备的最前面512个字节,如果发现最后两个字节是0x55, oxAA,那么就找到了主引导扇区MBR。
@@ -18,17 +18,17 @@ MBR结构如下：">
 <meta property="og:site_name" content="XYM">
 <meta property="og:description" content="安装了Arch，顺便梳理一下linux启动流程。
 
-BIOS(MBR)
+【BIOS(MBR)】
 
 开机自检，通过通过BIOS加载CMOS，获取各种硬件信息。
 按照BIOS 的boot sequeuece顺序读取每一个存储设备的最前面512个字节,如果发现最后两个字节是0x55, oxAA,那么就找到了主引导扇区MBR。
 MBR结构如下：">
-<meta property="og:updated_time" content="2016-01-19T15:48:18.000Z">
+<meta property="og:updated_time" content="2016-01-20T15:22:20.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux 启动过程">
 <meta name="twitter:description" content="安装了Arch，顺便梳理一下linux启动流程。
 
-BIOS(MBR)
+【BIOS(MBR)】
 
 开机自检，通过通过BIOS加载CMOS，获取各种硬件信息。
 按照BIOS 的boot sequeuece顺序读取每一个存储设备的最前面512个字节,如果发现最后两个字节是0x55, oxAA,那么就找到了主引导扇区MBR。
@@ -275,7 +275,7 @@ MBR结构如下：">
         <blockquote>
 <p>安装了Arch，顺便梳理一下linux启动流程。</p>
 </blockquote>
-<h4 id="BIOS_28MBR_29"><a href="#BIOS_28MBR_29" class="headerlink" title="BIOS(MBR)"></a><strong>BIOS(MBR)</strong></h4><blockquote>
+<h4 id="u3010BIOS_28MBR_29_u3011"><a href="#u3010BIOS_28MBR_29_u3011" class="headerlink" title="【BIOS(MBR)】"></a><strong>【BIOS(MBR)】</strong></h4><blockquote>
 <ol>
 <li>开机自检，通过通过BIOS加载CMOS，获取各种硬件信息。</li>
 <li>按照BIOS 的boot sequeuece顺序读取每一个存储设备的最前面512个字节,如果发现最后两个字节是0x55, oxAA,那么就找到了主引导扇区MBR。</li>
@@ -309,7 +309,7 @@ MBR结构如下：">
 </tr>
 </tbody>
 </table>
-<h4 id="GRUB"><a href="#GRUB" class="headerlink" title="GRUB"></a><strong>GRUB</strong></h4><blockquote>
+<h4 id="u3010GRUB_u3011"><a href="#u3010GRUB_u3011" class="headerlink" title="【GRUB】"></a><strong>【GRUB】</strong></h4><blockquote>
 <ol>
 <li>通过引导器（GNU/Linux 引导器包括 GRUB 和 Syslinux）读取分区表。</li>
 <li>“传统” Windows/DOS MBR：引导器代码会在整个分区表里搜寻一个也是唯一的一个”活动”分区，读取该分区的X扇区，并把控制权交给操作系统。Windows/DOS 引导器不能启动 Arch Linux 分区因为它不是设计来加载 Linux 内核的，而且它只适应活动分区，主分区 (GRUB 会完全无视). 这也是为什么先装linux，再装windows会无法找到linux启动项。</li>
@@ -317,25 +317,25 @@ MBR结构如下：">
 <li>分区表：每个分区表的长度只有64个字节，里面又分成四项，每项16个字节（第1个字节：如果为0x80，就表示该主分区是”活动”分区）所以，一个硬盘最多只能分四个一级分区，又叫做”主分区”。 随着硬盘越来越大，四个主分区已经不够了，需要更多的分区。但是，分区表只有四项，因此规定有且仅有一个区可以被定义成”扩展分区”（Extended partition）也就逻辑分区。 逻辑分区，以链式存放，可以无限拓展。</li>
 </ol>
 </blockquote>
-<h4 id="u8F7D_u5165_u5185_u6838"><a href="#u8F7D_u5165_u5185_u6838" class="headerlink" title="载入内核"></a><strong>载入内核</strong></h4><blockquote>
+<h4 id="u3010_u8F7D_u5165_u5185_u6838_u3011"><a href="#u3010_u8F7D_u5165_u5185_u6838_u3011" class="headerlink" title="【载入内核】"></a><strong>【载入内核】</strong></h4><blockquote>
 <ol>
 <li>操作系统接管硬件以后，首先将系统内核载入RAM，执行内核代码设置自己的虚拟内存子系统和根文件系统,对硬件进行检测并进行设备驱动程序初始化。</li>
 <li>驱动程序初始化后,会挂载一个只读的根文件系统（rootfs）,执行/sbin/init, 释放内存。</li>
 </ol>
 </blockquote>
-<h4 id="u521D_u59CB_u5316"><a href="#u521D_u59CB_u5316" class="headerlink" title="初始化"></a><strong>初始化</strong></h4><blockquote>
+<h4 id="u3010_u521D_u59CB_u5316_u3011"><a href="#u3010_u521D_u59CB_u5316_u3011" class="headerlink" title="【初始化】"></a><strong>【初始化】</strong></h4><blockquote>
 <ol>
 <li>执行/sbin/init 生成第一个进程，接管系统控制权，它首先会去读取/etc/inittab文件来执行相应的脚本进行系统初始化，如设置键盘、字体，装载模块，设置网络等。</li>
 <li>系统初始化脚本(/etc/rc.d/rc.sysinit)对系统进行基本的配置，以读写方式挂载根文件系统及其它文件系统，读取各种系统配置,如分区挂载/etc/fstab, 网络配置/etc/sysconfig/network。</li>
 <li>执行/etc/rc.d/rc脚本。该文件定义了服务启动的先后顺序，而具体的每个运行级别的服务状态是放在/etc/rc.d/rc*.d（=0~6）目录下，所有的文件均是指向/etc/init.d下相应文件的符号链接。rc.sysinit通过分析/etc/inittab文件来确定系统的启动级别，然后才去执行/etc/rc.d/rc.d下的文件。</li>
 </ol>
 </blockquote>
-<h4 id="u7528_u6237_u767B_u5F55"><a href="#u7528_u6237_u767B_u5F55" class="headerlink" title="用户登录"></a><strong>用户登录</strong></h4><blockquote>
+<h4 id="u3010_u7528_u6237_u767B_u5F55_u3011"><a href="#u3010_u7528_u6237_u767B_u5F55_u3011" class="headerlink" title="【用户登录】"></a><strong>【用户登录】</strong></h4><blockquote>
 <ol>
 <li>命令行登录：init进程调用getty程序（意为get teletype），让用户输入用户名和密码。输入完成后，再调用login程序，核对密码。如果密码正确，就从文件 /etc/passwd 读取该用户指定的shell，然后启动这个shell。</li>
 </ol>
 </blockquote>
-<h4 id="u684C_u9762_u8F7D_u5165"><a href="#u684C_u9762_u8F7D_u5165" class="headerlink" title="桌面载入"></a><strong>桌面载入</strong></h4><blockquote>
+<h4 id="u3010_u684C_u9762_u8F7D_u5165_u3011"><a href="#u3010_u684C_u9762_u8F7D_u5165_u3011" class="headerlink" title="【桌面载入】"></a><strong>【桌面载入】</strong></h4><blockquote>
 <ol>
 <li>如果有配置图形界面自动启动，则登录成功后，会读取当前用户的~/.xinitrc 文件，启动对应的X窗口系统。</li>
 </ol>
@@ -351,7 +351,7 @@ MBR结构如下：">
         <p><span>本文标题:</span><a href="/2016/01/09/Linux 启动过程/">Linux 启动过程</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 XYM 的个人博客">XYM</a></p>
         <p><span>发布时间:</span>2016年01月09日 - 20时10分</p>
-        <p><span>最后更新:</span>2016年01月19日 - 23时48分</p>
+        <p><span>最后更新:</span>2016年01月20日 - 23时22分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2016/01/09/Linux 启动过程/" title="Linux 启动过程">http://xymlife.com/2016/01/09/Linux 启动过程/</a>
             <span class="copy-path" data-clipboard-text="原文: http://xymlife.com/2016/01/09/Linux 启动过程/　　作者: XYM" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -387,7 +387,7 @@ MBR结构如下：">
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#BIOS_28MBR_29"><span class="toc-number">1.</span> <span class="toc-text">BIOS(MBR)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GRUB"><span class="toc-number">2.</span> <span class="toc-text">GRUB</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u8F7D_u5165_u5185_u6838"><span class="toc-number">3.</span> <span class="toc-text">载入内核</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u521D_u59CB_u5316"><span class="toc-number">4.</span> <span class="toc-text">初始化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u7528_u6237_u767B_u5F55"><span class="toc-number">5.</span> <span class="toc-text">用户登录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u684C_u9762_u8F7D_u5165"><span class="toc-number">6.</span> <span class="toc-text">桌面载入</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010BIOS_28MBR_29_u3011"><span class="toc-number">1.</span> <span class="toc-text">【BIOS(MBR)】</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010GRUB_u3011"><span class="toc-number">2.</span> <span class="toc-text">【GRUB】</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010_u8F7D_u5165_u5185_u6838_u3011"><span class="toc-number">3.</span> <span class="toc-text">【载入内核】</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010_u521D_u59CB_u5316_u3011"><span class="toc-number">4.</span> <span class="toc-text">【初始化】</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010_u7528_u6237_u767B_u5F55_u3011"><span class="toc-number">5.</span> <span class="toc-text">【用户登录】</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010_u684C_u9762_u8F7D_u5165_u3011"><span class="toc-number">6.</span> <span class="toc-text">【桌面载入】</span></a></li></ol>
 </div>
 <style>
     .left-col .switch-btn {

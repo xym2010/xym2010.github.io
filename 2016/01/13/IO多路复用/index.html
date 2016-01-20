@@ -5,19 +5,19 @@
   
   <title>I/O多路复用 | XYM</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="I/O多路复用技术
+  <meta name="description" content="【I/O多路复用技术】
 系统内核缓冲I/O数据，当某个I/O准备好后，系统通知应用程序该I/O可读或可写，这样应用程序可以马上完成相应的I/O操作，而不需要等待系统完成相应I/O操作，从而应用程序不必因等待I/O操作而阻塞。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="I/O多路复用">
 <meta property="og:url" content="http://xymlife.com/2016/01/13/IO多路复用/index.html">
 <meta property="og:site_name" content="XYM">
-<meta property="og:description" content="I/O多路复用技术
+<meta property="og:description" content="【I/O多路复用技术】
 系统内核缓冲I/O数据，当某个I/O准备好后，系统通知应用程序该I/O可读或可写，这样应用程序可以马上完成相应的I/O操作，而不需要等待系统完成相应I/O操作，从而应用程序不必因等待I/O操作而阻塞。">
 <meta property="og:image" content="http://7xq2as.com1.z0.glb.clouddn.com/F5044F9E-F8BA-4D9F-A9BF-EBBE0ECDE09C.png">
-<meta property="og:updated_time" content="2016-01-20T15:09:06.000Z">
+<meta property="og:updated_time" content="2016-01-20T15:21:18.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="I/O多路复用">
-<meta name="twitter:description" content="I/O多路复用技术
+<meta name="twitter:description" content="【I/O多路复用技术】
 系统内核缓冲I/O数据，当某个I/O准备好后，系统通知应用程序该I/O可读或可写，这样应用程序可以马上完成相应的I/O操作，而不需要等待系统完成相应I/O操作，从而应用程序不必因等待I/O操作而阻塞。">
   
     <link rel="alternative" href="/atom.xml" title="XYM" type="application/atom+xml">
@@ -258,11 +258,11 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h4 id="I/O_u591A_u8DEF_u590D_u7528_u6280_u672F"><a href="#I/O_u591A_u8DEF_u590D_u7528_u6280_u672F" class="headerlink" title="I/O多路复用技术"></a><strong>I/O多路复用技术</strong></h4><blockquote>
+        <h4 id="u3010I/O_u591A_u8DEF_u590D_u7528_u6280_u672F_u3011"><a href="#u3010I/O_u591A_u8DEF_u590D_u7528_u6280_u672F_u3011" class="headerlink" title="【I/O多路复用技术】"></a><strong>【I/O多路复用技术】</strong></h4><blockquote>
 <p>系统内核缓冲I/O数据，当某个I/O准备好后，系统通知应用程序该I/O可读或可写，这样应用程序可以马上完成相应的I/O操作，而不需要等待系统完成相应I/O操作，从而应用程序不必因等待I/O操作而阻塞。</p>
 </blockquote>
 <a id="more"></a>
-<h4 id="select"><a href="#select" class="headerlink" title="select"></a><strong>select</strong></h4><blockquote>
+<h4 id="u3010select_u3011"><a href="#u3010select_u3011" class="headerlink" title="【select】"></a><strong>【select】</strong></h4><blockquote>
 <p>网上很多讲解select函数的，这里围绕下图讲解一下select函数。</p>
 <p><strong>函数构造：</strong><br>int select(int maxfd, fd_set readset, fd_set writeset, fd_set exceptset, timeval tv);</p>
 <ol>
@@ -284,10 +284,10 @@
 <li>select支持的文件描述符数量太小了，默认是1024。</li>
 </ol>
 </blockquote>
-<h4 id="poll"><a href="#poll" class="headerlink" title="poll"></a><strong>poll</strong></h4><blockquote>
+<h4 id="u3010poll_u3011"><a href="#u3010poll_u3011" class="headerlink" title="【poll】"></a><strong>【poll】</strong></h4><blockquote>
 <p>poll的实现和select非常相似，只是描述fd集合的方式不同，poll使用pollfd数组而不是select的fd_set结构，所以poll克服了select文件描述符数量的限制。</p>
 </blockquote>
-<h4 id="epoll"><a href="#epoll" class="headerlink" title="epoll"></a><strong>epoll</strong></h4><blockquote>
+<h4 id="u3010epoll_u3011"><a href="#u3010epoll_u3011" class="headerlink" title="【epoll】"></a><strong>【epoll】</strong></h4><blockquote>
 <p>epoll是一种reactor模式，提供了三个函数，epoll_create,epoll_ctl和epoll_wait。</p>
 <ol>
 <li>epoll_create是创建一个epoll句柄。</li>
@@ -312,7 +312,7 @@
         <p><span>本文标题:</span><a href="/2016/01/13/IO多路复用/">I/O多路复用</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 XYM 的个人博客">XYM</a></p>
         <p><span>发布时间:</span>2016年01月13日 - 19时46分</p>
-        <p><span>最后更新:</span>2016年01月20日 - 23时09分</p>
+        <p><span>最后更新:</span>2016年01月20日 - 23时21分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2016/01/13/IO多路复用/" title="I/O多路复用">http://xymlife.com/2016/01/13/IO多路复用/</a>
             <span class="copy-path" data-clipboard-text="原文: http://xymlife.com/2016/01/13/IO多路复用/　　作者: XYM" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -348,7 +348,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#I/O_u591A_u8DEF_u590D_u7528_u6280_u672F"><span class="toc-number">1.</span> <span class="toc-text">I/O多路复用技术</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#select"><span class="toc-number">2.</span> <span class="toc-text">select</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#poll"><span class="toc-number">3.</span> <span class="toc-text">poll</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#epoll"><span class="toc-number">4.</span> <span class="toc-text">epoll</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010I/O_u591A_u8DEF_u590D_u7528_u6280_u672F_u3011"><span class="toc-number">1.</span> <span class="toc-text">【I/O多路复用技术】</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010select_u3011"><span class="toc-number">2.</span> <span class="toc-text">【select】</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010poll_u3011"><span class="toc-number">3.</span> <span class="toc-text">【poll】</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010epoll_u3011"><span class="toc-number">4.</span> <span class="toc-text">【epoll】</span></a></li></ol>
 </div>
 <style>
     .left-col .switch-btn {

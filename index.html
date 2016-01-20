@@ -247,7 +247,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <h3 id="u524D_u8A00"><a href="#u524D_u8A00" class="headerlink" title="前言"></a><strong>前言</strong></h3><blockquote>
+              <h4 id="u3010_u524D_u8A00_u3011"><a href="#u3010_u524D_u8A00_u3011" class="headerlink" title="【前言】"></a><strong>【前言】</strong></h4><blockquote>
 <p>两者都是高性能的WSGI兼容的web服务器。既然是同种东西，必然有对比，网上有挺多benchmark，我也做过对应的benchmark，不过没有整理，这里推荐一下网上的一篇<a href="http://www.360ito.com/article/26.html">benchmark</a>，能够看出meinheld的性能确实好得令人意外。那么为什么meinheld会比gevent性能高这么多呢？我们从底层实现来看看，他究竟做了一些什么。</p>
 </blockquote>
           
@@ -313,7 +313,7 @@
               <blockquote>
 <p>这篇文章看的人还是挺多的，为了提升大家的阅读快感，特地写了这markdown版。希望大家会喜欢。</p>
 </blockquote>
-<h3 id="u3010_u524D_u8A00_u3011"><a href="#u3010_u524D_u8A00_u3011" class="headerlink" title="【前言】"></a><strong>【前言】</strong></h3><blockquote>
+<h4 id="u3010_u524D_u8A00_u3011"><a href="#u3010_u524D_u8A00_u3011" class="headerlink" title="【前言】"></a><strong>【前言】</strong></h4><blockquote>
 <p>后缀数组号称字符串处理神器，不过发现好多人都只会用模板，其实这不是我们学算法的本质，我们学习算法的本质应该理解其实现原理，并加以实现，特别是算法，更讲究的是一种思想。一年前的我也是只会用别人的模板，最近却静下心来，研究了一下后缀数组，自己写了一份自己的模板。<br>我基本上是跟着连教的ppt来学习的，当然也少不了百度，先讲一下基本概念。(这里大量引用了连教的ppt)</p>
 </blockquote>
           
@@ -376,7 +376,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <h4 id="Reactor__3F"><a href="#Reactor__3F" class="headerlink" title="Reactor ?"></a><strong>Reactor ?</strong></h4><blockquote>
+              <h4 id="u3010Reactor_u3011"><a href="#u3010Reactor_u3011" class="headerlink" title="【Reactor】"></a><strong>【Reactor】</strong></h4><blockquote>
 <p>Reactor设计模式在高性能I/O框架中随处可见，例如redis，tornado，gevent，libevent等。</p>
 <p><strong>Reactor可以翻译为反应器，是一种基于事件驱动的设计模式。</strong>那么它是如何运作的呢？其实很多设计模式都来源于生活中的一些常见的处理事情的方式。</p>
 <p>我们先来看一个例子：你和妹子去购物中心吃饭，发现很多人在排队，这时只需要让前台在电脑上填上你需要的双人位，和你的手机号码，待会有位置的时候会发短信给你，这时候你可以陪妹子到处逛逛，买买买。当餐厅有双人位空出的时候，就会发短信或打电话给你，这时你就可以带妹子去吃饭了。</p>
@@ -443,7 +443,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <h4 id="I/O_u591A_u8DEF_u590D_u7528_u6280_u672F"><a href="#I/O_u591A_u8DEF_u590D_u7528_u6280_u672F" class="headerlink" title="I/O多路复用技术"></a><strong>I/O多路复用技术</strong></h4><blockquote>
+              <h4 id="u3010I/O_u591A_u8DEF_u590D_u7528_u6280_u672F_u3011"><a href="#u3010I/O_u591A_u8DEF_u590D_u7528_u6280_u672F_u3011" class="headerlink" title="【I/O多路复用技术】"></a><strong>【I/O多路复用技术】</strong></h4><blockquote>
 <p>系统内核缓冲I/O数据，当某个I/O准备好后，系统通知应用程序该I/O可读或可写，这样应用程序可以马上完成相应的I/O操作，而不需要等待系统完成相应I/O操作，从而应用程序不必因等待I/O操作而阻塞。</p>
 </blockquote>
           
@@ -509,7 +509,7 @@
               <blockquote>
 <p>安装了Arch，顺便梳理一下linux启动流程。</p>
 </blockquote>
-<h4 id="BIOS_28MBR_29"><a href="#BIOS_28MBR_29" class="headerlink" title="BIOS(MBR)"></a><strong>BIOS(MBR)</strong></h4><blockquote>
+<h4 id="u3010BIOS_28MBR_29_u3011"><a href="#u3010BIOS_28MBR_29_u3011" class="headerlink" title="【BIOS(MBR)】"></a><strong>【BIOS(MBR)】</strong></h4><blockquote>
 <ol>
 <li>开机自检，通过通过BIOS加载CMOS，获取各种硬件信息。</li>
 <li>按照BIOS 的boot sequeuece顺序读取每一个存储设备的最前面512个字节,如果发现最后两个字节是0x55, oxAA,那么就找到了主引导扇区MBR。</li>
