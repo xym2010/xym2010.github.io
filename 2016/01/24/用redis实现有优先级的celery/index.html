@@ -3,18 +3,21 @@
 <head>
   <meta charset="utf-8">
   
-  <title>ubuntu ratproxy安装使用 | XYM</title>
+  <title>用redis实现有优先级的&quot;celery&quot; | XYM</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Google 推出一套免費的 Web 安全評估工具，叫做 RatProxy，這套工具可以檢測、分析您的網站是否有安全性漏洞或網頁是否有被入侵，目前可支援 Linux, FreeBSD, MacOS X, 與 Windows (Cygwin) 等執行環境（反正就是 Unix-like 的環境啦）。RatProxy 可偵測到的漏洞包括 Cross-site Scripting (XSS, 跨網站指令碼">
+  <meta name="description" content="【需求背景】
+对于异步任务处理，相信很多人首选celery，的确，celery处理异步任务非常强悍，使用简单，支持各种并发。但是，大家来看看我所遇到的一个应用场景：每次后台上传一个游戏母包，然后对这个母包处理（添加某种标识，比如id）生成多个游戏子包，其中有一些id号的包是要求尽快的处理的，剩下的可以闲时处理。这里就对要把一个母包分成两个任务来处理，其中一个是优先处理的，另一个是闲时处理。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ubuntu ratproxy安装使用">
-<meta property="og:url" content="http://xymlife.com/2015/03/11/ratproxy/index.html">
+<meta property="og:title" content="用redis实现有优先级的"celery"">
+<meta property="og:url" content="http://xymlife.com/2016/01/24/用redis实现有优先级的celery/index.html">
 <meta property="og:site_name" content="XYM">
-<meta property="og:description" content="Google 推出一套免費的 Web 安全評估工具，叫做 RatProxy，這套工具可以檢測、分析您的網站是否有安全性漏洞或網頁是否有被入侵，目前可支援 Linux, FreeBSD, MacOS X, 與 Windows (Cygwin) 等執行環境（反正就是 Unix-like 的環境啦）。RatProxy 可偵測到的漏洞包括 Cross-site Scripting (XSS, 跨網站指令碼">
-<meta property="og:updated_time" content="2016-01-19T15:48:18.000Z">
+<meta property="og:description" content="【需求背景】
+对于异步任务处理，相信很多人首选celery，的确，celery处理异步任务非常强悍，使用简单，支持各种并发。但是，大家来看看我所遇到的一个应用场景：每次后台上传一个游戏母包，然后对这个母包处理（添加某种标识，比如id）生成多个游戏子包，其中有一些id号的包是要求尽快的处理的，剩下的可以闲时处理。这里就对要把一个母包分成两个任务来处理，其中一个是优先处理的，另一个是闲时处理。">
+<meta property="og:updated_time" content="2016-01-23T17:10:27.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ubuntu ratproxy安装使用">
-<meta name="twitter:description" content="Google 推出一套免費的 Web 安全評估工具，叫做 RatProxy，這套工具可以檢測、分析您的網站是否有安全性漏洞或網頁是否有被入侵，目前可支援 Linux, FreeBSD, MacOS X, 與 Windows (Cygwin) 等執行環境（反正就是 Unix-like 的環境啦）。RatProxy 可偵測到的漏洞包括 Cross-site Scripting (XSS, 跨網站指令碼">
+<meta name="twitter:title" content="用redis实现有优先级的"celery"">
+<meta name="twitter:description" content="【需求背景】
+对于异步任务处理，相信很多人首选celery，的确，celery处理异步任务非常强悍，使用简单，支持各种并发。但是，大家来看看我所遇到的一个应用场景：每次后台上传一个游戏母包，然后对这个母包处理（添加某种标识，比如id）生成多个游戏子包，其中有一些id号的包是要求尽快的处理的，剩下的可以闲时处理。这里就对要把一个母包分成两个任务来处理，其中一个是优先处理的，另一个是闲时处理。">
   
     <link rel="alternative" href="/atom.xml" title="XYM" type="application/atom+xml">
   
@@ -216,11 +219,11 @@
         </header>                
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-ratproxy" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-用redis实现有优先级的celery" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2015/03/11/ratproxy/" class="article-date">
-      <time datetime="2015-03-11T02:48:26.000Z" itemprop="datePublished">2015-03-11</time>
+      <a href="/2016/01/24/用redis实现有优先级的celery/" class="article-date">
+      <time datetime="2016-01-23T17:07:13.000Z" itemprop="datePublished">2016-01-24</time>
 </a>
     </div>
   
@@ -233,7 +236,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      ubuntu ratproxy安装使用
+      用redis实现有优先级的&quot;celery&quot;
     </h1>
   
 
@@ -244,7 +247,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安全/">安全</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/笔记/">笔记</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/celery/">celery</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/">redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/supervisor/">supervisor</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/优先队列/">优先队列</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -254,28 +257,41 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <blockquote>
-<p>Google 推出一套免費的 Web 安全評估工具，叫做 RatProxy，這套工具可以檢測、分析您的網站是否有安全性漏洞或網頁是否有被入侵，目前可支援 Linux, FreeBSD, MacOS X, 與 Windows (Cygwin) 等執行環境（反正就是 Unix-like 的環境啦）。<br>RatProxy 可偵測到的漏洞包括 Cross-site Scripting (XSS, 跨網站指令碼)、指令碼惡意置入(script inclusion issues), 惡意網頁內容(content serving problems), insufficient XSRF 以及 XSS 防護(XSS defenses) 等。<br>参考: <a href="http://wiki.zheng-ji.info/Sec/ratproxy.html" target="_blank" rel="external">http://wiki.zheng-ji.info/Sec/ratproxy.html</a></p>
+        <h4 id="u3010_u9700_u6C42_u80CC_u666F_u3011"><a href="#u3010_u9700_u6C42_u80CC_u666F_u3011" class="headerlink" title="【需求背景】"></a><strong>【需求背景】</strong></h4><blockquote>
+<p>对于异步任务处理，相信很多人首选<a href="http://docs.jinkan.org/docs/celery/getting-started/introduction.html" target="_blank" rel="external">celery</a>，的确，celery处理异步任务非常强悍，使用简单，支持各种并发。但是，大家来看看我所遇到的一个应用场景：每次后台上传一个游戏母包，然后对这个母包处理（添加某种标识，比如id）生成多个游戏子包，其中有一些id号的包是要求尽快的处理的，剩下的可以闲时处理。这里就对要把一个母包分成两个任务来处理，其中一个是优先处理的，另一个是闲时处理。</p>
 </blockquote>
 <a id="more"></a>
-<p><strong> 1.安装ratproxy </strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install ratproxy</span><br></pre></td></tr></table></figure>
-<hr>
-<p><strong> 2.启动ratproxy </strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ratproxy -v logs -w logs/report.log <span class="operator">-d</span> www.baidu.com -lextifscgjm</span><br></pre></td></tr></table></figure>
-<hr>
-<p><strong> 3.设置代理 </strong></p>
-<ul>
-<li>启动时没有指定端口,所以默认端口8080,如果有指定端口则浏览器代理设置时填对应端口.</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">8080</span></span><br></pre></td></tr></table></figure>
-<hr>
-<p><strong> 4.生成报告 </strong></p>
-<ul>
-<li>先对你测试的网站进行对应该操作,然后相应的检测信息会写到我们启动ratproxy的 -w 指定的文件中,这时候是log文件,不方便我们阅读,需要重定向写到一个html文件中去.</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ratproxy-report logs/ratporxy.log &gt; report.html</span><br></pre></td></tr></table></figure>
-<p>用浏览器打开 report.html文件就可以看到网站的检测结果.</p>
+<h4 id="u3010_u65B9_u6848_u521D_u63A2_u3011"><a href="#u3010_u65B9_u6848_u521D_u63A2_u3011" class="headerlink" title="【方案初探】"></a><strong>【方案初探】</strong></h4><blockquote>
+<p>对于上面的场景，最先想到的方案是，把每个母包处理任务分成优先和闲时两个celery任务队列分别处理，分别单独配给cpu资源（土豪的话给多一台机器也行）专门处理。大家估计也想到这种做法的弊端了，这样无法有效使用资源，当优先任务队列没有任务时，闲时任务队列却满载，显然这种设计方案不是很好。</p>
+<p>那么有没有更好的处理方案呢？试想如果任务可以按优先级别在队列中排队就好了。显然celery并没有提供优先队列这种机制，那么我们只能自己实现一个celery一样的异步事件队列，并且支持优先级的队列。这时候显然想到的是<a href="http://doc.redisfans.com/" target="_blank" rel="external">redis</a>。</p>
+</blockquote>
+<h4 id="u3010redis_u4F18_u5148_u961F_u5217_u3011"><a href="#u3010redis_u4F18_u5148_u961F_u5217_u3011" class="headerlink" title="【redis优先队列】"></a><strong>【redis优先队列】</strong></h4><blockquote>
+<p>redis中提供了BLPOP，RPUSH（RLPOP，LPSUH）这些队列操作。</p>
+<p>来看看<a href="http://doc.redisfans.com/list/blpop.html" target="_blank" rel="external">BLOOP</a>的介绍：<br>BLPOP key [key …] timeout<br>BLPOP 是列表的阻塞式(blocking)弹出原语。<br>它是 LPOP 命令的阻塞版本，当给定列表内没有任何元素可供弹出的时候，连接将被 BLPOP命令阻塞，直到等待超时，或有另一个客户端对给定 key 的任意一个执行 LPUSH 或 RPUSH 命令为止。<br><strong>当给定多个 key 参数时，按参数 key的先后顺序依次检查各个列表，弹出第一个非空列表的头元素（这是就是实现优先级的关键）。</strong></p>
+<p>那么我们可以设置两个key，一个表示优先任务的key，姑且叫priority_task，另一个闲时任务的key，就叫normal_task。在添加任务时，把对应任务所要必备参数添加的对应的key值队列即可。具体如下：</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">priority_task = &#123;  <span class="comment"># 优先任务</span></span><br><span class="line">    <span class="string">'id_list'</span>: [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>],  <span class="comment"># 对应要生成子包id列表</span></span><br><span class="line">    <span class="string">'root_package_id'</span>: <span class="number">10086</span>  <span class="comment"># 母包数据表索引id</span></span><br><span class="line">&#125;</span><br><span class="line">redis.rpush(<span class="string">'priority_task'</span>, json.dumps(priority_task))</span><br><span class="line"></span><br><span class="line">normal_task = &#123;  <span class="comment"># 普通任务</span></span><br><span class="line">    <span class="string">'id_list'</span>: [<span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>],  <span class="comment"># 对应要生成子包id列表</span></span><br><span class="line">    <span class="string">'root_package_id'</span>: <span class="number">10086</span>  <span class="comment"># 母包数据表索引id</span></span><br><span class="line">&#125;</span><br><span class="line">redis.rpush(<span class="string">'normal_task'</span>, json.dumps(normal_task))</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>成功入队后，接下来就是不断从队列中取出任务，然后对应处理，大概代码如下：</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> <span class="number">1</span>:</span><br><span class="line">    <span class="comment"># 监听任务,没有打包任务则阻塞</span></span><br><span class="line">    key, task = redis.blpop([<span class="string">'priority_task'</span>, <span class="string">'normal_task'</span>])</span><br><span class="line">    deal_task(key, json.loads(task))</span><br></pre></td></tr></table></figure>
+<h4 id="u3010_u4EFB_u52A1_u52A8_u6001_u5207_u6362_u3011"><a href="#u3010_u4EFB_u52A1_u52A8_u6001_u5207_u6362_u3011" class="headerlink" title="【任务动态切换】"></a><strong>【任务动态切换】</strong></h4><blockquote>
+<p>上面实现保证了每次从队列取出的任务都是优先级别最高的，但是存在着问题，比如当前正在处理闲时任务，可是这个闲时任务可能要处理200+个包，这时候队列中又来了一个优先任务，那么这个优先任务必须等待之前的闲时任务处理完成才能开始处理，这显然不是我们想要的，那么我们能挂起当前正在处理的闲时任务，先去处理优先任务吗。显然是可以的，就是一个最简单的协程：函数调用。只需要在闲时任务处理完每个子包后，检查优先任务队列是否有元素，有则调用函数先处理优先任务，等优先任务完成后，再继续处理闲时任务。<br>处理函数大概如下：</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">deal_task</span><span class="params">(key, task)</span>:</span>  <span class="comment"># 任务处理函数</span></span><br><span class="line">    id_list = task[<span class="string">'id_list'</span>]  <span class="comment"># 要生成的子包id</span></span><br><span class="line">    <span class="keyword">for</span> id <span class="keyword">in</span> id_list:</span><br><span class="line">        do something....   <span class="comment"># 生成对应的id子包</span></span><br><span class="line">        <span class="keyword">if</span> key == <span class="string">'normal_key'</span>:  <span class="comment"># 如果当前是闲时任务</span></span><br><span class="line">            <span class="keyword">while</span> redis.llen(<span class="string">'priority_key'</span>) &gt; <span class="number">0</span>:  <span class="comment"># 检查是否有优先任务，有则获取并执行</span></span><br><span class="line">                priority_task = redis.lpop(<span class="string">'priority_key'</span>)</span><br><span class="line">                <span class="keyword">if</span> priority_task:</span><br><span class="line">                    deal_task(<span class="string">'priority_key'</span>, json.loads(priority_task))  <span class="comment"># 执行优先任务处理</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>以上就是实现一个单进程处理异步优先任务队列的全过程。</p>
+</blockquote>
+<h4 id="u3010_u591A_u8FDB_u7A0B_u5316_u3011"><a href="#u3010_u591A_u8FDB_u7A0B_u5316_u3011" class="headerlink" title="【多进程化】"></a><strong>【多进程化】</strong></h4><blockquote>
+<p>上面实现都是单进程处理的，为了提升处理效率，我们可以开多个进程提升并发量，这里建议使用<a href="https://pypi.python.org/pypi/supervisor/" target="_blank" rel="external">supervisor</a>来管理你的这些进程。这里需要注意：</p>
+<ol>
+<li>多进程处理临界资源，如果没有相关临界资源的竞争那最好，如果有，那么你必须考虑怎么处理，一般是用队列顺序化。</li>
+<li>supervisor持久化进程数据库链接，会导致数据库虽然已经断开连接，但是进程并不知晓，当进程再次执行数据库查询时就会出错，mysql一般会报一个gone away的错误。<br><strong>注：还可以用进程池异步处理。</strong></li>
+</ol>
+</blockquote>
+<h4 id="u3010_u6700_u540E_u3011"><a href="#u3010_u6700_u540E_u3011" class="headerlink" title="【最后】"></a><strong>【最后】</strong></h4><blockquote>
+<p>以上是本人的处理方案，如果有更好的建议记得留下宝贵的意见(&gt;▽&lt;)。</p>
+</blockquote>
 
       
     </div>
@@ -284,13 +300,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2015/03/11/ratproxy/">ubuntu ratproxy安装使用</a></p>
+        <p><span>本文标题:</span><a href="/2016/01/24/用redis实现有优先级的celery/">用redis实现有优先级的&quot;celery&quot;</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 XYM 的个人博客">XYM</a></p>
-        <p><span>发布时间:</span>2015年03月11日 - 10时48分</p>
-        <p><span>最后更新:</span>2016年01月19日 - 23时48分</p>
+        <p><span>发布时间:</span>2016年01月24日 - 01时07分</p>
+        <p><span>最后更新:</span>2016年01月24日 - 01时10分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2015/03/11/ratproxy/" title="ubuntu ratproxy安装使用">http://xymlife.com/2015/03/11/ratproxy/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://xymlife.com/2015/03/11/ratproxy/　　作者: XYM" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2016/01/24/用redis实现有优先级的celery/" title="用redis实现有优先级的&quot;celery&quot;">http://xymlife.com/2016/01/24/用redis实现有优先级的celery/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://xymlife.com/2016/01/24/用redis实现有优先级的celery/　　作者: XYM" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -303,16 +319,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2015/06/22/redis/">
-                    Redis
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2015/03/09/hexo-skill/">
-                    hexo常用技巧
+                <a href="/2016/01/18/meinheld为何比gevent高效？/">
+                    meinheld为何比gevent高效？
                 </a>
             </div>
         
@@ -323,7 +333,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    
+    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010_u9700_u6C42_u80CC_u666F_u3011"><span class="toc-number">1.</span> <span class="toc-text">【需求背景】</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010_u65B9_u6848_u521D_u63A2_u3011"><span class="toc-number">2.</span> <span class="toc-text">【方案初探】</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010redis_u4F18_u5148_u961F_u5217_u3011"><span class="toc-number">3.</span> <span class="toc-text">【redis优先队列】</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010_u4EFB_u52A1_u52A8_u6001_u5207_u6362_u3011"><span class="toc-number">4.</span> <span class="toc-text">【任务动态切换】</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010_u591A_u8FDB_u7A0B_u5316_u3011"><span class="toc-number">5.</span> <span class="toc-text">【多进程化】</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010_u6700_u540E_u3011"><span class="toc-number">6.</span> <span class="toc-text">【最后】</span></a></li></ol>
 </div>
 <style>
     .left-col .switch-btn {
@@ -387,7 +397,7 @@
     
       <div class="duoshuo" id="comments">
     <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="2015/03/11/ratproxy/" data-title="ubuntu ratproxy安装使用" data-url="http://xymlife.com/2015/03/11/ratproxy/"></div>
+    <div class="ds-thread" data-thread-key="2016/01/24/用redis实现有优先级的celery/" data-title="用redis实现有优先级的&quot;celery&quot;" data-url="http://xymlife.com/2016/01/24/用redis实现有优先级的celery/"></div>
     <!-- 多说评论框 end -->
     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
     <script type="text/javascript">
@@ -412,15 +422,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2015/06/22/redis/" title="上一篇: Redis">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2015/03/09/hexo-skill/" title="下一篇: hexo常用技巧">
+            <a href="/2016/01/18/meinheld为何比gevent高效？/" title="下一篇: meinheld为何比gevent高效？">
                 <i class="fa fa-angle-right"></i>
             </a>
         
