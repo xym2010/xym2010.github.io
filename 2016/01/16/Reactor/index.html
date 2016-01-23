@@ -190,7 +190,9 @@ Reactor可以翻译为反应器，是一种基于事件驱动的设计模式。�
     <div class="intrude-less">
         <header id="header" class="inner">
             <a href="/" class="profilepic">
-                <img lazy-src="/img/hello_world_150.JPG" class="js-avatar">
+                
+                    <img lazy-src="/img/hello_world_150.JPG" class="js-avatar">
+                
             </a>
             <hgroup>
               <h1 class="header-author"><a href="/" title="回到主页">XYM</a></h1>
@@ -402,7 +404,7 @@ Reactor可以翻译为反应器，是一种基于事件驱动的设计模式。�
         var ds = document.createElement('script');
         ds.type = 'text/javascript';ds.async = true;
         <!--ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';-->
-        ds.src = "http://xymlife.com/js/embed.js";
+        ds.src = "http://xymlife.com/js/embed.js"
         ds.charset = 'UTF-8';
         (document.getElementsByTagName('head')[0] 
          || document.getElementsByTagName('body')[0]).appendChild(ds);
@@ -471,18 +473,27 @@ Reactor可以翻译为反应器，是一种基于事件驱动的设计模式。�
                 <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的静态博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减双栏 Hexo 博客主题">Yelee</a> by MOxFIVE
             </div>
         </div>
-        <div class="visit">
-            <span id="busuanzi_container_site_pv" style='display:none'>
-                <span id="site-visit" >本站到访数: 
-                    <span id="busuanzi_value_site_uv"></span>
-                </span>
-            </span>
-            <span id="busuanzi_container_page_pv" style='display:none'>
-                <span id="page-visit">, 本页阅读量: 
-                    <span id="busuanzi_value_page_pv"></span>
-                </span>
-            </span>
-        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >本站到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
     </div>
 </footer>
     </div>

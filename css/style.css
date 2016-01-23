@@ -617,8 +617,8 @@ a {
   text-align: center;
   display: block;
   border: 5px solid #fff;
-  -webkit-border-radius: 300px;
-  border-radius: 300px;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
   width: 128px;
   height: 128px;
   margin: 0 auto;
@@ -634,8 +634,8 @@ a {
 #header .profilepic img {
   width: 20%;
   height: 20%;
-  -webkit-border-radius: 300px;
-  border-radius: 300px;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
   opacity: 0;
   -webkit-transition: all 0.2s ease-in;
 }
@@ -716,7 +716,6 @@ a {
   min-height: 84px;
   max-height: 140px;
   overflow: auto;
-  margin-left: -12px;
   text-align: center;
   display: -webkit-box;
   -webkit-box-orient: horizontal;
@@ -759,7 +758,6 @@ a {
   transition: transform 0.3s ease-in;
 }
 #header .header-nav .social {
-  margin-right: 11px;
   margin-top: 10px;
   text-align: center;
   font-family: Arial;
@@ -2329,7 +2327,7 @@ pre .javascript .function {
   }
 }
 .switch-btn {
-  margin-left: 74px;
+  margin: 0 auto;
   margin-top: 23px;
   position: relative;
   width: 70px;
