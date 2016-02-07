@@ -18,7 +18,7 @@
 <meta property="og:image" content="http://7xq2as.com1.z0.glb.clouddn.com/70f58fb6-ba03-11e4-82c9-c083bf9a6574%20(1).png">
 <meta property="og:image" content="http://7xq2as.com1.z0.glb.clouddn.com/2D7615C4-0257-4C4A-97D2-496929B9E334%20(1).jpeg">
 <meta property="og:image" content="http://7xq2as.com1.z0.glb.clouddn.com/4C48CD16-FC46-4FB5-AF89-5511F2D55FA5%20(1).jpeg">
-<meta property="og:updated_time" content="2016-02-07T15:46:42.000Z">
+<meta property="og:updated_time" content="2016-02-07T15:56:31.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="打造自己的Python编码环境">
 <meta name="twitter:description" content="【前言】
@@ -285,17 +285,12 @@
 <h4 id="u3010_u6253_u78E8_u9636_u6BB5_uFF1A_u5229_u5668_u3011"><a href="#u3010_u6253_u78E8_u9636_u6BB5_uFF1A_u5229_u5668_u3011" class="headerlink" title="【打磨阶段：利器】"></a><strong>【打磨阶段：利器】</strong></h4><blockquote>
 <p>上面的工具准备好了后，就可以开始配置这些工具了。</p>
 <p><strong>Zsh配置</strong></p>
-<ul>
-<li><a href="https://github.com/robbyrussell/oh-my-zsh" target="_blank" rel="external">oh-my-zsh</a>：一套强大的开源zsh配置文件。安装如下：</li>
-</ul>
+<p><a href="https://github.com/robbyrussell/oh-my-zsh" target="_blank" rel="external">oh-my-zsh</a>：一套强大的开源zsh配置文件。安装如下：</p>
 </blockquote>
 <figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/<span class="regexp">/ 使用curl安装</span><br><span class="line">$ sh -c "$(curl -fsSL https:/</span><span class="regexp">/raw.github.com/robbyrussell</span><span class="regexp">/oh-my-zsh/master</span><span class="regexp">/tools/install</span>.sh)<span class="string">" </span><br><span class="line">// 或者使用wget安装</span><br><span class="line">$ sh -c "</span><span class="variable">$(</span>wget <span class="symbol">https:</span>/<span class="regexp">/raw.github.com/robbyrussell</span><span class="regexp">/oh-my-zsh/master</span><span class="regexp">/tools/install</span>.sh -<span class="constant">O</span> -)<span class="string">"</span><br><span class="line">// 安装后重新载入配置</span><br><span class="line">$ source .zshrc</span></span><br></pre></td></tr></table></figure>
 <blockquote>
-<ul>
-<li><p><a href="https://github.com/robbyrussell/oh-my-zsh/wiki/themes" target="_blank" rel="external">oh-my-zsh主题</a>： oh-my-zsh有多款配套主题，点击前面的主题链接可以看到所有主题。这里主要介绍下agnoster主题。修改zsh配置文件（~/.zshrc）中的主题属性为agnoster即可。官方图如下：<br><img src="http://7xq2as.com1.z0.glb.clouddn.com/70f58fb6-ba03-11e4-82c9-c083bf9a6574%20(1).png" alt="此处输入图片的描述"></p>
-<p>安装这个主题需要额外安装<a href="https://github.com/powerline/fonts" target="_blank" rel="external">powerline</a>字体，不然会显示乱码。如果你想隐藏自己的用户名信息，需要在zsh配置文件中设置默认用户。具体安装配置如下：</p>
-</li>
-</ul>
+<p><a href="https://github.com/robbyrussell/oh-my-zsh/wiki/themes" target="_blank" rel="external">oh-my-zsh主题</a>： oh-my-zsh有多款配套主题，点击前面的主题链接可以看到所有主题。这里主要介绍下agnoster主题。修改zsh配置文件（~/.zshrc）中的主题属性为agnoster即可。官方图如下：<br><img src="http://7xq2as.com1.z0.glb.clouddn.com/70f58fb6-ba03-11e4-82c9-c083bf9a6574%20(1).png" alt="此处输入图片的描述"></p>
+<p> 安装这个主题需要额外安装<a href="https://github.com/powerline/fonts" target="_blank" rel="external">powerline</a>字体，不然会显示乱码。如果你想隐藏自己的用户名信息，需要在zsh配置文件中设置默认用户。具体安装配置如下：</p>
 </blockquote>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 修改zsh配置文件</span></span><br><span class="line">$ vim ~/<span class="class">.zshrc</span></span><br><span class="line">  ZSH_THEME=<span class="string">"agnoster"</span>  <span class="comment">//在.zshrc中修改ZSH_THEME</span></span><br><span class="line">  DEFAULT_USER=username <span class="comment">// 在.zshrc中添加或者修改默认用户为自己，开启终端后就不会显示自己的用户名信息</span></span><br><span class="line">$ source ~/<span class="class">.zshrc</span>       <span class="comment">// 重新载入配置文件</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// poweline font 安装</span></span><br><span class="line">$ git clone https:<span class="comment">//github.com/powerline/fonts.git</span></span><br><span class="line">$ cd powerline</span><br><span class="line">$ ./install.sh</span><br></pre></td></tr></table></figure>
 <blockquote>
@@ -323,7 +318,7 @@
         <p><span>本文标题:</span><a href="/2016/02/07/打造自己的Python编码环境/">打造自己的Python编码环境</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 XYM 的个人博客">XYM</a></p>
         <p><span>发布时间:</span>2016年02月07日 - 23时35分</p>
-        <p><span>最后更新:</span>2016年02月07日 - 23时46分</p>
+        <p><span>最后更新:</span>2016年02月07日 - 23时56分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2016/02/07/打造自己的Python编码环境/" title="打造自己的Python编码环境">http://xymlife.com/2016/02/07/打造自己的Python编码环境/</a>
             <span class="copy-path" data-clipboard-text="原文: http://xymlife.com/2016/02/07/打造自己的Python编码环境/　　作者: XYM" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
