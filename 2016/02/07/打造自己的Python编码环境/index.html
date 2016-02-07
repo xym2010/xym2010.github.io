@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>打造自己的Python编码环境 | XYM</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="【前言】
+趁着放假，重新配置了一下自己的Mac的编程环境，毕竟新年新气象嘛，主要是iTerm2、Zsh、Vim优化、Consolas字体、NoisyTyper，这些的相关配置。工欲利其事必先利其器，好的编码环境可以提升我们的打码的幸福感。好的编码环境包括美观（视觉），声音（听觉），流畅度（触觉），工作环境（嗅觉，味觉）等多个方面。后面有几张配置后的图片感受一下，主要看字体和配色（有些人可能觉得比较">
+<meta property="og:type" content="article">
+<meta property="og:title" content="打造自己的Python编码环境">
+<meta property="og:url" content="http://xymlife.com/2016/02/07/打造自己的Python编码环境/index.html">
+<meta property="og:site_name" content="XYM">
+<meta property="og:description" content="【前言】
+趁着放假，重新配置了一下自己的Mac的编程环境，毕竟新年新气象嘛，主要是iTerm2、Zsh、Vim优化、Consolas字体、NoisyTyper，这些的相关配置。工欲利其事必先利其器，好的编码环境可以提升我们的打码的幸福感。好的编码环境包括美观（视觉），声音（听觉），流畅度（触觉），工作环境（嗅觉，味觉）等多个方面。后面有几张配置后的图片感受一下，主要看字体和配色（有些人可能觉得比较">
+<meta property="og:image" content="http://7xq2as.com1.z0.glb.clouddn.com/A7B15512-47CB-4A87-B88B-89DF5316B7BD%20%281%29.png">
+<meta property="og:image" content="http://7xq2as.com1.z0.glb.clouddn.com/0F91C711-1176-420B-9281-66EDA531D77A%20(1).png">
+<meta property="og:image" content="http://7xq2as.com1.z0.glb.clouddn.com/70f58fb6-ba03-11e4-82c9-c083bf9a6574%20(1).png">
+<meta property="og:image" content="http://7xq2as.com1.z0.glb.clouddn.com/2D7615C4-0257-4C4A-97D2-496929B9E334%20(1).jpeg">
+<meta property="og:image" content="http://7xq2as.com1.z0.glb.clouddn.com/4C48CD16-FC46-4FB5-AF89-5511F2D55FA5%20(1).jpeg">
+<meta property="og:updated_time" content="2016-02-07T15:46:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="打造自己的Python编码环境">
+<meta name="twitter:description" content="【前言】
+趁着放假，重新配置了一下自己的Mac的编程环境，毕竟新年新气象嘛，主要是iTerm2、Zsh、Vim优化、Consolas字体、NoisyTyper，这些的相关配置。工欲利其事必先利其器，好的编码环境可以提升我们的打码的幸福感。好的编码环境包括美观（视觉），声音（听觉），流畅度（触觉），工作环境（嗅觉，味觉）等多个方面。后面有几张配置后的图片感受一下，主要看字体和配色（有些人可能觉得比较">
+  
+    <link rel="alternative" href="/atom.xml" title="XYM" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/my_favicon.jpg">
+  
+  
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <script>
+      var yiliaConfig = {
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/hello_world_150.JPG" class="js-avatar">
+            
+        </a>
+
+        <hgroup>
+          <h1 class="header-author"><a href="/">XYM</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">念念不忘，必有回响。</p>
+        
+        
+        <form><input type="text" class="search" placeholder=" Search..."></form>
+                
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <li id="新浪微博"><a class="新浪微博" target="_blank" href="http://weibo.com/xymacmer/" title="新浪微博"></a></li>
+                            
+                                <li id="GitHub"><a class="GitHub" target="_blank" href="http://github.com/xym2010" title="GitHub"></a></li>
+                            
+                                <li id="RSS"><a class="RSS" target="_blank" href="/atom.xml" title="RSS"></a></li>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/I-O多路复用/" style="font-size: 20px;">I/O多路复用</a> <a href="/tags/Mac-python/" style="font-size: 10px;">Mac/python</a> <a href="/tags/arch/" style="font-size: 10px;">arch</a> <a href="/tags/celery/" style="font-size: 10px;">celery</a> <a href="/tags/consolas/" style="font-size: 10px;">consolas</a> <a href="/tags/gevent/" style="font-size: 10px;">gevent</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/iterm2/" style="font-size: 10px;">iterm2</a> <a href="/tags/libevent/" style="font-size: 15px;">libevent</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/meinheld/" style="font-size: 10px;">meinheld</a> <a href="/tags/picoev/" style="font-size: 10px;">picoev</a> <a href="/tags/reactor/" style="font-size: 10px;">reactor</a> <a href="/tags/redis/" style="font-size: 20px;">redis</a> <a href="/tags/supervisor/" style="font-size: 10px;">supervisor</a> <a href="/tags/vim/" style="font-size: 10px;">vim</a> <a href="/tags/zsh/" style="font-size: 10px;">zsh</a> <a href="/tags/事件驱动/" style="font-size: 10px;">事件驱动</a> <a href="/tags/优先队列/" style="font-size: 10px;">优先队列</a> <a href="/tags/后缀数组/" style="font-size: 10px;">后缀数组</a> <a href="/tags/字符串处理/" style="font-size: 10px;">字符串处理</a> <a href="/tags/安全/" style="font-size: 10px;">安全</a> <a href="/tags/技能/" style="font-size: 10px;">技能</a> <a href="/tags/排序/" style="font-size: 10px;">排序</a> <a href="/tags/操作系统/" style="font-size: 15px;">操作系统</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/笔记/" style="font-size: 10px;">笔记</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/xymscau/">我的CSDN博客</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.90arther.net">90Arther</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">未知生物</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">XYM</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/hello_world_150.JPG" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">XYM</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">念念不忘，必有回响。</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <li id="新浪微博"><a class="新浪微博" target="_blank" href="http://weibo.com/xymacmer/" title="新浪微博"></a></li>
+                            
+                                <li id="GitHub"><a class="GitHub" target="_blank" href="http://github.com/xym2010" title="GitHub"></a></li>
+                            
+                                <li id="RSS"><a class="RSS" target="_blank" href="/atom.xml" title="RSS"></a></li>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-打造自己的Python编码环境" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/02/07/打造自己的Python编码环境/" class="article-date">
+      <time datetime="2016-02-07T15:35:14.000Z" itemprop="datePublished">2016-02-07</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      打造自己的Python编码环境
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mac-python/">Mac/python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/consolas/">consolas</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iterm2/">iterm2</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vim/">vim</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/zsh/">zsh</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h4 id="u3010_u524D_u8A00_u3011"><a href="#u3010_u524D_u8A00_u3011" class="headerlink" title="【前言】"></a><strong>【前言】</strong></h4><blockquote>
+<p>趁着放假，重新配置了一下自己的Mac的编程环境，毕竟新年新气象嘛，主要是iTerm2、Zsh、Vim优化、Consolas字体、NoisyTyper，这些的相关配置。工欲利其事必先利其器，好的编码环境可以提升我们的打码的幸福感。好的编码环境包括<strong>美观（视觉），声音（听觉），流畅度（触觉），工作环境（嗅觉，味觉）</strong>等多个方面。后面有几张配置后的图片感受一下，主要看字体和配色<strong>（有些人可能觉得比较丑，个人喜欢黑紫，配色和字体有很多选择，各有所好，求别喷 XD）</strong>。</p>
+<p>Zsh效果<br><img src="http://7xq2as.com1.z0.glb.clouddn.com/A7B15512-47CB-4A87-B88B-89DF5316B7BD%20%281%29.png" alt="此处输入图片的描述"></p>
+<p>Vim效果<br><img src="http://7xq2as.com1.z0.glb.clouddn.com/0F91C711-1176-420B-9281-66EDA531D77A%20(1).png" alt="此处输入图片的描述"></p>
+</blockquote>
+<a id="more"></a>
+<h4 id="u3010_u51C6_u5907_u9636_u6BB5_uFF1A_u5668_u3011"><a href="#u3010_u51C6_u5907_u9636_u6BB5_uFF1A_u5668_u3011" class="headerlink" title="【准备阶段：器】"></a><strong>【准备阶段：器】</strong></h4><blockquote>
+<p><a href="https://www.iterm2.com/" target="_blank" rel="external">iTerm2</a>：是os系统中的一个替代终端。主要优点：屏幕分割（可以水平分割和垂直分割），选中即复制，快速查找(command+f)，配色字体自定义化，自定义快捷键等。</p>
+<p><a href="http://baike.baidu.com/link?url=utDFn9oCVk-dT0d2N2XvU1ANs3zjcYaALYGvGJpkgXKR80e9Hdt-nZCn5iWwPtFNBOSdRenPcjarpmb92GhNJ_" target="_blank" rel="external">Consolas</a>：微软下最好看的字体之一，个人认为很适合程序员，除开字体好看外，主要原因是它的数字“0”字加入了一斜撇，以方便与字母“o”分辨。这也是我和它结缘的主要缘由，当年在某次acm比赛中，就是因为肉眼无法分辨是0还是o，遗憾至今。</p>
+<p><a href="https://wiki.archlinux.org/index.php/Zsh_%28%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87%29" target="_blank" rel="external">Zsh</a>：zsh和bash一样是Shell的一种。相比bash：更高效、更好的自动补全、更好的文件名展开（通配符展开）、更好的数组处理、可定制性高。mac下自带了zsh，无需再安装。</p>
+<p><a href="http://baike.baidu.com/link?url=6wOFRZ2btdRojE5FRHpiKOha3iVW5EdgUCc9kHFB_IPOWUQ_XABhwqIVBGQ-qqzb2iE6aVjzY4WAWq3R2fxlHbbm0ad0Ldf9ATai7B_ay5K" target="_blank" rel="external">Vim</a>：是一个类似于Vi的著名的功能强大、高度可定制的文本编辑器，在Vi的基础上改进和增加了很多特性。和Emacs并列成为类Unix系统用户最喜欢的编辑器。估计大家都很熟悉，不做累述。</p>
+<p><a href="http://www.douban.com/subject/14327967/" target="_blank" rel="external">NoisyTyper</a>：一款提升你打字逼格的软件，可以让你打字的时候发出打字机的声音，咔咔咔这样。</p>
+<p><strong>上面几个安装都比较简单，教程也比较多。这里主要讲一下mac下consolas字体的安装。</strong></p>
+</blockquote>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>brew install cabextract</span><br><span class="line"><span class="variable">$ </span>cd ~<span class="regexp">/Downloads</span><br><span class="line">$ mkdir consolas</span><br><span class="line">$ cd consolas</span><br><span class="line">$ curl -O http:/</span><span class="regexp">/download.microsoft.com/download</span><span class="regexp">/f/</span><span class="number">5</span>/a/f5a3df76-d856-<span class="number">4</span>a61-a6bd-<span class="number">722</span>f52a5be26/<span class="constant">PowerPointViewer</span>.exe</span><br><span class="line"><span class="variable">$ </span>cabextract <span class="constant">PowerPointViewer</span>.exe</span><br><span class="line"><span class="variable">$ </span>cabextract ppviewer.cab</span><br><span class="line"><span class="variable">$ </span>open <span class="constant">CONSOLA</span>*.<span class="constant">TTF</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>最后按下弹出窗口的安装键就ok了。</p>
+</blockquote>
+<h4 id="u3010_u6253_u78E8_u9636_u6BB5_uFF1A_u5229_u5668_u3011"><a href="#u3010_u6253_u78E8_u9636_u6BB5_uFF1A_u5229_u5668_u3011" class="headerlink" title="【打磨阶段：利器】"></a><strong>【打磨阶段：利器】</strong></h4><blockquote>
+<p>上面的工具准备好了后，就可以开始配置这些工具了。</p>
+<p><strong>Zsh配置</strong></p>
+<ul>
+<li><a href="https://github.com/robbyrussell/oh-my-zsh" target="_blank" rel="external">oh-my-zsh</a>：一套强大的开源zsh配置文件。安装如下：</li>
+</ul>
+</blockquote>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/<span class="regexp">/ 使用curl安装</span><br><span class="line">$ sh -c "$(curl -fsSL https:/</span><span class="regexp">/raw.github.com/robbyrussell</span><span class="regexp">/oh-my-zsh/master</span><span class="regexp">/tools/install</span>.sh)<span class="string">" </span><br><span class="line">// 或者使用wget安装</span><br><span class="line">$ sh -c "</span><span class="variable">$(</span>wget <span class="symbol">https:</span>/<span class="regexp">/raw.github.com/robbyrussell</span><span class="regexp">/oh-my-zsh/master</span><span class="regexp">/tools/install</span>.sh -<span class="constant">O</span> -)<span class="string">"</span><br><span class="line">// 安装后重新载入配置</span><br><span class="line">$ source .zshrc</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li><p><a href="https://github.com/robbyrussell/oh-my-zsh/wiki/themes" target="_blank" rel="external">oh-my-zsh主题</a>： oh-my-zsh有多款配套主题，点击前面的主题链接可以看到所有主题。这里主要介绍下agnoster主题。修改zsh配置文件（~/.zshrc）中的主题属性为agnoster即可。官方图如下：<br><img src="http://7xq2as.com1.z0.glb.clouddn.com/70f58fb6-ba03-11e4-82c9-c083bf9a6574%20(1).png" alt="此处输入图片的描述"></p>
+<p>安装这个主题需要额外安装<a href="https://github.com/powerline/fonts" target="_blank" rel="external">powerline</a>字体，不然会显示乱码。如果你想隐藏自己的用户名信息，需要在zsh配置文件中设置默认用户。具体安装配置如下：</p>
+</li>
+</ul>
+</blockquote>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 修改zsh配置文件</span></span><br><span class="line">$ vim ~/<span class="class">.zshrc</span></span><br><span class="line">  ZSH_THEME=<span class="string">"agnoster"</span>  <span class="comment">//在.zshrc中修改ZSH_THEME</span></span><br><span class="line">  DEFAULT_USER=username <span class="comment">// 在.zshrc中添加或者修改默认用户为自己，开启终端后就不会显示自己的用户名信息</span></span><br><span class="line">$ source ~/<span class="class">.zshrc</span>       <span class="comment">// 重新载入配置文件</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// poweline font 安装</span></span><br><span class="line">$ git clone https:<span class="comment">//github.com/powerline/fonts.git</span></span><br><span class="line">$ cd powerline</span><br><span class="line">$ ./install.sh</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>iTerm2配置</strong></p>
+<p><a href="https://github.com/powerline/fonts" target="_blank" rel="external">字体</a>：接着要在iterm2的Perferences中Text中选择常规字体 为consolas字体或者其他你喜欢的字体，非ASCII码字体为powerline字体（<strong>一定要是名字中带powerline的字体，不然还是乱码</strong>）。如下：<br><img src="http://7xq2as.com1.z0.glb.clouddn.com/2D7615C4-0257-4C4A-97D2-496929B9E334%20(1).jpeg" alt="此处输入图片的描述"></p>
+<p><a href="https://github.com/mbadolato/iTerm2-Color-Schemes" target="_blank" rel="external">iTerm2配色</a>：从<a href="https://github.com/mbadolato/iTerm2-Color-Schemes" target="_blank" rel="external">这里</a>可以获取很多别人的配色主题，把整个项目git clone下来，然后在iterm2的Perferences中的Colors最下面的Load Presets中import git下来的terminal文件，自己可以根据自己喜欢调整自己喜欢的颜色，我选的是Fish Tank，我自己微调了一些配色。如下：<br><img src="http://7xq2as.com1.z0.glb.clouddn.com/4C48CD16-FC46-4FB5-AF89-5511F2D55FA5%20(1).jpeg" alt="此处输入图片的描述"></p>
+<p><strong>Vim配置</strong><br>之前一直用spf13，但是打开大文件太卡了，所以自己重新配置了一份。实测打开8000+行代码的文件，因为语法检测，所以大概延时1s左右，之后操作很顺畅。在配置过程中会遇到很多蛋疼的地方。需要比较系统的学习一下vim脚本的语法和相关配置方法，vim网上很多配置好文，如<a href="https://github.com/yangyangwithgnu/use_vim_as_ide" target="_blank" rel="external">《像 IDE 一样使用 vim》</a>，还有<a href="http://vimdoc.sourceforge.net" target="_blank" rel="external">《vim 脚本学习文档》</a>，我就不累述了，配置文件的注释写的比较详细。我的配置主要针对python开发，另外需要额外安装python包flake8。具体如下：</p>
+<p>vimrc文件，主要是vim基础配置。</p>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br></pre></td><td class="code"><pre><span class="line">" .vimrc</span><br><span class="line">" 相关vim脚本文档 http://vimdoc.sourceforge.net</span><br><span class="line">" 相关好文 https://github.com/yangyangwithgnu/use_vim_as_ide</span><br><span class="line"></span><br><span class="line">" 基本配置</span><br><span class="line"><span class="operator"><span class="keyword">set</span> nocompatible <span class="string">"不要vim模仿vi模式，建议设置，否则会有很多不兼容的问题</span><br><span class="line">set mouse=a      "</span> 启动鼠标所有模式，但是右键功能不可用, 可以保证鼠标滚屏在当前屏幕内</span><br><span class="line"><span class="keyword">set</span> mousehide    <span class="string">" 输入文件时隐藏鼠标</span><br><span class="line">set backspace=indent,eol,start   "</span> 退格键分别可删除缩进，上一行结束，<span class="keyword">insert</span>之前的字</span><br><span class="line"><span class="keyword">set</span> showmatch     <span class="string">" 设置匹配模式 </span><br><span class="line">set nobackup      "</span> 不备份</span><br><span class="line"><span class="keyword">set</span> nowritebackup <span class="string">" 不写入备份文件</span><br><span class="line">set noswapfile    "</span> 关闭交换文件</span><br><span class="line"><span class="keyword">set</span> history=<span class="number">500</span>	  <span class="string">" history存储长</span><br><span class="line">set ruler         "</span> 显示标尺 </span><br><span class="line"><span class="keyword">set</span> showcmd       <span class="string">" 显示输入命令 </span><br><span class="line">set incsearch     "</span> 搜索时自动匹配 </span><br><span class="line"><span class="keyword">set</span> hlsearch      <span class="string">" 高亮搜索项 </span><br><span class="line">set ignorecase    "</span> 无视大小写 </span><br><span class="line"><span class="keyword">set</span> smartcase     <span class="string">" 如果有大写就区别大小写匹配 </span><br><span class="line">set laststatus=2  "</span> 总是显示状态栏 </span><br><span class="line"><span class="string">" set autowrite     "</span> 切换文件自动保存 </span><br><span class="line"><span class="keyword">set</span> shortmess=atI<span class="string">"  "</span> 关闭欢迎页面</span><br><span class="line"><span class="keyword">set</span> viewoptions=folds,options,<span class="keyword">cursor</span>,unix,slash <span class="string">" Better Unix / Windows compatibility</span><br><span class="line">set virtualedit=onemore             "</span> 光标可以移到当行最后一个字符之后 </span><br><span class="line"><span class="keyword">set</span> hidden                          <span class="string">" 切换文件不保存，隐藏 </span><br><span class="line">"</span><span class="keyword">set</span> <span class="keyword">confirm</span>       <span class="string">" 退出前验证</span><br><span class="line">"</span> <span class="keyword">set</span> spell         <span class="string">" 拼写检查</span><br><span class="line">set linespace=0   "</span> 行之间没有多余的空格</span><br><span class="line"><span class="keyword">set</span> wildmenu      <span class="string">" 自动补全时的文件菜单</span><br><span class="line">set wildmode=list:longest,full "</span> 自动补全时，匹配最长子串，列出文件</span><br><span class="line"><span class="keyword">set</span> whichwrap=b,s,h,<span class="keyword">l</span>,&lt;,&gt;,[,]  <span class="string">" 行尾可右移到下行，行首左移到上行,b：退格，s：空格，hl：左右，&lt;&gt;：n/v模式下的左右，[]：i/r模式下的左右</span><br><span class="line">set scrolljump=5  "</span> 光标离开屏幕范围 </span><br><span class="line"><span class="keyword">set</span> scrolloff=<span class="number">3</span>   <span class="string">" 光标移动至少保留行数</span><br><span class="line"></span><br><span class="line">"</span> 格式</span><br><span class="line"><span class="keyword">set</span> nowrap        <span class="string">" 取消自动折行</span><br><span class="line">set autoindent    "</span> 自动缩进 </span><br><span class="line"><span class="keyword">set</span> shiftwidth=<span class="number">4</span>  <span class="string">" 缩进位宽=4个空格位</span><br><span class="line">set expandtab     "</span> tab由空格表示</span><br><span class="line"><span class="keyword">set</span> tabstop=<span class="number">4</span>     <span class="string">" tab=4空格 </span><br><span class="line">set softtabstop=4 "</span> 回退可以删除缩进 </span><br><span class="line"><span class="keyword">set</span> nojoinspaces  <span class="string">" 用J合并两行用一个空格隔开</span><br><span class="line">set splitright    "</span> 用vsplit新建窗口，让新的放右边</span><br><span class="line"><span class="keyword">set</span> splitbelow    <span class="string">" 用split新建窗口，让新的放下面</span><br><span class="line">set pastetoggle=&lt;F12&gt; "</span> 指定F12进入黏贴模式，可以正常复制缩进</span><br><span class="line"><span class="keyword">set</span> iskeyword-=.  <span class="string">" 让'.' 作为单词分割符</span><br><span class="line">set iskeyword-=#  "</span> 让<span class="string">'#'</span> 作为单词分割符</span><br><span class="line"><span class="keyword">set</span> iskeyword-=-  <span class="string">" 让'-' 作为单词分割符</span><br><span class="line">set listchars=tab:›\ ,trail:•,extends:#,nbsp:. "</span> 空格等无效字符显示</span><br><span class="line"><span class="keyword">set</span> textwidth=<span class="number">80</span>  <span class="string">" 内容宽度</span><br><span class="line">set fileencodings=utf-8,gb18030,gbk,big5 "</span> 文件编码</span><br><span class="line"><span class="string">" 文件保存时处理首尾空格，^M字符</span><br><span class="line">let g:keep_trailing_whitespace = 1</span><br><span class="line">function! StripTrailingWhitespace()</span><br><span class="line">    let _s=@/</span><br><span class="line">    let l = line("</span>.<span class="string">")</span><br><span class="line">    let c = col("</span>.<span class="string">")</span><br><span class="line">    %s/\s\+$//e</span><br><span class="line">    let @/=_s</span><br><span class="line">    call cursor(l, c)</span><br><span class="line">endfunction</span><br><span class="line">autocmd FileType c,cpp,java,go,php,javascript,python,twig,xml,yml autocmd BufWritePre &lt;buffer&gt; if exists('g:keep_trailing_whitespace') | call StripTrailingWhitespace() | endif </span><br><span class="line"></span><br><span class="line">"</span> 开启新的buffer时，自动转到对应文件目录</span><br><span class="line">let <span class="keyword">g</span>:autochdir = <span class="number">1</span></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">exists</span>(<span class="string">'g:autochdir'</span>)</span><br><span class="line">    autocmd BufEnter * <span class="keyword">if</span> bufname(<span class="string">""</span>) !~ <span class="string">"^\[A-Za-z0-9\]*://"</span> | lcd %:<span class="keyword">p</span>:h | endif</span><br><span class="line">endif</span><br><span class="line"></span><br><span class="line"><span class="string">" 恢复光标最后编辑位置</span><br><span class="line">au BufWinLeave *.py,*.c,*.cpp,*.css,*.html,*.js,*php mkview</span><br><span class="line">au BufWinEnter *.py,*.c,*.cpp,*.css,*.html,*.js,*php silent loadview</span><br><span class="line"></span><br><span class="line">"</span> 设置u的返回步数限制</span><br><span class="line"><span class="keyword">if</span> has(<span class="string">'persistent_undo'</span>)</span><br><span class="line">    <span class="keyword">set</span> undofile               <span class="string">" 开启u回滚文件记录</span><br><span class="line">    set undolevels=1000         "</span> 最大数量的改变回滚</span><br><span class="line">    <span class="keyword">set</span> undoreload=<span class="number">10000</span>        <span class="string">" 最大数量重载可回滚行数</span><br><span class="line">endif</span><br><span class="line"></span><br><span class="line">"</span> 特殊文件打开</span><br><span class="line">autocmd BufNewFile,BufRead *.py,*.pyw <span class="keyword">set</span> filetype=python</span><br><span class="line">autocmd BufNewFile,BufRead *.html.twig <span class="keyword">set</span> filetype=html.twig</span><br><span class="line">autocmd FileType haskell setlocal expandtab shiftwidth=<span class="number">2</span> softtabstop=<span class="number">2</span></span><br><span class="line">autocmd BufNewFile,BufRead *.coffee <span class="keyword">set</span> filetype=coffee</span><br><span class="line">autocmd FileType haskell setlocal commentstring=<span class="comment">--\ %s</span></span><br><span class="line">autocmd FileType haskell setlocal nospell</span><br><span class="line"></span><br><span class="line"><span class="string">" key 映射</span><br><span class="line">let mapleader = ','         "</span> 全局leader设置</span><br><span class="line">let maplocalleader = <span class="string">'_'</span>    <span class="string">" 本地leader设置</span><br><span class="line"></span><br><span class="line">"</span> 设置tag和window间快速跳转 </span><br><span class="line">let <span class="keyword">g</span>:easyWindows = <span class="number">1</span></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">exists</span>(<span class="string">'g:easyWindows'</span>)</span><br><span class="line">    <span class="string">" 向上</span><br><span class="line">    map &lt;C-J&gt; &lt;C-W&gt;j&lt;C-W&gt;_  </span><br><span class="line">    "</span> 向下</span><br><span class="line">    <span class="keyword">map</span> &lt;<span class="keyword">C</span>-<span class="keyword">K</span>&gt; &lt;<span class="keyword">C</span>-W&gt;<span class="keyword">k</span>&lt;<span class="keyword">C</span>-W&gt;_</span><br><span class="line">    <span class="string">" 向右</span><br><span class="line">    map &lt;C-L&gt; &lt;C-W&gt;l&lt;C-W&gt;_</span><br><span class="line">    "</span> 向左</span><br><span class="line">    <span class="keyword">map</span> &lt;<span class="keyword">C</span>-H&gt; &lt;<span class="keyword">C</span>-W&gt;h&lt;<span class="keyword">C</span>-W&gt;_</span><br><span class="line">endif</span><br><span class="line"></span><br><span class="line"><span class="string">" 处理折叠行的左右移动</span><br><span class="line">noremap j gj</span><br><span class="line">noremap k gk</span><br><span class="line"></span><br><span class="line">"</span> 没sudo却想保存</span><br><span class="line">cmap w!! w !sudo tee % &gt;/dev/<span class="literal">null</span></span><br><span class="line"></span><br><span class="line"><span class="string">" ,fc查找冲突的地方</span><br><span class="line">map &lt;leader&gt;fc /\v^[&lt;\|=&gt;]&#123;7&#125;( .*\|$)&lt;CR&gt;</span><br><span class="line"></span><br><span class="line">"</span> ,ff 查找光标后的单词位置，列出选择项</span><br><span class="line">nmap &lt;Leader&gt;ff [<span class="keyword">I</span>:let nr = <span class="keyword">input</span>(<span class="string">"Which one: "</span>)&lt;Bar&gt;exe <span class="string">"normal "</span> . nr .<span class="string">"[\t"</span>&lt;CR&gt;</span><br><span class="line"></span><br><span class="line"><span class="string">" 屏幕左移和右移</span><br><span class="line">map zl zL</span><br><span class="line">map zh zH</span><br><span class="line"></span><br><span class="line">"</span> 映射vsp这些开启新的buffer,默认目录为当前目录</span><br><span class="line">cnoremap %% &lt;<span class="keyword">C</span>-R&gt;=fnameescape(expand(<span class="string">'%:h'</span>)).<span class="string">'/'</span>&lt;cr&gt;</span><br><span class="line"><span class="keyword">map</span> &lt;leader&gt;ew :<span class="keyword">e</span> %%</span><br><span class="line"><span class="keyword">map</span> &lt;leader&gt;es :sp %%</span><br><span class="line"><span class="keyword">map</span> &lt;leader&gt;ev :vsp %%</span><br><span class="line"><span class="keyword">map</span> &lt;leader&gt;et :tabe %%</span><br><span class="line"></span><br><span class="line"><span class="string">" 黏贴板</span><br><span class="line">if has('clipboard')</span><br><span class="line">    if has('unnamedplus')</span><br><span class="line">        set clipboard=unnamedplus</span><br><span class="line">    else</span><br><span class="line">        set clipboard=unnamed</span><br><span class="line">    endif</span><br><span class="line">endif</span><br><span class="line"></span><br><span class="line">"</span>字体的设置</span><br><span class="line"><span class="keyword">set</span> guifont=Consolas,Bitstream_Vera_Sans_Mono:h9:cANSI <span class="string">"记住空格用下划线代替哦</span><br><span class="line">set gfw=幼圆:h10:cGB2312</span><br><span class="line"></span><br><span class="line">"</span> 语法高亮</span><br><span class="line">syntax <span class="keyword">on</span></span><br><span class="line"></span><br><span class="line"><span class="string">" 导入vim插件管理文件</span><br><span class="line">if filereadable(expand("</span>~/.vimrc.bundles<span class="string">"))</span><br><span class="line">	source ~/.vimrc.bundles</span><br><span class="line">endif</span><br><span class="line"></span><br><span class="line">"</span> 缩进和md文件</span><br><span class="line">filetype <span class="keyword">plugin</span> indent <span class="keyword">on</span> <span class="string">" 自动根据类型启动对应插件，缩进开启</span><br><span class="line"></span><br><span class="line">"</span> 设置主题,UI</span><br><span class="line"><span class="string">" solarized 主题</span><br><span class="line">set background=dark</span><br><span class="line">if filereadable(expand("</span>~/.vim/bundle/vim-colors-solarized/colors/solarized.vim<span class="string">"))</span><br><span class="line">	let g:solarized_termcolors=256</span><br><span class="line">	let g:solarized_termtrans=1</span><br><span class="line">	let g:solarized_contrast="</span><span class="keyword">normal</span><span class="string">"</span><br><span class="line">	let g:solarized_visibility="</span><span class="keyword">normal</span><span class="string">"</span><br><span class="line">	color solarized             "</span> <span class="keyword">Load</span> a colorscheme</span><br><span class="line">endif</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span> cursorline <span class="string">" 选中行高亮 </span><br><span class="line">autocmd BufEnter *.py set cc=81 "</span> 打开py文件<span class="number">81</span>行高亮  </span><br><span class="line"><span class="string">" 之前的高亮线太难看，重新制定颜色，这里的black和iterm2颜色配置中的black一样</span><br><span class="line">hi CursorLine   cterm=NONE ctermbg=black guibg=black  </span><br><span class="line">hi CursorColumn   cterm=NONE ctermbg=black guibg=black "</span> </span><br><span class="line">highlight ColorColumn ctermbg=black guibg=black</span><br><span class="line"><span class="keyword">set</span> <span class="built_in">number</span> <span class="string">" 设置行号</span><br><span class="line">hi LineNr ctermbg=black</span><br><span class="line"></span><br><span class="line">"</span> Indent Guides 缩进列对齐线</span><br><span class="line">let <span class="keyword">g</span>:indent_guides_start_level = <span class="number">2</span></span><br><span class="line">let <span class="keyword">g</span>:indent_guides_guide_size = <span class="number">1</span></span><br><span class="line">let <span class="keyword">g</span>:indent_guides_enable_on_vim_startup = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="string">" airline 就是状态栏的箭头</span><br><span class="line">let g:airline_theme="</span>dark<span class="string">"</span><br><span class="line">let g:airline_powerline_fonts = 1</span><br><span class="line">let g:airline#extensions#tabline#enabled = 1</span><br><span class="line">let g:airline#extensions#tabline#buffer_nr_show = 1</span><br><span class="line"></span><br><span class="line">"</span> NerdTree配置 control+<span class="keyword">e</span>打开当前文件目录树</span><br><span class="line"><span class="keyword">map</span> &lt;<span class="keyword">C</span>-<span class="keyword">e</span>&gt; :NERDTreeToggle&lt;CR&gt;</span><br><span class="line"><span class="keyword">map</span> &lt;leader&gt;ee :NERDTreeToggle&lt;CR&gt;</span><br><span class="line">nmap &lt;leader&gt;nt :NERDTreeFind&lt;CR&gt;</span><br><span class="line"></span><br><span class="line">let NERDTreeShowBookmarks=<span class="number">1</span></span><br><span class="line">let NERDTreeIgnore=[<span class="string">'\.pyc'</span>, <span class="string">'\~$'</span>, <span class="string">'\.swo$'</span>, <span class="string">'\.swp$'</span>, <span class="string">'\.git'</span>, <span class="string">'\.hg'</span>, <span class="string">'\.svn'</span>, <span class="string">'\.bzr'</span>]</span><br><span class="line">let NERDTreeChDirMode=<span class="number">0</span></span><br><span class="line">let NERDTreeQuitOnOpen=<span class="number">1</span></span><br><span class="line">let NERDTreeMouseMode=<span class="number">2</span></span><br><span class="line">let NERDTreeShowHidden=<span class="number">1</span></span><br><span class="line">let NERDTreeKeepTreeInNewTab=<span class="number">1</span></span><br><span class="line">let <span class="keyword">g</span>:nerdtree_tabs_open_on_gui_startup=<span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="string">" syntastic 配置</span><br><span class="line">"</span> 设置每次w保存后语法检查</span><br><span class="line"><span class="keyword">function</span>! ToggleErrors()</span><br><span class="line">    <span class="keyword">Errors</span></span><br><span class="line">endfunction</span><br><span class="line">let <span class="keyword">g</span>:syntastic_check_on_open=<span class="number">1</span></span><br><span class="line">let <span class="keyword">g</span>:syntastic_always_populate_loc_list = <span class="number">1</span></span><br><span class="line">let <span class="keyword">g</span>:syntastic_auto_loc_list = <span class="number">1</span></span><br><span class="line">let <span class="keyword">g</span>:syntastic_check_on_wq = <span class="number">0</span></span><br><span class="line">let syntastic_loc_list_height = <span class="number">5</span></span><br><span class="line">let <span class="keyword">g</span>:syntastic_html_tidy_ignore_errors=[<span class="string">" proprietary attribute \"ng-"</span>]</span><br><span class="line">autocmd WinEnter * <span class="keyword">if</span> &amp;buftype ==#<span class="string">'quickfix'</span> &amp;&amp; winnr(<span class="string">'$'</span>) == <span class="number">1</span> | quit |endif</span><br><span class="line">autocmd WinLeave * lclose</span><br><span class="line"></span><br><span class="line"><span class="string">" 自动补全tab触发</span><br><span class="line">function! InsertTabWrapper()</span><br><span class="line">	let col = col('.') - 1</span><br><span class="line">	if !col || getline('.')[col - 1] !~ '\k'</span><br><span class="line">        return "</span>\&lt;tab&gt;<span class="string">"</span><br><span class="line">	else</span><br><span class="line">        return "</span>\&lt;<span class="keyword">c</span>-<span class="keyword">p</span>&gt;<span class="string">"</span><br><span class="line">	endif</span><br><span class="line">endfunction</span><br><span class="line">inoremap &lt;Tab&gt; &lt;c-r&gt;=InsertTabWrapper()&lt;cr&gt;</span><br><span class="line">inoremap &lt;S-Tab&gt; &lt;c-n&gt;</span><br><span class="line"></span><br><span class="line">"</span> Ctrlp 和 Ctrlp-funky(,fu)</span><br><span class="line"><span class="keyword">if</span> isdirectory(expand(<span class="string">"~/.vim/bundle/ctrlp.vim/"</span>))</span><br><span class="line">    let <span class="keyword">g</span>:ctrlp_working_path_mode = <span class="string">'ra'</span></span><br><span class="line">    nnoremap &lt;silent&gt; &lt;<span class="keyword">D</span>-<span class="keyword">t</span>&gt; :CtrlP&lt;CR&gt;</span><br><span class="line">    nnoremap &lt;silent&gt; &lt;<span class="keyword">D</span>-r&gt; :CtrlPMRU&lt;CR&gt;</span><br><span class="line">    let <span class="keyword">g</span>:ctrlp_custom_ignore = &#123;</span><br><span class="line">                \ <span class="string">'dir'</span>:  <span class="string">'\.git$\|\.hg$\|\.svn$'</span>,</span><br><span class="line">                \ <span class="string">'file'</span>: <span class="string">'\.exe$\|\.so$\|\.dll$\|\.pyc$'</span> &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> executable(<span class="string">'ag'</span>)</span><br><span class="line">        let s:ctrlp_fallback = <span class="string">'ag %s --nocolor -l -g ""'</span></span><br><span class="line">    elseif executable(<span class="string">'ack-grep'</span>)</span><br><span class="line">        let s:ctrlp_fallback = <span class="string">'ack-grep %s --nocolor -f'</span></span><br><span class="line">    elseif executable(<span class="string">'ack'</span>)</span><br><span class="line">        let s:ctrlp_fallback = <span class="string">'ack %s --nocolor -f'</span></span><br><span class="line">        <span class="string">" On Windows use "</span>dir<span class="string">" as fallback command.</span><br><span class="line">    else</span><br><span class="line">        let s:ctrlp_fallback = 'find %s -type f'</span><br><span class="line">    endif</span><br><span class="line">    if exists("</span><span class="keyword">g</span>:ctrlp_user_command<span class="string">")</span><br><span class="line">        unlet g:ctrlp_user_command</span><br><span class="line">    endif</span><br><span class="line">    let g:ctrlp_user_command = &#123;</span><br><span class="line">                \ 'types': &#123;</span><br><span class="line">                \ 1: ['.git', 'cd %s &amp;&amp; git ls-files . --cached --exclude-standard --others'],</span><br><span class="line">                \ 2: ['.hg', 'hg --cwd %s locate -I .'],</span><br><span class="line">                \ &#125;,</span><br><span class="line">                \ 'fallback': s:ctrlp_fallback</span><br><span class="line">                \ &#125;</span><br><span class="line"></span><br><span class="line">    if isdirectory(expand("</span>~/.vim/bundle/ctrlp-funky/<span class="string">"))</span><br><span class="line">        "</span> CtrlP extensions</span><br><span class="line">        let <span class="keyword">g</span>:ctrlp_extensions = [<span class="string">'funky'</span>]</span><br><span class="line">        <span class="string">"funky</span><br><span class="line">        nnoremap &lt;Leader&gt;fu :CtrlPFunky&lt;Cr&gt;</span><br><span class="line">    endif</span><br><span class="line">endif</span><br><span class="line"></span><br><span class="line">"</span> <span class="keyword">complete</span></span><br><span class="line">autocmd Filetype * <span class="keyword">if</span> &amp;omnifunc == <span class="string">""</span> | setlocal omnifunc=syntaxcomplete#<span class="keyword">Complete</span> | endif</span><br><span class="line">autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS</span><br><span class="line">autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags</span><br><span class="line">autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS</span><br><span class="line">autocmd FileType python setlocal omnifunc=pythoncomplete#<span class="keyword">Complete</span></span><br><span class="line"></span><br><span class="line"><span class="string">"进行版权声明的设置</span><br><span class="line">"</span>添加或更新头</span><br><span class="line"><span class="keyword">map</span> &lt;F4&gt; :<span class="keyword">call</span> TitleDet()&lt;cr&gt;<span class="string">'s</span><br><span class="line">autocmd BufNewFile *.py :call TitleDet()</span><br><span class="line">function AddTitle()</span><br><span class="line">    call append(0,"#! /usr/bin/env python")</span><br><span class="line">    call append(1,"# -*- coding: utf-8 -*-")</span><br><span class="line">    call append(2,"# vim:fenc=utf-8 ")</span><br><span class="line">    call append(3,"#  Copyright © XYM")</span><br><span class="line">    call append(4,"# Last modified: ".strftime("%Y-%m-%d %H:%M:%S"))</span><br><span class="line">    call append(5,"")</span><br><span class="line">endf</span><br><span class="line">"更新最近修改时间和文件名</span><br><span class="line">function UpdateTitle()</span><br><span class="line">    normal m'</span></span><br><span class="line">    <span class="keyword">execute</span> <span class="string">'/# *Last modified:/s@:.*$@\=strftime(":\t%Y-%m-%d %H:%M")@'</span></span><br><span class="line">    <span class="keyword">normal</span> <span class="string">''</span></span><br><span class="line">    <span class="keyword">normal</span> mk</span><br><span class="line">    <span class="keyword">execute</span> <span class="string">'/# *Filename:/s@:.*$@\=":\t\t".expand("%:t")@'</span></span><br><span class="line">    <span class="keyword">execute</span> <span class="string">"noh"</span></span><br><span class="line">    <span class="keyword">normal</span> <span class="string">'k</span><br><span class="line">endfunction</span><br><span class="line">"判断前10行代码里面，是否有Last modified这个单词，</span><br><span class="line">"如果没有的话，代表没有添加过作者信息，需要新添加；</span><br><span class="line">"如果有的话，那么只需要更新即可</span><br><span class="line">function TitleDet()</span><br><span class="line">    let n=1</span><br><span class="line">    "默认为添加</span><br><span class="line">    while n &lt; 10</span><br><span class="line">        let line = getline(n)</span><br><span class="line">        if line =~ '</span>^\#\s*\S*<span class="keyword">Last</span>\smodified:\S*.*$<span class="string">'</span><br><span class="line">            call UpdateTitle()</span><br><span class="line">            return</span><br><span class="line">        endif</span><br><span class="line">        let n = n + 1</span><br><span class="line">    endwhile</span><br><span class="line">    call AddTitle()</span><br><span class="line">endfunction</span></span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>vimrc.bundles文件，主要是vim相关插件<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">" .vimrc.bundles</span><br><span class="line"></span></span><br><span class="line"><span class="keyword">if</span> &amp;compatible</span><br><span class="line">	<span class="keyword">set</span> nocompatible</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line"><span class="keyword">filetype</span> off</span><br><span class="line"><span class="keyword">set</span> rtp+=~/.<span class="keyword">vim</span>/bundle/vundle</span><br><span class="line"><span class="built_in">call</span> vundle#rc()</span><br><span class="line">Bundle <span class="string">"gmarik/vundle"</span></span><br><span class="line"><span class="string">" 星级越多越推荐, 5星为必选，4星强烈推荐，3星比较推荐</span><br><span class="line"></span><span class="string">" 文件模糊匹配查找 推荐：****</span><br><span class="line"></span>Bundle <span class="string">"kien/ctrlp.vim"</span></span><br><span class="line"><span class="string">" 函数模糊匹配查找(,fu) 推荐：****</span><br><span class="line"></span>Bundle <span class="string">'tacahiroy/ctrlp-funky'</span></span><br><span class="line"><span class="string">" 文件索引树 推荐：*****</span><br><span class="line"></span>Bundle <span class="string">"scrooloose/nerdtree"</span></span><br><span class="line"><span class="string">" 自动注释 推荐：*****</span><br><span class="line"></span>Bundle <span class="string">'scrooloose/nerdcommenter'</span></span><br><span class="line"><span class="string">" 语法检查 推荐：****</span><br><span class="line"></span>Bundle <span class="string">"scrooloose/syntastic"</span></span><br><span class="line"><span class="string">" 括号自动匹配 推荐：****</span><br><span class="line"></span>Bundle <span class="string">'jiangmiao/auto-pairs'</span></span><br><span class="line"><span class="string">" 光标多行编辑 &lt;C-n&gt; &lt;C-x&gt; &lt;C-p&gt; 推荐：****</span><br><span class="line"></span>Bundle <span class="string">'terryma/vim-multiple-cursors'</span></span><br><span class="line"><span class="string">" 配色主题 推荐：****</span><br><span class="line"></span>Bundle <span class="string">"altercation/vim-colors-solarized"</span></span><br><span class="line"><span class="string">" 缩进引导线 推荐：****</span><br><span class="line"></span>Bundle <span class="string">"nathanaelkane/vim-indent-guides"</span></span><br><span class="line"><span class="string">" 状态栏效果 推荐：***</span><br><span class="line"></span>Bundle <span class="string">"bling/vim-airline"</span></span><br><span class="line"></span><br><span class="line"><span class="string">" python 推荐：****</span><br><span class="line"></span>Bundle <span class="string">'yssource/python.vim'</span></span><br><span class="line">Bundle <span class="string">'python_match.vim'</span></span><br><span class="line">Bundle <span class="string">'pythoncomplete'</span></span><br><span class="line"></span><br><span class="line"><span class="string">" js 推荐：****</span><br><span class="line"></span>Bundle <span class="string">'elzr/vim-json'</span></span><br><span class="line">Bundle <span class="string">'groenewege/vim-less'</span></span><br><span class="line">Bundle <span class="string">'pangloss/vim-javascript'</span></span><br><span class="line">Bundle <span class="string">'briancollins/vim-jst'</span></span><br><span class="line">Bundle <span class="string">'kchmck/vim-coffee-script'</span></span><br><span class="line"></span><br><span class="line"><span class="string">" html 推荐：****</span><br><span class="line"></span>Bundle <span class="string">'amirh/HTML-AutoCloseTag'</span></span><br><span class="line">Bundle <span class="string">'hail2u/vim-css3-syntax'</span></span><br><span class="line">Bundle <span class="string">'gorodinskiy/vim-coloresque'</span></span><br><span class="line">Bundle <span class="string">'tpope/vim-haml'</span></span><br><span class="line">Bundle <span class="string">'mattn/emmet-vim'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">filereadable</span>(<span class="built_in">expand</span>(<span class="string">"~/.vimrc.bundles.local"</span>))</span><br><span class="line"><span class="keyword">source</span> ~/.vimrc.bundles.local</span><br><span class="line"><span class="keyword">endif</span></span><br><span class="line"><span class="keyword">filetype</span> <span class="keyword">on</span></span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h4 id="u3010_u603B_u7ED3_u3011"><a href="#u3010_u603B_u7ED3_u3011" class="headerlink" title="【总结】"></a><strong>【总结】</strong></h4><blockquote>
+<p>一个好的程序员必须善用各种工具提升自己的开发效率，和提升自己的幸福指数。另外，个人觉得vim还是值得自己重新一配的，我的配置过程基本都是在读spf13的配置，读懂，然后选取，可是中间还是出了很多问题，比如因为我没有用pymode插件，所以在用括syntastic的local_list在退出或者分屏时的位置，都令我很蛋疼。而且在读spf13配置时，会发现有很多很好的功能都没有用上，比如paste模式，查找冲突快捷键，屏幕移动，还有ctrlp-funky，vim-multiple-cursors这些很爽的插件。大家有好的配置可以推荐给我。</p>
+</blockquote>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/02/07/打造自己的Python编码环境/">打造自己的Python编码环境</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 XYM 的个人博客">XYM</a></p>
+        <p><span>发布时间:</span>2016年02月07日 - 23时35分</p>
+        <p><span>最后更新:</span>2016年02月07日 - 23时46分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/02/07/打造自己的Python编码环境/" title="打造自己的Python编码环境">http://xymlife.com/2016/02/07/打造自己的Python编码环境/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://xymlife.com/2016/02/07/打造自己的Python编码环境/　　作者: XYM" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/01/24/用redis实现有优先级的celery/">
+                    用redis实现有优先级的&quot;celery&quot;
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010_u524D_u8A00_u3011"><span class="toc-number">1.</span> <span class="toc-text">【前言】</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010_u51C6_u5907_u9636_u6BB5_uFF1A_u5668_u3011"><span class="toc-number">2.</span> <span class="toc-text">【准备阶段：器】</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010_u6253_u78E8_u9636_u6BB5_uFF1A_u5229_u5668_u3011"><span class="toc-number">3.</span> <span class="toc-text">【打磨阶段：利器】</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010_u603B_u7ED3_u3011"><span class="toc-number">4.</span> <span class="toc-text">【总结】</span></a></li></ol>
+</div>
+<style>
+    .left-col .switch-btn {
+        display: none;
+    }
+    .left-col .switch-area {
+        display: none;
+    }
+</style>
+
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+            $(".switch-btn, .switch-area").fadeOut(300);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+            $(".switch-btn, .switch-area").fadeIn(500);
+        }
+    })
+
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+        $(".switch-btn, .switch-area").show();
+    }
+</script>
+
+
+
+
+<div class="share">
+    <div class="bdsharebuttonbox">
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+    <a href="#" class="bds_copy" data-cmd="copy" title="复制网址"></a>
+    <a href="#" class="bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+    </div>
+    <script>
+        window._bd_share_config={
+            "common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+</div>
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="2016/02/07/打造自己的Python编码环境/" data-title="打造自己的Python编码环境" data-url="http://xymlife.com/2016/02/07/打造自己的Python编码环境/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"xymlife"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        <!--ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';-->
+        ds.src = "http://xymlife.com/js/embed.js"
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+</div>
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/01/24/用redis实现有优先级的celery/" title="下一篇: 用redis实现有优先级的&quot;celery&quot;">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/02/07/打造自己的Python编码环境/">打造自己的Python编码环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/24/用redis实现有优先级的celery/">用redis实现有优先级的"celery"</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/18/meinheld为何比gevent高效？/">meinheld为何比gevent高效？</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/16/后缀数组小结/">后缀数组小结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/16/Reactor/">Reactor</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/13/IO多路复用/">I/O多路复用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/09/Linux 启动过程/">Linux 启动过程</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/01/08/Arch/">Arch</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/06/22/redis/">Redis</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/03/11/ratproxy/">ubuntu ratproxy安装使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/03/09/hexo-skill/">hexo常用技巧</a></li></ul>
+    <script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#toc, .switch-btn, .switch-area").toggle();
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+                $(".switch-btn, .switch-area").fadeToggle(300);
+            }
+        })
+    </script>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2016 XYM
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的静态博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减双栏 Hexo 博客主题">Yelee</a> by MOxFIVE
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >本站到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    <script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
