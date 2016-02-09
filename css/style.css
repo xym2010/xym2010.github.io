@@ -232,13 +232,6 @@ a {
   position: relative;
   z-index: 100;
 }
-#container #mobile-nav #header .profilepic:hover {
-  -webkit-animation: rubberBand 1s;
-  -webkit-animation: rubberBand 1s;
-  -moz-animation: rubberBand 1s;
-  -ms-animation: rubberBand 1s;
-  animation: rubberBand 1s;
-}
 #container #mobile-nav #header .header-menu {
   height: auto;
   margin: 10px;
@@ -611,6 +604,13 @@ a {
   -ms-transition: 0.3s;
   transition: 0.3s;
 }
+.header-author:hover {
+  -webkit-animation: rubberBand 1s;
+  -webkit-animation: rubberBand 1s;
+  -moz-animation: rubberBand 1s;
+  -ms-animation: rubberBand 1s;
+  animation: rubberBand 1s;
+}
 #header {
   width: 100%;
 }
@@ -656,11 +656,11 @@ a {
   border: 5px solid #88acdb;
   -webkit-box-shadow: 0 0 1.5em #88acdb;
   box-shadow: 0 0 1.5em #88acdb;
-  -webkit-animation: profilepic 0.15s linear infinite alternate;
-  -moz-animation: profilepic 0.15s linear infinite alternate;
-  -ms-animation: profilepic 0.15s linear infinite alternate;
-  animation: profilepic 0.15s linear infinite alternate;
-  -webkit-animation: profilepic 0.15s linear infinite alternate;
+  -webkit-animation: rubberBand 1s;
+  -webkit-animation: rubberBand 1s;
+  -moz-animation: rubberBand 1s;
+  -ms-animation: rubberBand 1s;
+  animation: rubberBand 1s;
 }
 @-moz-keyframes profilepic {
   0% {
