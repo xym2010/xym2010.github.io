@@ -232,6 +232,13 @@ a {
   position: relative;
   z-index: 100;
 }
+#container #mobile-nav #header .profilepic:hover {
+  -webkit-animation: rubberBand 1s;
+  -webkit-animation: rubberBand 1s;
+  -moz-animation: rubberBand 1s;
+  -ms-animation: rubberBand 1s;
+  animation: rubberBand 1s;
+}
 #container #mobile-nav #header .header-menu {
   height: auto;
   margin: 10px;
