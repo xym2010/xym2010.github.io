@@ -605,11 +605,11 @@ a {
   transition: 0.3s;
 }
 .header-author:hover {
-  -webkit-animation: rubberBand 1s;
-  -webkit-animation: rubberBand 1s;
-  -moz-animation: rubberBand 1s;
-  -ms-animation: rubberBand 1s;
-  animation: rubberBand 1s;
+  -webkit-animation: swing 1s;
+  -webkit-animation: swing 1s;
+  -moz-animation: swing 1s;
+  -ms-animation: swing 1s;
+  animation: swing 1s;
 }
 #header {
   width: 100%;
