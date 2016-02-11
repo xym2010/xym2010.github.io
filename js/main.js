@@ -94,13 +94,7 @@ require([], function (){
             //],
             //len = animationNames.length,
             //randomAnimationName = animationNames[Math.ceil(Math.random() * len) - 1];
-
-          var animationNames = [
-            "pulse"
-            ],
-            len = animationNames.length,
-            randomAnimationName = animationNames[Math.ceil(Math.random() * len) - 1];
-
+            randomAnimationName = "fadeInUp";
 
           // ie9 不支持css3 keyframe动画, safari不支持requestAnimationFrame, 不使用随机动画，切回原来的动画
           if (!window.requestAnimationFrame) {
