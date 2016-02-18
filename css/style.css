@@ -804,14 +804,14 @@ a {
   margin-right: 0;
 }
 #header .header-nav .social #新浪微博 {
-  background: url("/img/weibo.png") center no-repeat #ecc260;
+  background: url("/img/weibo.jpeg") center no-repeat #000;
 }
 #header .header-nav .social .新浪微博:before {
   content: "\f18a";
   color: transparent;
 }
 #header .header-nav .social #GitHub {
-  background: url("/img/github.png") center no-repeat #fff;
+  background: url("/img/github.jpeg") center no-repeat #000;
 }
 #header .header-nav .social .GitHub:before {
   content: "\f113";
@@ -825,7 +825,7 @@ a {
   color: transparent;
 }
 #header .header-nav .social #RSS {
-  background: #ef7522;
+  background: #000;
 }
 #header .header-nav .social .RSS:before {
   content: "\f09e";
