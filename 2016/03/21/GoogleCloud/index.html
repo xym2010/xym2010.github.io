@@ -3,28 +3,28 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Reactor | XYM</title>
+  <title>Google Cloud初体验 | XYM</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="【Reactor】
-Reactor设计模式在高性能I/O框架中随处可见，例如redis，tornado，gevent，libevent等。
-Reactor可以翻译为反应器，是一种基于事件驱动的设计模式。那么它是如何运作的呢？其实很多设计模式都来源于生活中的一些常见的处理事情的方式。
-我们先来看一个例子：你和妹子去购物中心吃饭，发现很多人在排队，这时只需要让前台在电脑上填上你需要的双人位，和你的手机">
+  <meta name="description" content="【前言】
+废话不多说，先上一图。
+
+没有看错，速度很快，相对比较稳定，白天基本是100ms以内，晚上的时候会慢，点ping值差不多150ms左右，不过速度也算快的了。最主要的是他的最低配置只要5美元（共享cpu，0.6G内存，10G存储空间），很适合用来翻墙。不过高一档次的配置（内存1.75G）就要15美元了。穷人的话（比如我），可以考虑添加Swap弥补一下内存不足，土豪随意。现在新用户有送300">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Reactor">
-<meta property="og:url" content="http://xymlife.com/2016/01/16/Reactor/index.html">
+<meta property="og:title" content="Google Cloud初体验">
+<meta property="og:url" content="http://xymlife.com/2016/03/21/GoogleCloud/index.html">
 <meta property="og:site_name" content="XYM">
-<meta property="og:description" content="【Reactor】
-Reactor设计模式在高性能I/O框架中随处可见，例如redis，tornado，gevent，libevent等。
-Reactor可以翻译为反应器，是一种基于事件驱动的设计模式。那么它是如何运作的呢？其实很多设计模式都来源于生活中的一些常见的处理事情的方式。
-我们先来看一个例子：你和妹子去购物中心吃饭，发现很多人在排队，这时只需要让前台在电脑上填上你需要的双人位，和你的手机">
-<meta property="og:image" content="http://7xq2as.com1.z0.glb.clouddn.com/1342687408_4917.jpg">
-<meta property="og:updated_time" content="2016-01-20T16:42:30.000Z">
+<meta property="og:description" content="【前言】
+废话不多说，先上一图。
+
+没有看错，速度很快，相对比较稳定，白天基本是100ms以内，晚上的时候会慢，点ping值差不多150ms左右，不过速度也算快的了。最主要的是他的最低配置只要5美元（共享cpu，0.6G内存，10G存储空间），很适合用来翻墙。不过高一档次的配置（内存1.75G）就要15美元了。穷人的话（比如我），可以考虑添加Swap弥补一下内存不足，土豪随意。现在新用户有送300">
+<meta property="og:image" content="http://7xq2as.com1.z0.glb.clouddn.com/IMG_2245%20%281%29.JPG">
+<meta property="og:updated_time" content="2016-03-21T06:59:52.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Reactor">
-<meta name="twitter:description" content="【Reactor】
-Reactor设计模式在高性能I/O框架中随处可见，例如redis，tornado，gevent，libevent等。
-Reactor可以翻译为反应器，是一种基于事件驱动的设计模式。那么它是如何运作的呢？其实很多设计模式都来源于生活中的一些常见的处理事情的方式。
-我们先来看一个例子：你和妹子去购物中心吃饭，发现很多人在排队，这时只需要让前台在电脑上填上你需要的双人位，和你的手机">
+<meta name="twitter:title" content="Google Cloud初体验">
+<meta name="twitter:description" content="【前言】
+废话不多说，先上一图。
+
+没有看错，速度很快，相对比较稳定，白天基本是100ms以内，晚上的时候会慢，点ping值差不多150ms左右，不过速度也算快的了。最主要的是他的最低配置只要5美元（共享cpu，0.6G内存，10G存储空间），很适合用来翻墙。不过高一档次的配置（内存1.75G）就要15美元了。穷人的话（比如我），可以考虑添加Swap弥补一下内存不足，土豪随意。现在新用户有送300">
   
     <link rel="alternative" href="/atom.xml" title="XYM" type="application/atom+xml">
   
@@ -234,11 +234,11 @@ Reactor可以翻译为反应器，是一种基于事件驱动的设计模式。�
         </header>                
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-Reactor" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-GoogleCloud" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/01/16/Reactor/" class="article-date">
-      <time datetime="2016-01-15T17:39:34.000Z" itemprop="datePublished">2016-01-16</time>
+      <a href="/2016/03/21/GoogleCloud/" class="article-date">
+      <time datetime="2016-03-21T06:51:14.000Z" itemprop="datePublished">2016-03-21</time>
 </a>
     </div>
   
@@ -251,7 +251,7 @@ Reactor可以翻译为反应器，是一种基于事件驱动的设计模式。�
         
   
     <h1 class="article-title" itemprop="name">
-      Reactor
+      Google Cloud初体验
     </h1>
   
 
@@ -262,7 +262,7 @@ Reactor可以翻译为反应器，是一种基于事件驱动的设计模式。�
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/I-O多路复用/">I/O多路复用</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/libevent/">libevent</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/reactor/">reactor</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/">redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/事件驱动/">事件驱动</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GoogleCloud/">GoogleCloud</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -272,23 +272,41 @@ Reactor可以翻译为反应器，是一种基于事件驱动的设计模式。�
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h4 id="u3010Reactor_u3011"><a href="#u3010Reactor_u3011" class="headerlink" title="【Reactor】"></a><strong>【Reactor】</strong></h4><blockquote>
-<p>Reactor设计模式在高性能I/O框架中随处可见，例如redis，tornado，gevent，libevent等。</p>
-<p><strong>Reactor可以翻译为反应器，是一种基于事件驱动的设计模式。</strong>那么它是如何运作的呢？其实很多设计模式都来源于生活中的一些常见的处理事情的方式。</p>
-<p>我们先来看一个例子：你和妹子去购物中心吃饭，发现很多人在排队，这时只需要让前台在电脑上填上你需要的双人位，和你的手机号码，待会有位置的时候会发短信给你，这时候你可以陪妹子到处逛逛，买买买。当餐厅有双人位空出的时候，就会发短信或打电话给你，这时你就可以带妹子去吃饭了。</p>
-<p>上面例子中，你没有呆呆的排队等餐厅有位，你还陪妹子去逛街买了很多东西，整个过程都是不阻塞的，效率非常之高。这里面餐厅充当了Reactor的作用，他帮你一直盯着，等有位置空出的时候，就做出相应的反应：根据你所填的手机号码，通知你可以就餐。</p>
-<p><strong>总结：在Reactor模式中，处理事件的程序不会去调用反应器，而是告诉Reactor监听一个事件，和这个事件发生时处理方法，当Reactor监测到这个事件发生时，就启动对应的处理方法（一般是回调函数）进行处理，这种控制逆转又称为“好莱坞法则”（不要调用我，让我来调用你）。</strong></p>
+        <h4 id="u3010_u524D_u8A00_u3011"><a href="#u3010_u524D_u8A00_u3011" class="headerlink" title="【前言】"></a><strong>【前言】</strong></h4><blockquote>
+<p>废话不多说，先上一图。</p>
+<p><img src="http://7xq2as.com1.z0.glb.clouddn.com/IMG_2245%20%281%29.JPG" alt="此处输入图片的描述"></p>
+<p>没有看错，速度很快，相对比较稳定，白天基本是100ms以内，晚上的时候会慢，点ping值差不多150ms左右，不过速度也算快的了。最主要的是他的最低配置只要5美元（共享cpu，0.6G内存，10G存储空间），很适合用来翻墙。不过高一档次的配置（内存1.75G）就要15美元了。穷人的话（比如我），可以考虑添加Swap弥补一下内存不足，土豪随意。现在新用户有送300美元试用金额，2个月后就要交钱了。有兴趣听我安利的请继续。</p>
 </blockquote>
 <a id="more"></a>
-<h4 id="u3010Reactor_u8BBE_u8BA1_u6A21_u5F0F_u3011"><a href="#u3010Reactor_u8BBE_u8BA1_u6A21_u5F0F_u3011" class="headerlink" title="【Reactor设计模式】"></a><strong>【Reactor设计模式】</strong></h4><blockquote>
-<p>在Reactor模式中，有5个关键的参与者。<a href="http://www.cnblogs.com/hzbook/archive/2012/07/19/2599698.html" target="_blank" rel="external">[引用]</a></p>
-<p><strong>1. 描述符（handle）：</strong>由操作系统提供，用于识别每一个事件，如Socket描述符、文件描述符(fd)等。在Linux中，它用一个整数来表示。事件可以来自外部，如来自客户端的连接请求、数据等。事件也可以来自内部，如定时器事件。<br><strong>2. 同步事件分离器（demultiplexer）：</strong>是一个函数，用来等待一个或多个事件的发生。调用者会被阻塞，直到分离器分离的描述符集上有事件发生。Linux的select函数是一个经常被使用的分离器。<br><strong>3. 事件处理器接口（event handler）：</strong>是由一个或多个模板函数组成的接口。这些模板函数描述了和应用程序相关的对某个事件的操作。<br><strong>4. 具体的事件处理器（concrete event handler）：</strong>是事件处理器接口的实现。它实现了应用程序提供的某个服务。每个具体的事件处理器总和一个描述符相关。它使用描述符来识别事件、识别应用程序提供的服务。<br><strong>5. Reactor 管理器（reactor）：</strong>定义了一些接口，用于应用程序控制事件调度，以及应用程序注册、删除事件处理器和相关的描述符。它是事件处理器的调度核心。 Reactor管理器使用同步事件分离器来等待事件的发生。一旦事件发生，Reactor管理器先是分离每个事件，然后调度事件处理器，最后调用相关的模 板函数来处理这个事件。</p>
-<p>下面是Reactor结构图</p>
-<p><img src="http://7xq2as.com1.z0.glb.clouddn.com/1342687408_4917.jpg" alt="此处输入图片的描述"></p>
-<p>可能从上面来看比较难理解，那么我们从最开始的例子来分析这几个角色的作用。<br>你告诉前台MM <strong>（Reactor：负责后面的所有操作的调度）</strong>你需要一个双人位<strong>（handle：就是一个等待双人位的事件）</strong>，并告知手机号码<strong>（concrete event handler：当有双人位时，通过这个手机联系你，是具体的事件的处理方法）</strong>，而她会往她的电脑中添加一条记录<strong>（event handler：记录着双人位和你的联系方式，将事件和处理方式绑定到一起）</strong>，当某一桌双人位结账时，电脑从一堆排号信息中自动检测到有空余双人位<strong>（demultiplexer：将空余双人位事件从其他还在等待发生的事件中分离出来）</strong>，前台MM根据电脑记录找到你的电话号码，然后通过电话通知你可以前来就餐。<br>希望到这里你已经把Reactor的各个角色的作用弄清楚了，下次就可以去读一些使用Reactor设计模式的源码了，这里推荐 <a href="http://blog.csdn.net/sparkliang/article/details/5202394" target="_blank" rel="external">libevent</a> 。</p>
+<h4 id="u3010_u51C6_u5907_u3011"><a href="#u3010_u51C6_u5907_u3011" class="headerlink" title="【准备】"></a><strong>【准备】</strong></h4><blockquote>
+<ul>
+<li>一台能翻墙的电脑，因为我们在中国，如果没有你可以找能翻墙的教你，或者去找找一些试用vpn或者交一个月的钱。</li>
+<li>一个谷歌账号，和上一点息息相关。</li>
+<li>一张visa的信用卡，需要绑定信用卡。</li>
+<li>一颗耐心。</li>
+</ul>
+<p>准备好了以上东西，那就可以申请一台属于你的vps了。<br>首先访问<a href="https://cloud.google.com/" target="_blank" rel="external">cloud.google.com</a>，如果正常说明你翻墙成功了，不正常请继续尝试翻墙。<br>这里提醒一下，本人选的是asia-east1-c机房，经过测试ip是100~110段的网速最好，大家可以刷，但是不要太过分哦。<br>接下来的申请流程我就不说，这里推荐一个详细的流程 <a href="https://github.com/kaiye/kaiye.github.com/issues/9" target="_blank" rel="external">https://github.com/kaiye/kaiye.github.com/issues/9</a> 如果你只是想搭个vps，这篇文章已经够了，下面的东西可以不用再看了。如果你想让它变成正常服务器使用，请继续看下去。</p>
 </blockquote>
-<h4 id="u3010Reactor_u7684_u7279_u70B9_u3011"><a href="#u3010Reactor_u7684_u7279_u70B9_u3011" class="headerlink" title="【Reactor的特点】"></a><strong>【Reactor的特点】</strong></h4><blockquote>
-<p>最后总结一下Reactor的优点：<br><strong>1. 响应快：</strong>不必为单个同步时间所阻塞，虽然Reactor本身依然是同步的。<br><strong>2. 编程相对简单：</strong> 可以最大程度的避免复杂的多线程及同步问题，并且避免了多线程/进程的切换开销。<br><strong>3. 可扩展性：</strong> 可以方便的通过增加Reactor实例个数来充分利用CPU资源。<br><strong>4. 可复用性：</strong> reactor框架本身与具体事件处理逻辑无关，具有很高的复用性。</p>
+<h4 id="u3010_u914D_u7F6E_u672C_u5730ssh_u767B_u5F55_u3011"><a href="#u3010_u914D_u7F6E_u672C_u5730ssh_u767B_u5F55_u3011" class="headerlink" title="【配置本地ssh登录】"></a><strong>【配置本地ssh登录】</strong></h4><blockquote>
+<p>Google Cloud提供了4种ssh的方法：浏览器视窗ssh，通过自定通讯协议在浏览器视窗的ssh（这个没用过），使用gcloud登录（使用Google Cloud的sdk登录），其他ssh用户端（我们本地的终端）。前面三种不是很推荐，理由很简单，比较卡。最后本地ssh才是我们的正确姿势啊。不过官网推荐的方法都是基于gcloud把公匙传上去，而使用gcloud还要终端翻墙，如果你想用gcloud，推荐终端翻墙代理privoxy。这里推荐另一种非官方方法。</p>
+<p> <strong>1.本地无密登陆</strong><br> 首先我们使用第一种方法使用浏览器窗ssh（之前推荐的文章里使用的ssh方法），接着我们可以把我们本地的ssh的pub_key（一般是我们本地 ~/.ssh/id_rsa.pub里面的内容）<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat ~/.ssh/id_rsa.pub  //本地终端</span><br></pre></td></tr></table></figure></p>
+<p>copy输入结果（公匙）到服务器的~/.ssh/authorized_keys文件的最后。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim .ssh/authorized_keys  //在最后添加前面copy的公匙</span><br></pre></td></tr></table></figure></p>
+<p>这样你就可以直接在本地 ssh 登陆了。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh user@ip //user是你之前浏览器窗看到的那个user，一般是g开头，ip就是你这台机的ip</span><br></pre></td></tr></table></figure></p>
+<p><strong>2.用户和密码登陆</strong><br>通过前面的无密登陆ssh上服务器，接着配置多用户和密码登陆，因为无密登陆那个user并不是你自己创建的，是系统生成给你的。我们现在给自己创建一个用户，并开启密码登陆。<br>首先去掉/etc/nologin文件，这个文件会让之后创建的用户不能登陆。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mv /etc/nologin /etc/nologin.backup</span><br></pre></td></tr></table></figure></p>
+<p>然后要开启密码验证检查，也就是密码登陆。<br>将/etc/ssh/sshd_config文件中的PasswordAuthentication no 改为PasswordAuthentication yes<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/ssh/sshd_config</span><br><span class="line">PasswordAuthentication yes  //找到PasswordAuthentication no改成yes</span><br></pre></td></tr></table></figure></p>
+<p>现在可以创建用户，通过密码登陆了。以下操作记得sudo<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">groupadd users //创建用户组</span><br><span class="line">useradd -m -g users <span class="operator">-s</span> /bin/bash xym  //添加用户到组</span><br><span class="line">passwd xym  //添加用户密码</span><br><span class="line">vim /etc/sudoers  </span><br><span class="line">然后在文件后面添加 xym ALL=(ALL) ALL  //添加用户的sudo权限</span><br></pre></td></tr></table></figure></p>
+<p>接着你就可以很爽的使用ssh了。</p>
+</blockquote>
+<h4 id="u3010_u6DFB_u52A0Swap_u3011"><a href="#u3010_u6DFB_u52A0Swap_u3011" class="headerlink" title="【添加Swap】"></a><strong>【添加Swap】</strong></h4><blockquote>
+<p>自带的0.6G内存肯定是不够用的，所以我们要使用swap空间，但是刚刚申请的服务器是没有swap空间的，这时我们要自己挂载一个swap。具体操作如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo fallocate <span class="operator">-l</span> <span class="number">1</span>G /swapfile  //一般为当前内存的两倍，这里我取<span class="number">1</span>G</span><br><span class="line">sudo chmod <span class="number">600</span> /swapfile  //锁定文件权限</span><br><span class="line">sudo mkswap /swapfile  //生成swap空间</span><br><span class="line">sudo swapon /swapfile  //开启swap功能</span><br><span class="line">free -m  //查看是否有swap</span><br></pre></td></tr></table></figure></p>
+<p>到这里基本成功了，但是重启后系统不会自动挂载刚刚的swap文件，所以我们要加入到fstab。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/fstab</span><br><span class="line">最后一行添加</span><br><span class="line">/swapfile   none    swap    sw    <span class="number">0</span>   <span class="number">0</span></span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h4 id="u3010_u8C03_u4F18_u3011"><a href="#u3010_u8C03_u4F18_u3011" class="headerlink" title="【调优】"></a><strong>【调优】</strong></h4><blockquote>
+<p><strong>1. swappiness</strong><br>通过swappiness可以调节是积极的使用内存（趋近0）还是积极的使用swap（趋近100），默认swappiness=60，大部分推荐改为swappiness=10，我这里也配成10，减少内存和swap的页交换嘛，大家看需要而定。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo sysctl vm.swappiness=<span class="number">10</span>  //设定当前环境swappiness的值，但是重启失效</span><br><span class="line">sudo vim /etc/sysctl.conf  //启动配置</span><br><span class="line">最后一行添加</span><br><span class="line">vm.swappiness=<span class="number">10</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>2. vfs_cache_pressure</strong><br>通过vfs_cache_pressure调整文件在缓存中交换的频率，默认为100，是比较频繁的交换inode信息，可以设置为50。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo sysctl vm.vfs_cache_pressure=<span class="number">50</span>  //设定当前环境vfs_cache_pressure的值，但是重启失效</span><br><span class="line">sudo vim /etc/sysctl.conf  //启动配置</span><br><span class="line">最后一行添加</span><br><span class="line">vm.vfs_cache_pressure = <span class="number">50</span></span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h4 id="u3010_u5176_u4ED6_u3011"><a href="#u3010_u5176_u4ED6_u3011" class="headerlink" title="【其他】"></a><strong>【其他】</strong></h4><blockquote>
+<p>Google Cloud 也有一些坑爹的东西，比如他把25号端口（SMTP）给永远封了，如果想发邮件建议使用mailgun。不过整体来说是一个快速稳定的服务器。反正一句话：你，值得拥有。</p>
 </blockquote>
 
       
@@ -298,13 +316,13 @@ Reactor可以翻译为反应器，是一种基于事件驱动的设计模式。�
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/01/16/Reactor/">Reactor</a></p>
+        <p><span>本文标题:</span><a href="/2016/03/21/GoogleCloud/">Google Cloud初体验</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 XYM 的个人博客">XYM</a></p>
-        <p><span>发布时间:</span>2016年01月16日 - 01时39分</p>
-        <p><span>最后更新:</span>2016年01月21日 - 00时42分</p>
+        <p><span>发布时间:</span>2016年03月21日 - 14时51分</p>
+        <p><span>最后更新:</span>2016年03月21日 - 14时59分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/01/16/Reactor/" title="Reactor">http://xymlife.com/2016/01/16/Reactor/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://xymlife.com/2016/01/16/Reactor/　　作者: XYM" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2016/03/21/GoogleCloud/" title="Google Cloud初体验">http://xymlife.com/2016/03/21/GoogleCloud/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://xymlife.com/2016/03/21/GoogleCloud/　　作者: XYM" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -317,16 +335,10 @@ Reactor可以翻译为反应器，是一种基于事件驱动的设计模式。�
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2016/01/16/后缀数组小结/">
-                    后缀数组小结
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2016/01/13/IO多路复用/">
-                    I/O多路复用
+                <a href="/2016/02/07/打造自己的Python编码环境/">
+                    打造自己的Python编码环境
                 </a>
             </div>
         
@@ -337,7 +349,7 @@ Reactor可以翻译为反应器，是一种基于事件驱动的设计模式。�
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010Reactor_u3011"><span class="toc-number">1.</span> <span class="toc-text">【Reactor】</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010Reactor_u8BBE_u8BA1_u6A21_u5F0F_u3011"><span class="toc-number">2.</span> <span class="toc-text">【Reactor设计模式】</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010Reactor_u7684_u7279_u70B9_u3011"><span class="toc-number">3.</span> <span class="toc-text">【Reactor的特点】</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010_u524D_u8A00_u3011"><span class="toc-number">1.</span> <span class="toc-text">【前言】</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010_u51C6_u5907_u3011"><span class="toc-number">2.</span> <span class="toc-text">【准备】</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010_u914D_u7F6E_u672C_u5730ssh_u767B_u5F55_u3011"><span class="toc-number">3.</span> <span class="toc-text">【配置本地ssh登录】</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010_u6DFB_u52A0Swap_u3011"><span class="toc-number">4.</span> <span class="toc-text">【添加Swap】</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010_u8C03_u4F18_u3011"><span class="toc-number">5.</span> <span class="toc-text">【调优】</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010_u5176_u4ED6_u3011"><span class="toc-number">6.</span> <span class="toc-text">【其他】</span></a></li></ol>
 </div>
 <style>
     .left-col .switch-btn {
@@ -401,7 +413,7 @@ Reactor可以翻译为反应器，是一种基于事件驱动的设计模式。�
     
       <div class="duoshuo" id="comments">
     <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="2016/01/16/Reactor/" data-title="Reactor" data-url="http://xymlife.com/2016/01/16/Reactor/"></div>
+    <div class="ds-thread" data-thread-key="2016/03/21/GoogleCloud/" data-title="Google Cloud初体验" data-url="http://xymlife.com/2016/03/21/GoogleCloud/"></div>
     <!-- 多说评论框 end -->
     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
     <script type="text/javascript">
@@ -426,15 +438,13 @@ Reactor可以翻译为反应器，是一种基于事件驱动的设计模式。�
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2016/01/16/后缀数组小结/" title="上一篇: 后缀数组小结">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2016/01/13/IO多路复用/" title="下一篇: I/O多路复用">
+            <a href="/2016/02/07/打造自己的Python编码环境/" title="下一篇: 打造自己的Python编码环境">
                 <i class="fa fa-angle-right"></i>
             </a>
         
