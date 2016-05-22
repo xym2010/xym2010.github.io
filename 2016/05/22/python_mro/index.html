@@ -3,28 +3,34 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Google Cloud初体验 | XYM</title>
+  <title>你真的理解Python中MRO算法吗？ | XYM</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="【前言】
-废话不多说，先上一图。
+MRO（Method Resolution Order）：方法解析顺序。Python语言包含了很多优秀的特性，其中多重继承就是其中之一，但是多重继承会引发很多问题，比如二义性，Python中一切皆引用，这使得他不会像C++一样使用虚基类处理基类对象重复的问题，但是如果父类存在同名函数的时候还是会产生二义性，Python中处理这种问题的方法就是MRO。
 
-没有看错，速度很快，相对比较稳定，白天基本是100ms以内，晚上的时候会慢，点ping值差不多150ms左右，不过速度也算快的了。最主要的是他的最低配置只要5美元（共享cpu，0.6G内存，10G存储空间），很适合用来翻墙。不过高一档次的配置（内存1.75G）就要15美元了。穷人的话（比如我），可以考虑添加Swap弥补一下内存不足，土豪随意。现在新用户有送300">
+【历史中的MRO】
+如果不想了解历">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Google Cloud初体验">
-<meta property="og:url" content="http://xymlife.com/2016/03/21/GoogleCloud/index.html">
+<meta property="og:title" content="你真的理解Python中MRO算法吗？">
+<meta property="og:url" content="http://xymlife.com/2016/05/22/python_mro/index.html">
 <meta property="og:site_name" content="XYM">
 <meta property="og:description" content="【前言】
-废话不多说，先上一图。
+MRO（Method Resolution Order）：方法解析顺序。Python语言包含了很多优秀的特性，其中多重继承就是其中之一，但是多重继承会引发很多问题，比如二义性，Python中一切皆引用，这使得他不会像C++一样使用虚基类处理基类对象重复的问题，但是如果父类存在同名函数的时候还是会产生二义性，Python中处理这种问题的方法就是MRO。
 
-没有看错，速度很快，相对比较稳定，白天基本是100ms以内，晚上的时候会慢，点ping值差不多150ms左右，不过速度也算快的了。最主要的是他的最低配置只要5美元（共享cpu，0.6G内存，10G存储空间），很适合用来翻墙。不过高一档次的配置（内存1.75G）就要15美元了。穷人的话（比如我），可以考虑添加Swap弥补一下内存不足，土豪随意。现在新用户有送300">
-<meta property="og:image" content="http://7xq2as.com1.z0.glb.clouddn.com/IMG_2245%20%281%29.JPG">
-<meta property="og:updated_time" content="2016-03-21T06:59:52.000Z">
+【历史中的MRO】
+如果不想了解历">
+<meta property="og:image" content="http://7xq2as.com1.z0.glb.clouddn.com/36071EB6-F4FF-46FA-99F2-F3A205FB7353.png">
+<meta property="og:image" content="http://7xq2as.com1.z0.glb.clouddn.com/6C3FAA19-5C47-426D-9AB2-99789FAEBE6D.png">
+<meta property="og:image" content="http://7xq2as.com1.z0.glb.clouddn.com/7CA5DDFC-F5F4-4060-8B9F-21D123AB71E5.png">
+<meta property="og:image" content="http://7xq2as.com1.z0.glb.clouddn.com/4F0403FB-6FD7-4631-99A5-96FEE2C11FA7.png">
+<meta property="og:updated_time" content="2016-05-22T16:07:26.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Google Cloud初体验">
+<meta name="twitter:title" content="你真的理解Python中MRO算法吗？">
 <meta name="twitter:description" content="【前言】
-废话不多说，先上一图。
+MRO（Method Resolution Order）：方法解析顺序。Python语言包含了很多优秀的特性，其中多重继承就是其中之一，但是多重继承会引发很多问题，比如二义性，Python中一切皆引用，这使得他不会像C++一样使用虚基类处理基类对象重复的问题，但是如果父类存在同名函数的时候还是会产生二义性，Python中处理这种问题的方法就是MRO。
 
-没有看错，速度很快，相对比较稳定，白天基本是100ms以内，晚上的时候会慢，点ping值差不多150ms左右，不过速度也算快的了。最主要的是他的最低配置只要5美元（共享cpu，0.6G内存，10G存储空间），很适合用来翻墙。不过高一档次的配置（内存1.75G）就要15美元了。穷人的话（比如我），可以考虑添加Swap弥补一下内存不足，土豪随意。现在新用户有送300">
+【历史中的MRO】
+如果不想了解历">
   
     <link rel="alternative" href="/atom.xml" title="XYM" type="application/atom+xml">
   
@@ -234,11 +240,11 @@
         </header>                
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-GoogleCloud" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-python_mro" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/03/21/GoogleCloud/" class="article-date">
-      <time datetime="2016-03-21T06:51:14.000Z" itemprop="datePublished">2016-03-21</time>
+      <a href="/2016/05/22/python_mro/" class="article-date">
+      <time datetime="2016-05-22T15:45:14.000Z" itemprop="datePublished">2016-05-22</time>
 </a>
     </div>
   
@@ -251,7 +257,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Google Cloud初体验
+      你真的理解Python中MRO算法吗？
     </h1>
   
 
@@ -262,7 +268,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GoogleCloud/">GoogleCloud</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/class/">class</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mixin/">mixin</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mro/">mro</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -273,40 +279,63 @@
       
           
         <h4 id="u3010_u524D_u8A00_u3011"><a href="#u3010_u524D_u8A00_u3011" class="headerlink" title="【前言】"></a><strong>【前言】</strong></h4><blockquote>
-<p>废话不多说，先上一图。</p>
-<p><img src="http://7xq2as.com1.z0.glb.clouddn.com/IMG_2245%20%281%29.JPG" alt="此处输入图片的描述"></p>
-<p>没有看错，速度很快，相对比较稳定，白天基本是100ms以内，晚上的时候会慢，点ping值差不多150ms左右，不过速度也算快的了。最主要的是他的最低配置只要5美元（共享cpu，0.6G内存，10G存储空间），很适合用来翻墙。不过高一档次的配置（内存1.75G）就要15美元了。穷人的话（比如我），可以考虑添加Swap弥补一下内存不足，土豪随意。现在新用户有送300美元试用金额，2个月后就要交钱了。有兴趣听我安利的请继续。</p>
+<p><strong>MRO（Method Resolution Order）：方法解析顺序</strong>。<br>Python语言包含了很多优秀的特性，其中多重继承就是其中之一，但是多重继承会引发很多问题，比如二义性，Python中一切皆引用，这使得他不会像C++一样使用虚基类处理基类对象重复的问题，但是如果父类存在同名函数的时候还是会产生二义性，Python中处理这种问题的方法就是MRO。</p>
+</blockquote>
+<h4 id="u3010_u5386_u53F2_u4E2D_u7684MRO_u3011"><a href="#u3010_u5386_u53F2_u4E2D_u7684MRO_u3011" class="headerlink" title="【历史中的MRO】"></a><strong>【历史中的MRO】</strong></h4><blockquote>
+<p>如果不想了解历史，只想知道现在的MRO可以直接看最后的C3算法，不过C3所解决的问题都是历史遗留问题，了解问题，才能解决问题，建议先看历史中MRO的演化。<br><strong>Python2.2以前的版本：金典类（classic class）时代</strong><br>金典类是一种没有继承的类，实例类型都是type类型，如果经典类被作为父类，子类调用父类的构造函数时会出错。<br><strong>这时MRO的方法为DFS（深度优先搜索（子节点顺序：从左到右））。</strong></p>
 </blockquote>
 <a id="more"></a>
-<h4 id="u3010_u51C6_u5907_u3011"><a href="#u3010_u51C6_u5907_u3011" class="headerlink" title="【准备】"></a><strong>【准备】</strong></h4><blockquote>
-<ul>
-<li>一台能翻墙的电脑，因为我们在中国，如果没有你可以找能翻墙的教你，或者去找找一些试用vpn或者交一个月的钱。</li>
-<li>一个谷歌账号，和上一点息息相关。</li>
-<li>一张visa的信用卡，需要绑定信用卡。</li>
-<li>一颗耐心。</li>
-</ul>
-<p>准备好了以上东西，那就可以申请一台属于你的vps了。<br>首先访问<a href="https://cloud.google.com/" target="_blank" rel="external">cloud.google.com</a>，如果正常说明你翻墙成功了，不正常请继续尝试翻墙。<br>这里提醒一下，本人选的是asia-east1-c机房，经过测试ip是100~110段的网速最好，大家可以刷，但是不要太过分哦。<br>接下来的申请流程我就不说，这里推荐一个详细的流程 <a href="https://github.com/kaiye/kaiye.github.com/issues/9" target="_blank" rel="external">https://github.com/kaiye/kaiye.github.com/issues/9</a> 如果你只是想搭个vps，这篇文章已经够了，下面的东西可以不用再看了。如果你想让它变成正常服务器使用，请继续看下去。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Class A:   <span class="comment"># 是没有继承任何父类的</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">print</span> <span class="string">"这是金典类"</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>inspect.getmro（A）可以查看金典类的MRO顺序</p>
 </blockquote>
-<h4 id="u3010_u914D_u7F6E_u672C_u5730ssh_u767B_u5F55_u3011"><a href="#u3010_u914D_u7F6E_u672C_u5730ssh_u767B_u5F55_u3011" class="headerlink" title="【配置本地ssh登录】"></a><strong>【配置本地ssh登录】</strong></h4><blockquote>
-<p>Google Cloud提供了4种ssh的方法：浏览器视窗ssh，通过自定通讯协议在浏览器视窗的ssh（这个没用过），使用gcloud登录（使用Google Cloud的sdk登录），其他ssh用户端（我们本地的终端）。前面三种不是很推荐，理由很简单，比较卡。最后本地ssh才是我们的正确姿势啊。不过官网推荐的方法都是基于gcloud把公匙传上去，而使用gcloud还要终端翻墙，如果你想用gcloud，推荐终端翻墙代理privoxy。这里推荐另一种非官方方法。</p>
-<p> <strong>1.本地无密登陆</strong><br> 首先我们使用第一种方法使用浏览器窗ssh（之前推荐的文章里使用的ssh方法），接着我们可以把我们本地的ssh的pub_key（一般是我们本地 ~/.ssh/id_rsa.pub里面的内容）<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat ~/.ssh/id_rsa.pub  //本地终端</span><br></pre></td></tr></table></figure></p>
-<p>copy输入结果（公匙）到服务器的~/.ssh/authorized_keys文件的最后。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim .ssh/authorized_keys  //在最后添加前面copy的公匙</span><br></pre></td></tr></table></figure></p>
-<p>这样你就可以直接在本地 ssh 登陆了。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh user@ip //user是你之前浏览器窗看到的那个user，一般是g开头，ip就是你这台机的ip</span><br></pre></td></tr></table></figure></p>
-<p><strong>2.用户和密码登陆</strong><br>通过前面的无密登陆ssh上服务器，接着配置多用户和密码登陆，因为无密登陆那个user并不是你自己创建的，是系统生成给你的。我们现在给自己创建一个用户，并开启密码登陆。<br>首先去掉/etc/nologin文件，这个文件会让之后创建的用户不能登陆。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mv /etc/nologin /etc/nologin.backup</span><br></pre></td></tr></table></figure></p>
-<p>然后要开启密码验证检查，也就是密码登陆。<br>将/etc/ssh/sshd_config文件中的PasswordAuthentication no 改为PasswordAuthentication yes<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/ssh/sshd_config</span><br><span class="line">PasswordAuthentication yes  //找到PasswordAuthentication no改成yes</span><br></pre></td></tr></table></figure></p>
-<p>现在可以创建用户，通过密码登陆了。以下操作记得sudo<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">groupadd users //创建用户组</span><br><span class="line">useradd -m -g users <span class="operator">-s</span> /bin/bash xym  //添加用户到组</span><br><span class="line">passwd xym  //添加用户密码</span><br><span class="line">vim /etc/sudoers  </span><br><span class="line">然后在文件后面添加 xym ALL=(ALL) ALL  //添加用户的sudo权限</span><br></pre></td></tr></table></figure></p>
-<p>接着你就可以很爽的使用ssh了。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">import inspect</span><br><span class="line">class D:</span><br><span class="line">    pass</span><br><span class="line"></span><br><span class="line">class <span class="function"><span class="title">C</span><span class="params">(D)</span></span>:</span><br><span class="line">    pass</span><br><span class="line"></span><br><span class="line">class <span class="function"><span class="title">B</span><span class="params">(D)</span></span>:</span><br><span class="line">    pass</span><br><span class="line"></span><br><span class="line">class <span class="function"><span class="title">A</span><span class="params">(B, C)</span></span>:</span><br><span class="line">    pass</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    print inspect.<span class="function"><span class="title">getmro</span><span class="params">(A)</span></span></span><br><span class="line">    </span><br><span class="line">&gt;&gt;  (&lt;class __main__<span class="class">.A</span> at <span class="number">0</span>x10e0e5530&gt;, &lt;class __main__<span class="class">.B</span> at <span class="number">0</span>x10e0e54c8&gt;, &lt;class __main__<span class="class">.D</span> at <span class="number">0</span>x10e0e53f8&gt;, &lt;class __main__<span class="class">.C</span> at <span class="number">0</span>x10e0e5460&gt;)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>MRO的DFS顺序如下图：  </p>
 </blockquote>
-<h4 id="u3010_u6DFB_u52A0Swap_u3011"><a href="#u3010_u6DFB_u52A0Swap_u3011" class="headerlink" title="【添加Swap】"></a><strong>【添加Swap】</strong></h4><blockquote>
-<p>自带的0.6G内存肯定是不够用的，所以我们要使用swap空间，但是刚刚申请的服务器是没有swap空间的，这时我们要自己挂载一个swap。具体操作如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo fallocate <span class="operator">-l</span> <span class="number">1</span>G /swapfile  //一般为当前内存的两倍，这里我取<span class="number">1</span>G</span><br><span class="line">sudo chmod <span class="number">600</span> /swapfile  //锁定文件权限</span><br><span class="line">sudo mkswap /swapfile  //生成swap空间</span><br><span class="line">sudo swapon /swapfile  //开启swap功能</span><br><span class="line">free -m  //查看是否有swap</span><br></pre></td></tr></table></figure></p>
-<p>到这里基本成功了，但是重启后系统不会自动挂载刚刚的swap文件，所以我们要加入到fstab。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/fstab</span><br><span class="line">最后一行添加</span><br><span class="line">/swapfile   none    swap    sw    <span class="number">0</span>   <span class="number">0</span></span><br></pre></td></tr></table></figure></p>
+<p><img src="http://7xq2as.com1.z0.glb.clouddn.com/36071EB6-F4FF-46FA-99F2-F3A205FB7353.png" alt="此处输入图片的描述"></p>
+<blockquote>
+<p><strong>两种继承模式在DFS下的优缺点。</strong><br>第一种，我称为正常继承模式，两个互不相关的类的多继承，这种情况DFS顺序正常，不会引起任何问题；  </p>
+<p>第二种，棱形继承模式，存在公共父类（D）的多继承（有种D字一族的感觉），这种情况下DFS必定经过公共父类（D），这时候想想，如果这个公共父类（D）有一些初始化属性或者方法，但是子类（C）又重写了这些属性或者方法，那么按照DFS顺序必定是会先找到D的属性或方法，那么C的属性或者方法将永远访问不到，导致C只能继承无法重写（override）。这也就是为什么新式类不使用DFS的原因，因为他们都有一个公共的祖先object。</p>
 </blockquote>
-<h4 id="u3010_u8C03_u4F18_u3011"><a href="#u3010_u8C03_u4F18_u3011" class="headerlink" title="【调优】"></a><strong>【调优】</strong></h4><blockquote>
-<p><strong>1. swappiness</strong><br>通过swappiness可以调节是积极的使用内存（趋近0）还是积极的使用swap（趋近100），默认swappiness=60，大部分推荐改为swappiness=10，我这里也配成10，减少内存和swap的页交换嘛，大家看需要而定。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo sysctl vm.swappiness=<span class="number">10</span>  //设定当前环境swappiness的值，但是重启失效</span><br><span class="line">sudo vim /etc/sysctl.conf  //启动配置</span><br><span class="line">最后一行添加</span><br><span class="line">vm.swappiness=<span class="number">10</span></span><br></pre></td></tr></table></figure></p>
-<p><strong>2. vfs_cache_pressure</strong><br>通过vfs_cache_pressure调整文件在缓存中交换的频率，默认为100，是比较频繁的交换inode信息，可以设置为50。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo sysctl vm.vfs_cache_pressure=<span class="number">50</span>  //设定当前环境vfs_cache_pressure的值，但是重启失效</span><br><span class="line">sudo vim /etc/sysctl.conf  //启动配置</span><br><span class="line">最后一行添加</span><br><span class="line">vm.vfs_cache_pressure = <span class="number">50</span></span><br></pre></td></tr></table></figure></p>
+<hr>
+<blockquote>
+<p><strong>Python2.2版本：新式类（new-style class）诞生</strong><br>为了使类和内置类型更加统一，引入了新式类。新式类的每个类都继承于一个基类，可以是自定义类或者其它类，默认承于object。子类可以调用父类的构造函数。  </p>
+<p><strong>这时有两种MRO的方法</strong><br><strong>1. 如果是金典类MRO为DFS（深度优先搜索（子节点顺序：从左到右））。</strong><br><strong>2. 如果是新式类MRO为BFS（广度优先搜索（子节点顺序：从左到右））。</strong></p>
 </blockquote>
-<h4 id="u3010_u5176_u4ED6_u3011"><a href="#u3010_u5176_u4ED6_u3011" class="headerlink" title="【其他】"></a><strong>【其他】</strong></h4><blockquote>
-<p>Google Cloud 也有一些坑爹的东西，比如他把25号端口（SMTP）给永远封了，如果想发邮件建议使用mailgun。不过整体来说是一个快速稳定的服务器。反正一句话：你，值得拥有。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Class A(object):   <span class="comment"># 继承于object</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">print</span> <span class="string">"这是新式类"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">A</span>.__mro__ 可以查看新式类的顺序</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>MRO的BFS顺序如下图：<br><img src="http://7xq2as.com1.z0.glb.clouddn.com/6C3FAA19-5C47-426D-9AB2-99789FAEBE6D.png" alt="此处输入图片的描述"></p>
+<p><strong>两种继承模式在BFS下的优缺点。</strong><br>第一种，正常继承模式，看起来正常，不过实际上感觉很别扭，比如B明明继承了D的某个属性（假设为foo），C中也实现了这个属性foo，那么BFS明明先访问B然后再去访问C，但是为什么foo这个属性会是C？这种应该先从B和B的父类开始找的顺序，我们称之为单调性。</p>
+<p>第二种，棱形继承模式，这种模式下面，BFS的查找顺序虽然解了DFS顺序下面的棱形问题，但是它也是违背了查找的单调性。</p>
+<p>因为违背了单调性，所以BFS方法只在Python2.2中出现了，在其后版本中用C3算法取代了BFS。</p>
+</blockquote>
+<hr>
+<blockquote>
+<p><strong>Python2.3到Python2.7：金典类、新式类和平发展</strong><br>因为之前的BFS存在较大的问题，所以从Python2.3开始新式类的MRO取而代之的是C3算法，我们可以知道C3算法肯定解决了单调性问题，和只能继承无法重写的问题。C3算法具体实现稍后讲解。</p>
+<p>MRO的C3算法顺序如下图：看起简直是DFS和BFS的合体有木有。但是仅仅是看起来像而已。<br><img src="http://7xq2as.com1.z0.glb.clouddn.com/7CA5DDFC-F5F4-4060-8B9F-21D123AB71E5.png" alt="此处输入图片的描述"></p>
+</blockquote>
+<hr>
+<blockquote>
+<p><strong>Python3到至今：新式类一统江湖</strong><br>Python3开始就只存在新式类了，采用的MRO也依旧是C3算法。</p>
+</blockquote>
+<h4 id="u3010_u795E_u5947_u7684_u7B97_u6CD5C3_u3011"><a href="#u3010_u795E_u5947_u7684_u7B97_u6CD5C3_u3011" class="headerlink" title="【神奇的算法C3】"></a><strong>【神奇的算法C3】</strong></h4><blockquote>
+<p>C3算法解决了单调性问题和只能继承无法重写问题，在很多技术文章包括<a href="https://www.python.org/download/releases/2.3/mro/#bad-method-resolution-orders" target="_blank" rel="external">官网</a>中的C3算法，都只有那个merge list的公式法，想看的话网上很多，自己可以查。但是从公式很难理解到解决这个问题的本质。我经过一番思考后，我讲讲我所理解的C3算法的本质。如果错了，希望有人指出来。</p>
+<p>假设继承关系如下(<a href="https://www.python.org/download/releases/2.3/mro/#bad-method-resolution-orders" target="_blank" rel="external">官网</a>的例子)：</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">D</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">E</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">F</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span><span class="params">(D, F)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span><span class="params">(E, D)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span><span class="params">(B, C)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    <span class="keyword">print</span> A.__mro__</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>首先假设继承关系是一张图（事实上也是），我们按类继承是的顺序（class A(B, C)括号里面的顺序B，C），子类指向父类，构一张图。<br><img src="http://7xq2as.com1.z0.glb.clouddn.com/4F0403FB-6FD7-4631-99A5-96FEE2C11FA7.png" alt="此处输入图片的描述"></p>
+<p>我们要解决两个问题：单调性问题和不能重写的问题。<br>很容易发现要解决单调性，只要保证从根(A)到叶(object)，从左到右的访问顺序即可。<br>那么对于只能继承，不能重写的问题呢？先分析这个问题的本质原因，主要是因为先访问了子类的父类导致的。那么怎么解决只能先访问父类再访问子类的问题呢？如果熟悉图论的人应该能马上想到拓扑排序，这里引用一下百科的的定义:</p>
+<p>对一个有向无环图(Directed Acyclic Graph简称DAG)G进行拓扑排序，是将G中所有顶点排成一个线性序列，使得图中任意一对顶点u和v，若边(u,v)∈E(G)，则u在线性序列中出现在v之前。通常，这样的线性序列称为满足拓扑次序(Topological Order)的序列，简称拓扑序列。简单的说，由某个集合上的一个偏序得到该集合上的一个全序，这个操作称之为拓扑排序。</p>
+<p>因为拓扑排序肯定是根到叶（也不能说是叶了，因为已经不是树了），所以只要满足从左到右，得到的拓扑排序就是结果，关于拓扑排序算法，大学的数据结构有教，这里不做讲解，不懂的可以自行谷歌或者翻一下书，建议了解完算法再往下看。</p>
+<p>那么模拟一下例子的拓扑排序：首先找入度为0的点，只有一个A，把A拿出来，把A相关的边剪掉，再找下一个入度为0的点，有两个点（B,C）,取最左原则，拿B，这是排序是AB，然后剪B相关的边，这时候入度为0的点有E和C，取最左。这时候排序为ABE，接着剪E相关的边，这时只有一个点入度为0，那就是C，取C，顺序为ABEC。剪C的边得到两个入度为0的点（DF），取最左D，顺序为ABECD，然后剪D相关的边，那么下一个入度为0的就是F，然后是object。那么最后的排序就为ABECDFobject。</p>
+</blockquote>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">对比一下 <span class="constant">A</span>.__mro__的结果</span><br><span class="line"></span><br><span class="line">(&lt;<span class="class"><span class="keyword">class</span> '<span class="title">__main__</span>.<span class="title">A</span>'&gt;, <span class="inheritance">&lt;<span class="parent">class</span></span> '<span class="title">__main__</span>.<span class="title">B</span>'&gt;, <span class="inheritance">&lt;<span class="parent">class</span></span> '<span class="title">__main__</span>.<span class="title">E</span>'&gt;, <span class="inheritance">&lt;<span class="parent">class</span></span> '<span class="title">__main__</span>.<span class="title">C</span>'&gt;, <span class="inheritance">&lt;<span class="parent">class</span></span> '<span class="title">__main__</span>.<span class="title">D</span>'&gt;, <span class="inheritance">&lt;<span class="parent">class</span></span> '<span class="title">__main__</span>.<span class="title">F</span>'&gt;, <span class="inheritance">&lt;<span class="parent">type</span></span> '<span class="title">object</span>'&gt;)</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>完全正确！</p>
+<p><strong>最后欢迎大家订阅我的<a href="http://xymlife.com">博客</a> <a href="http://xymlife.com">www.xymlife.com</a> 或者开发者头条主题，你的支持是我前进的动力。共勉！喜欢就给个赞呗~</strong></p>
 </blockquote>
 
       
@@ -316,13 +345,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/03/21/GoogleCloud/">Google Cloud初体验</a></p>
+        <p><span>本文标题:</span><a href="/2016/05/22/python_mro/">你真的理解Python中MRO算法吗？</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 XYM 的个人博客">XYM</a></p>
-        <p><span>发布时间:</span>2016年03月21日 - 14时51分</p>
-        <p><span>最后更新:</span>2016年03月21日 - 14时59分</p>
+        <p><span>发布时间:</span>2016年05月22日 - 23时45分</p>
+        <p><span>最后更新:</span>2016年05月23日 - 00时07分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/03/21/GoogleCloud/" title="Google Cloud初体验">http://xymlife.com/2016/03/21/GoogleCloud/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://xymlife.com/2016/03/21/GoogleCloud/　　作者: XYM" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2016/05/22/python_mro/" title="你真的理解Python中MRO算法吗？">http://xymlife.com/2016/05/22/python_mro/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://xymlife.com/2016/05/22/python_mro/　　作者: XYM" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -335,16 +364,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2016/05/22/python_mro/">
-                    你真的理解Python中MRO算法吗？
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2016/02/07/打造自己的Python编码环境/">
-                    打造自己的Python编码环境
+                <a href="/2016/03/21/GoogleCloud/">
+                    Google Cloud初体验
                 </a>
             </div>
         
@@ -355,7 +378,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010_u524D_u8A00_u3011"><span class="toc-number">1.</span> <span class="toc-text">【前言】</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010_u51C6_u5907_u3011"><span class="toc-number">2.</span> <span class="toc-text">【准备】</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010_u914D_u7F6E_u672C_u5730ssh_u767B_u5F55_u3011"><span class="toc-number">3.</span> <span class="toc-text">【配置本地ssh登录】</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010_u6DFB_u52A0Swap_u3011"><span class="toc-number">4.</span> <span class="toc-text">【添加Swap】</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010_u8C03_u4F18_u3011"><span class="toc-number">5.</span> <span class="toc-text">【调优】</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010_u5176_u4ED6_u3011"><span class="toc-number">6.</span> <span class="toc-text">【其他】</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010_u524D_u8A00_u3011"><span class="toc-number">1.</span> <span class="toc-text">【前言】</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010_u5386_u53F2_u4E2D_u7684MRO_u3011"><span class="toc-number">2.</span> <span class="toc-text">【历史中的MRO】</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#u3010_u795E_u5947_u7684_u7B97_u6CD5C3_u3011"><span class="toc-number">3.</span> <span class="toc-text">【神奇的算法C3】</span></a></li></ol>
 </div>
 <style>
     .left-col .switch-btn {
@@ -419,7 +442,7 @@
     
       <div class="duoshuo" id="comments">
     <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="2016/03/21/GoogleCloud/" data-title="Google Cloud初体验" data-url="http://xymlife.com/2016/03/21/GoogleCloud/"></div>
+    <div class="ds-thread" data-thread-key="2016/05/22/python_mro/" data-title="你真的理解Python中MRO算法吗？" data-url="http://xymlife.com/2016/05/22/python_mro/"></div>
     <!-- 多说评论框 end -->
     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
     <script type="text/javascript">
@@ -444,15 +467,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2016/05/22/python_mro/" title="上一篇: 你真的理解Python中MRO算法吗？">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2016/02/07/打造自己的Python编码环境/" title="下一篇: 打造自己的Python编码环境">
+            <a href="/2016/03/21/GoogleCloud/" title="下一篇: Google Cloud初体验">
                 <i class="fa fa-angle-right"></i>
             </a>
         
