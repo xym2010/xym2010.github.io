@@ -170,41 +170,6 @@
     </url>
 
     <url>
-        <loc>http://xymlife.com/tags/consolas/</loc>
-        <lastmod>2016-05-22T15:47:11.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://xymlife.com/tags/zsh/</loc>
-        <lastmod>2016-05-22T15:47:11.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://xymlife.com/tags/iterm2/</loc>
-        <lastmod>2016-05-22T15:47:11.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://xymlife.com/tags/vim/</loc>
-        <lastmod>2016-05-22T15:47:11.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://xymlife.com/tags/Mac-python/</loc>
-        <lastmod>2016-05-22T15:47:11.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://xymlife.com/tags/python/</loc>
         <lastmod>2016-05-22T16:07:26.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -228,6 +193,41 @@
     <url>
         <loc>http://xymlife.com/tags/mro/</loc>
         <lastmod>2016-05-22T16:07:26.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://xymlife.com/tags/consolas/</loc>
+        <lastmod>2016-05-28T12:59:01.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://xymlife.com/tags/zsh/</loc>
+        <lastmod>2016-05-28T12:59:01.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://xymlife.com/tags/iterm2/</loc>
+        <lastmod>2016-05-28T12:59:01.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://xymlife.com/tags/vim/</loc>
+        <lastmod>2016-05-28T12:59:01.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://xymlife.com/tags/Mac-python/</loc>
+        <lastmod>2016-05-28T12:59:01.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
