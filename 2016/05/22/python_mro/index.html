@@ -23,7 +23,7 @@ MRO（Method Resolution Order）：方法解析顺序。Python语言包含了很
 <meta property="og:image" content="http://7xq2as.com1.z0.glb.clouddn.com/6C3FAA19-5C47-426D-9AB2-99789FAEBE6D.png">
 <meta property="og:image" content="http://7xq2as.com1.z0.glb.clouddn.com/7CA5DDFC-F5F4-4060-8B9F-21D123AB71E5.png">
 <meta property="og:image" content="http://7xq2as.com1.z0.glb.clouddn.com/4F0403FB-6FD7-4631-99A5-96FEE2C11FA7.png">
-<meta property="og:updated_time" content="2016-05-22T16:07:26.000Z">
+<meta property="og:updated_time" content="2016-06-07T13:25:22.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="你真的理解Python中MRO算法吗？">
 <meta name="twitter:description" content="【前言】
@@ -327,7 +327,7 @@ MRO（Method Resolution Order）：方法解析顺序。Python语言包含了很
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">D</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">E</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">F</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span><span class="params">(D, F)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span><span class="params">(E, D)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span><span class="params">(B, C)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    <span class="keyword">print</span> A.__mro__</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>首先假设继承关系是一张图（事实上也是），我们按类继承是的顺序（class A(B, C)括号里面的顺序B，C），子类指向父类，构一张图。<br><img src="http://7xq2as.com1.z0.glb.clouddn.com/4F0403FB-6FD7-4631-99A5-96FEE2C11FA7.png" alt="此处输入图片的描述"></p>
-<p>我们要解决两个问题：单调性问题和不能重写的问题。<br>很容易发现要解决单调性，只要保证从根(A)到叶(object)，从左到右的访问顺序即可。<br>那么对于只能继承，不能重写的问题呢？先分析这个问题的本质原因，主要是因为先访问了子类的父类导致的。那么怎么解决只能先访问父类再访问子类的问题呢？如果熟悉图论的人应该能马上想到拓扑排序，这里引用一下百科的的定义:</p>
+<p>我们要解决两个问题：单调性问题和不能重写的问题。<br>很容易发现要解决单调性，只要保证从根(A)到叶(object)，从左到右的访问顺序即可。<br>那么对于只能继承，不能重写的问题呢？先分析这个问题的本质原因，主要是因为先访问了子类的父类导致的。那么怎么解决只能先访问子类再访问父类的问题呢？如果熟悉图论的人应该能马上想到拓扑排序，这里引用一下百科的的定义:</p>
 <p>对一个有向无环图(Directed Acyclic Graph简称DAG)G进行拓扑排序，是将G中所有顶点排成一个线性序列，使得图中任意一对顶点u和v，若边(u,v)∈E(G)，则u在线性序列中出现在v之前。通常，这样的线性序列称为满足拓扑次序(Topological Order)的序列，简称拓扑序列。简单的说，由某个集合上的一个偏序得到该集合上的一个全序，这个操作称之为拓扑排序。</p>
 <p>因为拓扑排序肯定是根到叶（也不能说是叶了，因为已经不是树了），所以只要满足从左到右，得到的拓扑排序就是结果，关于拓扑排序算法，大学的数据结构有教，这里不做讲解，不懂的可以自行谷歌或者翻一下书，建议了解完算法再往下看。</p>
 <p>那么模拟一下例子的拓扑排序：首先找入度为0的点，只有一个A，把A拿出来，把A相关的边剪掉，再找下一个入度为0的点，有两个点（B,C）,取最左原则，拿B，这是排序是AB，然后剪B相关的边，这时候入度为0的点有E和C，取最左。这时候排序为ABE，接着剪E相关的边，这时只有一个点入度为0，那就是C，取C，顺序为ABEC。剪C的边得到两个入度为0的点（DF），取最左D，顺序为ABECD，然后剪D相关的边，那么下一个入度为0的就是F，然后是object。那么最后的排序就为ABECDFobject。</p>
@@ -348,7 +348,7 @@ MRO（Method Resolution Order）：方法解析顺序。Python语言包含了很
         <p><span>本文标题:</span><a href="/2016/05/22/python_mro/">你真的理解Python中MRO算法吗？</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 XYM 的个人博客">XYM</a></p>
         <p><span>发布时间:</span>2016年05月22日 - 23时45分</p>
-        <p><span>最后更新:</span>2016年05月23日 - 00时07分</p>
+        <p><span>最后更新:</span>2016年06月07日 - 21时25分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2016/05/22/python_mro/" title="你真的理解Python中MRO算法吗？">http://xymlife.com/2016/05/22/python_mro/</a>
             <span class="copy-path" data-clipboard-text="原文: http://xymlife.com/2016/05/22/python_mro/　　作者: XYM" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
